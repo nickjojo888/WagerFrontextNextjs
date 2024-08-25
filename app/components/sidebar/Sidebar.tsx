@@ -37,7 +37,7 @@ export default function Sidebar() {
         "bg-gray-800 text-white h-screen p-4 transition-all duration-300",
         {
           "w-64": isExpanded,
-          "w-20": !isExpanded,
+          "w-16": !isExpanded,
         }
       )}
     >
