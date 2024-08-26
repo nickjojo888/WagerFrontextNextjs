@@ -8,7 +8,7 @@ interface GameImageProps {
 
 const GameImage: React.FC<GameImageProps> = ({ game }) => (
   <div className="flex-shrink-0 snap-start">
-    {/* to prevetn disabling of carousel buttons
+    {/* to prevetn disabling of carousel bttons
     alternative would be to set the buttons with onload call of next image */}
     <Image
       key={game.id}
