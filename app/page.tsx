@@ -6,7 +6,7 @@ import GamesCarousel from "./components/game_carousel/GamesCarousel";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center gap-16">
+    <main className="flex min-h-screen flex-col items-center gap-8">
       <Carousel />
       <ShadowDivider />
       <SearchOptions />
