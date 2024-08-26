@@ -1,0 +1,100 @@
+"use client";
+import React, { useRef, useState, useEffect } from "react";
+import ProviderImage from "./ProviderImage";
+import CarouselButton from "../CarouselButton";
+import { ProvidersSVG } from "@/public/svgs/SVGComponents";
+import { useProviders } from "./useProviders";
+
+const ProviderCarousel: React.FC = () => {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isAtStart, setIsAtStart] = useState(true);
+  const [isAtEnd, setIsAtEnd] = useState(false);
+  const providers = useProviders();
+
+  const updateButtonStates = () => {
+    if (carouselRef.current) {
+      const container = carouselRef.current;
+      setIsAtStart(container.scrollLeft <= 1); // Use a small threshold to account for precision issues
+      setIsAtEnd(
+        Math.ceil(container.scrollLeft + container.clientWidth) >=
+          container.scrollWidth - 1
+      );
+    }
+  };
+
+  useEffect(() => {
+    updateButtonStates();
+    const container = carouselRef.current;
+    if (container) {
+      container.addEventListener("scroll", updateButtonStates);
+      return () => container.removeEventListener("scroll", updateButtonStates);
+    }
+  }, [providers]); // Add games as a dependency to re-run effect when games change
+
+  const scrollGames = (direction: "next" | "prev") => {
+    if (carouselRef.current) {
+      const container = carouselRef.current;
+      const gameWidth = container.children[0].clientWidth;
+      const visibleWidth = container.clientWidth;
+      const gamesPerView = Math.floor(visibleWidth / gameWidth);
+      const scrollAmount = gameWidth * gamesPerView;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+
+      let nextScrollPosition;
+      if (direction === "next") {
+        nextScrollPosition = Math.min(
+          container.scrollLeft + scrollAmount,
+          maxScroll
+        );
+      } else {
+        nextScrollPosition = Math.max(container.scrollLeft - scrollAmount, 0);
+      }
+
+      container.scrollTo({ left: nextScrollPosition, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <div className="w-full max-w-6xl mx-auto">
+      <div className="flex justify-between items-center h-12 mb-4">
+        <div className="flex items-center gap-2">
+          <div className="text-primary">
+            <ProvidersSVG width={24} height={24} />
+          </div>
+          <h2 className="text-2xl font-bold">Providers</h2>
+        </div>
+        <div className="flex self-stretch gap-4">
+          <button className="bg-gray-800 text-white px-4 rounded-2xl hover:bg-gray-700">
+            View All
+          </button>
+          <div className="flex gap-2">
+            <CarouselButton
+              direction="prev"
+              onClick={() => scrollGames("prev")}
+              disabled={isAtStart}
+            />
+            <CarouselButton
+              direction="next"
+              onClick={() => scrollGames("next")}
+              disabled={isAtEnd}
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        ref={carouselRef}
+        className="flex overflow-x-scroll snap-x gap-20 snap-mandatory"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        {providers.map((provider) => (
+          <ProviderImage key={provider.id} provider={provider} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ProviderCarousel;

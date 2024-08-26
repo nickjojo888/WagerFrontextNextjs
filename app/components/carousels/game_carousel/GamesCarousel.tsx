@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import GameImage from "./GameImage";
-import CarouselButton from "./CarouselButton";
+import CarouselButton from "../CarouselButton";
 import { useGames, GameCategory } from "./useGames";
 
 interface GamesCarouselProps {
@@ -90,7 +90,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
       </div>
       <div
         ref={carouselRef}
-        className="flex overflow-x-scroll snap-x snap-mandatory"
+        className="flex gap-4 overflow-x-scroll snap-x snap-mandatory"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",

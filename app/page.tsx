@@ -1,8 +1,9 @@
 import Image from "next/image";
-import Carousel from "./components/promotion_carousel/Carousel";
+import Carousel from "./components/carousels/promotion_carousel/PromotionCarousel";
 import ShadowDivider from "./components/general/ShadowDivider";
 import SearchOptions from "./components/game_search/SearchOptions";
-import GamesCarousel from "./components/game_carousel/GamesCarousel";
+import GamesCarousel from "./components/carousels/game_carousel/GamesCarousel";
+import ProviderCarousel from "./components/carousels/provider_carousel/ProviderCarousel";
 import {
   ControllerSVG,
   CardsSVG,
@@ -26,6 +27,7 @@ export default function Home() {
         title="Slot Games"
         Icon={<PokerChipSVG width={24} height={24} />}
       />
+      <ProviderCarousel />
       <GamesCarousel
         category="liveCasino"
         title="Live Casino"

@@ -7,16 +7,15 @@ interface GameImageProps {
 }
 
 const GameImage: React.FC<GameImageProps> = ({ game }) => (
-  <div className="flex-shrink-0 px-2 snap-start">
+  <div className="flex-shrink-0 snap-start">
     <Image
       src={game.imageUrl}
-      alt={game.title}
-      width={150}
-      height={200}
+      alt={game.name}
+      width={100}
+      height={150}
       className="rounded-lg w-full h-auto"
       style={{ border: game.border }}
     />
-    <p className="mt-2 text-center">{game.title}</p>
   </div>
 );
 

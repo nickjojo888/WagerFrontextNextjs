@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { CarouselButton, CarouselDirection } from "./CarouselButton";
+import { CarouselButton, CarouselDirection } from "./PromotionCarouselButton";
 
 const images = [
   "/images/dummy/20k-weekly-gr.webp",
