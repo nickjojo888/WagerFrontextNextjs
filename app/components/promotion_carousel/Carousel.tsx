@@ -69,7 +69,7 @@ export default function Carousel() {
           ref={carouselRef}
           className="flex gap-x-2 overflow-x-auto scrollbar-hide"
           style={{
-            scrollSnapType: "x mandatory",
+            scrollSnapType: "x mandatory", // must snap to nearest child when scrolling stops
             overflowX: "scroll",
             scrollbarWidth: "none", // Firefox
             msOverflowStyle: "none", // Internet Explorer and Edge
