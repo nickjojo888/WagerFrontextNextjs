@@ -8,16 +8,17 @@ interface GameImageProps {
 
 const GameImage: React.FC<GameImageProps> = ({ game }) => (
   <div className="flex-shrink-0 snap-start">
-    <div className="w-32 h-48">
-      <Image
-        src={game.imageUrl}
-        alt={game.name}
-        width={100}
-        height={150}
-        className="rounded-lg w-full h-auto"
-        style={{ border: game.border }}
-      />
-    </div>
+    {/* to prevetn disabling of carousel buttons
+    alternative would be to set the buttons with onload call of next image */}
+    <Image
+      key={game.id}
+      src={game.imageUrl}
+      alt={game.name}
+      width={256}
+      height={359}
+      className="rounded-lg w-full h-auto"
+      style={{ border: game.border }}
+    />
   </div>
 );
 

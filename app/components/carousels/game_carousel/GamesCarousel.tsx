@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import GameImage from "./GameImage";
 import CarouselButton from "../CarouselButton";
 import { useGames, GameCategory } from "./useGames";
+import Image from "next/image";
 
 interface GamesCarouselProps {
   category?: GameCategory;
@@ -90,14 +91,22 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
       </div>
       <div
         ref={carouselRef}
-        className="flex gap-4 overflow-x-scroll snap-x snap-mandatory"
+        className="flex gap-4 overflow-x-scroll snap-x snap-mandatory h-48 w-full"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
         }}
       >
         {games.map((game) => (
-          <GameImage key={game.id} game={game} />
+          <Image
+            key={game.id}
+            src={game.imageUrl}
+            alt={game.name}
+            width={256}
+            height={359}
+            className="rounded-lg w-full h-auto snap-start"
+            style={{ border: game.border }}
+          />
         ))}
       </div>
     </div>
