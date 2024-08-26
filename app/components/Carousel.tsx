@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import clsx from "clsx";
+import { CarouselButton, CarouselDirection } from "./CarouselButton";
 
 const images = [
   "/images/dummy/20k-weekly-gr.webp",
@@ -12,20 +12,51 @@ const images = [
 ];
 
 export default function Carousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
+  const [isAtStart, setIsAtStart] = useState(true);
+  const [isAtEnd, setIsAtEnd] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 3 ? prevIndex : prevIndex + 1
-    );
+  // function to scroll to the left or right end of carousel
+  const scrollToEnd = (direction: CarouselDirection) => {
+    if (carouselRef.current) {
+      const scrollAmount =
+        direction === CarouselDirection.Left
+          ? 0
+          : carouselRef.current.scrollWidth;
+      carouselRef.current.scrollTo({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
   };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? prevIndex : prevIndex - 1
-    );
+  // Function to check scroll position and update state
+  // scrollLeft: distance from the left edge of the scrollable area to the leftmost visible content
+  // scrollWidth: total width of the scrollable content
+  // clientWidth: width of the visible area
+  // This function determines if we're at the start or end of the carousel
+  const checkScrollPosition = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      setIsAtStart(scrollLeft === 0);
+      setIsAtEnd(scrollLeft + clientWidth >= scrollWidth - 1); // -1 to account for small discrepancies
+    }
   };
+
+  // when component mounts, add event listener to check scroll position
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener("scroll", checkScrollPosition);
+      checkScrollPosition(); // Check initial position
+    }
+    return () => {
+      if (carousel) {
+        carousel.removeEventListener("scroll", checkScrollPosition);
+      }
+    };
+  }, []);
 
   return (
     <div
@@ -35,13 +66,21 @@ export default function Carousel() {
     >
       <div className="overflow-hidden rounded-lg">
         <div
-          className="flex transition-transform duration-300 ease-in-out gap-x-2"
+          ref={carouselRef}
+          className="flex gap-x-2 overflow-x-auto scrollbar-hide"
           style={{
-            transform: `translateX(-${currentIndex * (100 / 3)}%)`,
+            scrollSnapType: "x mandatory",
+            overflowX: "scroll",
+            scrollbarWidth: "none", // Firefox
+            msOverflowStyle: "none", // Internet Explorer and Edge
           }}
         >
           {images.map((src, index) => (
-            <div key={index} className="w-1/3 flex-shrink-0">
+            <div
+              key={index}
+              className="w-1/3 flex-shrink-0"
+              style={{ scrollSnapAlign: "start" }}
+            >
               <Image
                 src={src}
                 alt={`Slide ${index + 1}`}
@@ -53,36 +92,16 @@ export default function Carousel() {
           ))}
         </div>
       </div>
-      <button
-        onClick={prevSlide}
-        className={clsx(
-          "absolute left-2 top-1/2 -translate-y-1/2 bg-gray-300 bg-opacity-50 text-gray-800",
-          "w-6 h-6 rounded-full flex items-center justify-center z-10 text-sm",
-          "hover:bg-opacity-75 transition-opacity duration-300",
-          {
-            "opacity-100": isHovering && currentIndex > 0,
-            "opacity-0 pointer-events-none": !(isHovering && currentIndex > 0),
-          }
-        )}
-      >
-        &lt;
-      </button>
-      <button
-        onClick={nextSlide}
-        className={clsx(
-          "absolute right-2 top-1/2 -translate-y-1/2 bg-gray-300 bg-opacity-50 text-gray-800",
-          "w-6 h-6 rounded-full flex items-center justify-center z-10 text-sm",
-          "hover:bg-opacity-75 transition-opacity duration-300",
-          {
-            "opacity-100": isHovering && currentIndex < images.length - 3,
-            "opacity-0 pointer-events-none": !(
-              isHovering && currentIndex < images.length - 3
-            ),
-          }
-        )}
-      >
-        &gt;
-      </button>
+      <CarouselButton
+        visible={isHovering && !isAtStart}
+        direction={CarouselDirection.Left}
+        onClick={() => scrollToEnd(CarouselDirection.Left)}
+      />
+      <CarouselButton
+        visible={isHovering && !isAtEnd}
+        direction={CarouselDirection.Right}
+        onClick={() => scrollToEnd(CarouselDirection.Right)}
+      />
     </div>
   );
 }

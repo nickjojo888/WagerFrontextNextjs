@@ -25,6 +25,17 @@ const config: Config = {
         "gray-2": "#0e0f13",
         "gray-3": "#121418",
       },
+      utilities: {
+        ".hide-scrollbar": {
+          /* Hide scrollbar for WebKit browsers */
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+          /* Hide scrollbar for other browsers */
+          "-ms-overflow-style": "none" /* IE and Edge */,
+          "scrollbar-width": "none" /* Firefox */,
+        },
+      },
     },
   },
   plugins: [],
