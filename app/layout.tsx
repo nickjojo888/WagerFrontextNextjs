@@ -19,10 +19,10 @@ export default function RootLayout({
           <Sidebar />
 
           {/* Main content area on the right */}
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col mx-20">
             {/* Header inside the main content */}
             <Header />
-            <main className="flex-1 p-8 overflow-y-auto">{children}</main>
+            <main className="flex-1 overflow-y-auto">{children}</main>
           </div>
         </div>
       </body>

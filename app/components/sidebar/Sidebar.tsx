@@ -15,11 +15,11 @@ import {
   BitcoinSVG,
   DollarSVG,
   BetSlipSVG,
-} from "@/app/assets/svgs/SVGComponents";
-import MenuIcon from "@/app/assets/svgs/menu-outline.svg";
-import HomeIcon from "@/app/assets/svgs/home-outline.svg";
-import StarIcon from "@/app/assets/svgs/star-outline.svg";
-import RecentIcon from "@/app/assets/svgs/time-outline.svg";
+} from "@/public/svgs/SVGComponents";
+import MenuIcon from "@/public/svgs/menu-outline.svg";
+import HomeIcon from "@/public/svgs/home-outline.svg";
+import StarIcon from "@/public/svgs/star-outline.svg";
+import RecentIcon from "@/public/svgs/time-outline.svg";
 import SidebarLink from "./SidebarLink";
 import { useState } from "react";
 import clsx from "clsx";
