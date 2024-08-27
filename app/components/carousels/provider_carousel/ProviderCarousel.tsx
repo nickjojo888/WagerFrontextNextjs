@@ -1,6 +1,5 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
-import ProviderImage from "./ProviderImage";
 import CarouselButton from "../CarouselButton";
 import { ProvidersSVG } from "@/public/svgs/SVGComponents";
 import { useProviders } from "./useProviders";
@@ -83,14 +82,19 @@ const ProviderCarousel: React.FC = () => {
       </div>
       <div
         ref={carouselRef}
-        className="flex overflow-x-scroll snap-x gap-20 snap-mandatory"
+        className="flex overflow-x-scroll snap-x gap-20 h-14 snap-mandatory"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
         }}
       >
         {providers.map((provider) => (
-          <ProviderImage key={provider.id} provider={provider} />
+          <img
+            key={provider.id}
+            src={provider.imageUrl}
+            alt={provider.name}
+            className="snap-start w-auto"
+          />
         ))}
       </div>
     </div>

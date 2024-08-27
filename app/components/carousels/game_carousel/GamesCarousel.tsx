@@ -1,6 +1,5 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
-import GameImage from "./GameImage";
 import CarouselButton from "../CarouselButton";
 import { useGames, GameCategory } from "./useGames";
 import Image from "next/image";
@@ -89,6 +88,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
           </div>
         </div>
       </div>
+      {/* actual carousel */}
       <div
         ref={carouselRef}
         className="flex gap-4 overflow-x-scroll snap-x snap-mandatory h-48 w-full"
