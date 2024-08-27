@@ -62,126 +62,14 @@ const games: Game[] = [
     imageUrl: "/images/games/wager/wheel.jpg",
     border: "2px solid rgb(52, 101, 252)",
   },
-  {
-    id: 1,
-    name: "HiLo",
-    imageUrl: "/images/games/wager/hilo.jpg",
-    border: "2px solid rgb(98, 179, 251)",
-  },
-  {
-    id: 2,
-    name: "Blackjack",
-    imageUrl: "/images/games/wager/blackjack.jpg",
-    border: "2px solid rgb(240, 37, 37)",
-  },
-  {
-    id: 3,
-    name: "Dice",
-    imageUrl: "/images/games/wager/dice.jpg",
-    border: "2px solid rgb(1, 239, 82)",
-  },
-  {
-    id: 4,
-    name: "Crash",
-    imageUrl: "/images/games/wager/crash.jpg",
-    border: "2px solid rgb(143, 120, 251)",
-  },
-  {
-    id: 5,
-    name: "Keno",
-    imageUrl: "/images/games/wager/keno.jpg",
-    border: "2px solid rgb(252, 143, 2)",
-  },
-  {
-    id: 6,
-    name: "Limbo",
-    imageUrl: "/images/games/wager/limbo.jpg",
-    border: "2px solid rgb(136, 207, 0)",
-  },
-  {
-    id: 7,
-    name: "Mines",
-    imageUrl: "/images/games/wager/mines.jpg",
-    border: "2px solid rgb(247, 210, 96)",
-  },
-  {
-    id: 8,
-    name: "Plinko",
-    imageUrl: "/images/games/wager/planko.jpg",
-    border: "2px solid rgb(247, 0, 158)",
-  },
-  {
-    id: 9,
-    name: "Roulette",
-    imageUrl: "/images/games/wager/roulette.jpg",
-    border: "2px solid rgb(155, 38, 251)",
-  },
-  {
-    id: 10,
-    name: "Wheel",
-    imageUrl: "/images/games/wager/wheel.jpg",
-    border: "2px solid rgb(52, 101, 252)",
-  },
-  {
-    id: 1,
-    name: "HiLo",
-    imageUrl: "/images/games/wager/hilo.jpg",
-    border: "2px solid rgb(98, 179, 251)",
-  },
-  {
-    id: 2,
-    name: "Blackjack",
-    imageUrl: "/images/games/wager/blackjack.jpg",
-    border: "2px solid rgb(240, 37, 37)",
-  },
-  {
-    id: 3,
-    name: "Dice",
-    imageUrl: "/images/games/wager/dice.jpg",
-    border: "2px solid rgb(1, 239, 82)",
-  },
-  {
-    id: 4,
-    name: "Crash",
-    imageUrl: "/images/games/wager/crash.jpg",
-    border: "2px solid rgb(143, 120, 251)",
-  },
-  {
-    id: 5,
-    name: "Keno",
-    imageUrl: "/images/games/wager/keno.jpg",
-    border: "2px solid rgb(252, 143, 2)",
-  },
-  {
-    id: 6,
-    name: "Limbo",
-    imageUrl: "/images/games/wager/limbo.jpg",
-    border: "2px solid rgb(136, 207, 0)",
-  },
-  {
-    id: 7,
-    name: "Mines",
-    imageUrl: "/images/games/wager/mines.jpg",
-    border: "2px solid rgb(247, 210, 96)",
-  },
-  {
-    id: 8,
-    name: "Plinko",
-    imageUrl: "/images/games/wager/planko.jpg",
-    border: "2px solid rgb(247, 0, 158)",
-  },
-  {
-    id: 9,
-    name: "Roulette",
-    imageUrl: "/images/games/wager/roulette.jpg",
-    border: "2px solid rgb(155, 38, 251)",
-  },
-  {
-    id: 10,
-    name: "Wheel",
-    imageUrl: "/images/games/wager/wheel.jpg",
-    border: "2px solid rgb(52, 101, 252)",
-  },
+];
+
+// Duplicate the games array twice more, but with unique IDs
+const moreGames = [
+  ...games.map((game) => ({ ...game, id: game.id + 10 })),
+  ...games.map((game) => ({ ...game, id: game.id + 20 })),
+  ...games.map((game) => ({ ...game, id: game.id + 30 })),
+  ...games.map((game) => ({ ...game, id: game.id + 40 })),
 ];
 
 const slotGames: Game[] = [
@@ -376,7 +264,7 @@ export const useGames = (category: GameCategory = "all") => {
     let gamesArray: Game[];
     switch (category) {
       case "wager":
-        gamesArray = games;
+        gamesArray = moreGames;
         break;
       case "slots":
         gamesArray = slotGames;
@@ -390,7 +278,7 @@ export const useGames = (category: GameCategory = "all") => {
       case "all":
       default:
         gamesArray = [
-          ...games,
+          ...moreGames,
           ...slotGames,
           ...liveCasinoGames,
           ...tableGames,

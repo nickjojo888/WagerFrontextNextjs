@@ -14,8 +14,8 @@ const GameImage: React.FC<GameImageProps> = ({ game }) => (
       key={game.id}
       src={game.imageUrl}
       alt={game.name}
-      width={256}
-      height={359}
+      width={3840}
+      height={5378}
       className="rounded-lg w-full h-auto"
       style={{ border: game.border }}
     />
