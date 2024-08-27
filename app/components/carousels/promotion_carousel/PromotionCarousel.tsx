@@ -67,20 +67,14 @@ export default function Carousel() {
       <div className="overflow-hidden rounded-lg">
         <div
           ref={carouselRef}
-          className="flex gap-x-2 overflow-x-auto scrollbar-hide"
+          className="flex gap-x-2 overflow-x-auto snap-x snap-mandatory scrollbar-hide"
           style={{
-            scrollSnapType: "x mandatory", // must snap to nearest child when scrolling stops
-            overflowX: "scroll",
-            scrollbarWidth: "none", // Firefox
-            msOverflowStyle: "none", // Internet Explorer and Edge
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
           }}
         >
           {images.map((src, index) => (
-            <div
-              key={index}
-              className="w-1/3 flex-shrink-0"
-              style={{ scrollSnapAlign: "start" }}
-            >
+            <div key={index} className="w-1/3 flex-shrink-0 snap-start">
               <Image
                 src={src}
                 alt={`Slide ${index + 1}`}
