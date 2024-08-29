@@ -61,7 +61,6 @@ export default function Header() {
           )}
         </div>
       </header>
-      {/* this auth modal can be moved anywhere in the app */}
       <AuthModal />
     </>
   );
