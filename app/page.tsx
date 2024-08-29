@@ -10,8 +10,12 @@ import {
   HeadPhonesSVG,
   PokerChipSVG,
 } from "@/public/svgs/SVGComponents";
+import { useAuth } from "./components/authentication/AuthContext";
+import Link from "next/link";
 
 export default function Home() {
+  const { user } = useAuth();
+
   return (
     <main className="flex min-h-screen flex-col items-center gap-8">
       <Carousel />
@@ -38,6 +42,27 @@ export default function Home() {
         title="Table Games"
         Icon={<CardsSVG width={24} height={24} />}
       />
+
+      {!user && (
+        <div className="w-full max-w-6xl mx-auto text-center py-8">
+          <h2 className="text-2xl font-bold mb-4">Join Wager Today!</h2>
+          <p className="mb-4">
+            Create an account or log in to access all our features.
+          </p>
+          <div className="flex justify-center space-x-4">
+            <Link href="/login">
+              <button className="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700">
+                Login
+              </button>
+            </Link>
+            <Link href="/register">
+              <button className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-dark">
+                Register
+              </button>
+            </Link>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
