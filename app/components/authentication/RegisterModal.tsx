@@ -7,6 +7,9 @@ import {
   TwitterAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
+import FacebookIcon from "@public/images/auth/facebook-logo.png";
+import GoogleIcon from "@public/images/auth/google-logo.png";
+import XIcon from "@public/images/auth/x-logo.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -68,24 +71,19 @@ const RegisterModal: React.FC = () => {
           onClick={() => handleSocialRegister(new GoogleAuthProvider())}
           className="p-2 border rounded"
         >
-          <Image src="/google-icon.png" alt="Google" width={24} height={24} />
+          <Image src={GoogleIcon} alt="Google" width={24} height={24} />
         </button>
         <button
           onClick={() => handleSocialRegister(new FacebookAuthProvider())}
           className="p-2 border rounded"
         >
-          <Image
-            src="/facebook-icon.png"
-            alt="Facebook"
-            width={24}
-            height={24}
-          />
+          <Image src={FacebookIcon} alt="Facebook" width={24} height={24} />
         </button>
         <button
           onClick={() => handleSocialRegister(new TwitterAuthProvider())}
           className="p-2 border rounded"
         >
-          <Image src="/twitter-icon.png" alt="Twitter" width={24} height={24} />
+          <Image src={XIcon} alt="X" width={24} height={24} />
         </button>
       </div>
       <p className="text-center text-sm">
