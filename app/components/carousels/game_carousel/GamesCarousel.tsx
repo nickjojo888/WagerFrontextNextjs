@@ -91,10 +91,11 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
       {/* actual carousel */}
       <div
         ref={carouselRef}
-        className="flex gap-4 overflow-x-scroll snap-x snap-mandatory h-48 w-full"
+        className="flex webk gap-4 overflow-x-scroll snap-x snap-mandatory h-48 w-full"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
+          WebkitOverflowScrolling: "touch", // Add this line for smoother scrolling on iOS
         }}
       >
         {games.map((game) => (
@@ -104,7 +105,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
             alt={game.name}
             width={384}
             height={538}
-            className="rounded-lg w-full h-auto snap-start"
+            className="rounded-lg snap-start w-auto flex-shrink-0" //for some reason only way to get border and size to same on safari as chrome version
             style={{ border: game.border }}
           />
         ))}
