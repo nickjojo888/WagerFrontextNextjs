@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useAuth } from "./AuthContext";
-import { auth } from "../../firebase/firebaseConfig";
+import { auth } from "@/app/firebase/firebaseConfig";
 import { useRouter } from "next/navigation";
 
 const AuthButtons = () => {
@@ -39,7 +39,7 @@ const AuthButtons = () => {
             Login
           </button>
           <button
-            className="bg-primary px-4 py-2 rounded"
+            className="bg-primary hover:bg-secondary px-4 py-2 rounded"
             onClick={() => openAuthModal("register")}
           >
             Register

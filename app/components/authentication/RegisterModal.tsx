@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth } from "../../firebase/firebaseConfig";
+import { auth } from "@/app/firebase/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,

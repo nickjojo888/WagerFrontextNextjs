@@ -1,5 +1,6 @@
 import Image from "next/image";
 import newWagerLogo from "@/public/logos/new_wager_logo.png";
+import AuthButtons from "./authentication/AuthButtons";
 
 export default function Header() {
   return (
@@ -14,10 +15,7 @@ export default function Header() {
           height={40}
         />
       </div>
-      <div className="flex space-x-2">
-        <button className="bg-gray-800 px-4 py-2 rounded">Login</button>
-        <button className="bg-primary px-4 py-2 rounded">Register</button>
-      </div>
+      <AuthButtons />
     </header>
   );
 }
