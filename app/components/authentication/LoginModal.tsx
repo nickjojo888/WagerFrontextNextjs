@@ -11,7 +11,7 @@ import FacebookIcon from "@/public/images/auth/facebook-logo.png";
 import GoogleIcon from "@/public/images/auth/google-logo.png";
 import XIcon from "@/public/images/auth/x-logo.png";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const LoginModal: React.FC = () => {
   const [email, setEmail] = useState("");

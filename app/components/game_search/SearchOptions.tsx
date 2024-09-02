@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 export default function SearchOptions() {
   return (
     //this way for side by side like shuffle
-    <div className="flex w-full justify-between items-center px-8 mt-4">
+    <div className="flex w-full justify-between items-center mt-4">
       <div className="w-1/2">
         <CarouselOptions />
       </div>
