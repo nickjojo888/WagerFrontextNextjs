@@ -19,6 +19,7 @@ export default function RootLayout({
         className={`${inter.className} bg-gray-900 text-white overflow-x-hidden`}
       >
         <AuthProvider>
+          <AuthModal />
           <div className="flex h-screen">
             {/* Sidebar on the left */}
             <Sidebar />
@@ -30,7 +31,6 @@ export default function RootLayout({
               <main className="flex-1 overflow-y-auto">{children}</main>
             </div>
           </div>
-          <AuthModal />
         </AuthProvider>
       </body>
     </html>
