@@ -10,8 +10,6 @@ import {
   HeadPhonesSVG,
   PokerChipSVG,
 } from "@/public/svgs/SVGComponents";
-import { useAuth } from "./components/authentication/AuthContext";
-import Link from "next/link";
 
 export default function Home() {
   return (
