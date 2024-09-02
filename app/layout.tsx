@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/app/components/Header";
 import Sidebar from "@/app/components/sidebar/Sidebar";
 import { AuthProvider } from "@/app/components/authentication/AuthContext";
+import AuthModal from "./components/authentication/AuthModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
               <main className="flex-1 overflow-y-auto">{children}</main>
             </div>
           </div>
+          <AuthModal />
         </AuthProvider>
       </body>
     </html>
