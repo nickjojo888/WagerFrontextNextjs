@@ -1,13 +1,15 @@
+"use client";
 import React from "react";
-import { useRouter } from "next/router";
+import { useSearchParams, useRouter } from "next/navigation";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 
 const AuthModal: React.FC = () => {
   const router = useRouter();
-  const { auth } = router.query;
+  const searchParams = useSearchParams();
+  const authParam = searchParams.get("auth");
 
-  const isOpen = auth === "login" || auth === "register";
+  const isOpen = authParam === "login" || authParam === "register";
 
   if (!isOpen) return null;
 
@@ -17,7 +19,7 @@ const AuthModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      {auth === "login" ? <LoginModal /> : <RegisterModal />}
+      {authParam === "login" ? <LoginModal /> : <RegisterModal />}
       <button
         onClick={closeModal}
         className="absolute top-4 right-4 text-white text-xl"

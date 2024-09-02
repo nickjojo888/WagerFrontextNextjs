@@ -14,8 +14,6 @@ import { useAuth } from "./components/authentication/AuthContext";
 import Link from "next/link";
 
 export default function Home() {
-  const { user } = useAuth();
-
   return (
     <main className="flex min-h-screen flex-col items-center gap-8">
       <Carousel />
