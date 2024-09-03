@@ -1,13 +1,15 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import WalletButton from "./WalletButton";
-import BalanceDropdown from "../BalanceDropdown";
+import BalanceDropdown, { CryptoCoin } from "./BalanceDropdown";
 
 const WalletInfo: React.FC = () => {
   const [isBalanceDropdownOpen, setIsBalanceDropdownOpen] = useState(false);
-  const [selectedCoin, setSelectedCoin] = useState({
+  const [selectedCoin, setSelectedCoin] = useState<CryptoCoin>({
     symbol: "BTC",
+    name: "Bitcoin",
     balance: 1000,
+    icon: "/images/currencies/bitcoin.png",
   });
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -27,7 +29,7 @@ const WalletInfo: React.FC = () => {
     };
   }, []);
 
-  const handleCoinSelect = (coin: { symbol: string; balance: number }) => {
+  const handleCoinSelect = (coin: CryptoCoin) => {
     setSelectedCoin(coin);
     setIsBalanceDropdownOpen(false);
   };
@@ -35,10 +37,17 @@ const WalletInfo: React.FC = () => {
   return (
     <div className="relative flex items-center space-x-4" ref={dropdownRef}>
       <button
-        className="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300"
+        className="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300 flex items-center"
         onClick={() => setIsBalanceDropdownOpen(!isBalanceDropdownOpen)}
       >
-        {selectedCoin.balance} {selectedCoin.symbol}
+        <img
+          src={selectedCoin.icon}
+          alt={selectedCoin.name}
+          className="w-6 h-6 mr-2"
+        />
+        <span>
+          {selectedCoin.balance} {selectedCoin.symbol}
+        </span>
       </button>
       {isBalanceDropdownOpen && (
         <BalanceDropdown onSelectCoin={handleCoinSelect} />

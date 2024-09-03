@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-// /images/games/wager/blackjack.jpg
-const coins = [
+
+export interface CryptoCoin {
+  symbol: string;
+  name: string;
+  balance: number;
+  icon: string;
+}
+
+const coins: CryptoCoin[] = [
   {
     symbol: "BTC",
     name: "Bitcoin",
@@ -24,12 +31,6 @@ const coins = [
     name: "Ethereum",
     balance: 5000,
     icon: "/images/currencies/etherum.png",
-  },
-  {
-    symbol: "LTC",
-    name: "Litecoin",
-    balance: 2000,
-    icon: "/images/currencies/ltc.png",
   },
   {
     symbol: "MATIC",
@@ -64,7 +65,7 @@ const coins = [
 ];
 
 interface BalanceDropdownProps {
-  onSelectCoin: (coin: { symbol: string; balance: number }) => void;
+  onSelectCoin: (coin: CryptoCoin) => void;
 }
 
 const BalanceDropdown: React.FC<BalanceDropdownProps> = ({ onSelectCoin }) => {
@@ -72,22 +73,23 @@ const BalanceDropdown: React.FC<BalanceDropdownProps> = ({ onSelectCoin }) => {
 
   return (
     <div className="absolute top-full -left-10 mt-2 w-64 bg-gray-800 rounded-md shadow-lg z-10">
-      <ul className="py-2 max-h-60 overflow-y-auto">
-        {coins.map((coin) => (
-          <li
+      <div className="flex flex-col max-h-60 overflow-y-auto">
+        {coins.map((coin, index) => (
+          <div
             key={coin.symbol}
-            className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center"
+            className={`px-4 py-3 hover:bg-gray-700 cursor-pointer flex items-center ${
+              index !== 0 ? "border-t border-gray-700" : ""
+            }`}
             onClick={() => onSelectCoin(coin)}
           >
-            <img src={coin.icon} alt={coin.name} className="w-6 h-6 mr-2" />
-            <span className="font-medium">{coin.symbol}</span>
-            <span className="ml-2 text-gray-400">{coin.name}</span>
+            <img src={coin.icon} alt={coin.name} className="w-5 h-5 mr-2" />
+            <span className="font-light text-sm">{coin.symbol}</span>
             <span className="ml-auto">
               {showFiat ? `$${(coin.balance * 100).toFixed(2)}` : coin.balance}
             </span>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
       <div className="border-t border-gray-700 px-4 py-2 flex items-center justify-between">
         <span>Show in fiat</span>
         <button
