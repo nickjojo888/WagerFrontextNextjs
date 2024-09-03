@@ -70,7 +70,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
         />
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition duration-300"
+          className="w-full bg-primary text-white p-2 rounded hover:bg-secondary transition duration-300"
         >
           Register
         </button>
@@ -79,19 +79,19 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
       <div className="flex justify-center space-x-4 mb-4">
         <button
           onClick={() => handleSocialRegister(new GoogleAuthProvider())}
-          className="p-2 border rounded border-gray-700 hover:border-gray-600 transition duration-300"
+          className="p-2 border rounded bg-gray-800 border-gray-700 hover:border-gray-600 transition duration-300"
         >
           <Image src={GoogleIcon} alt="Google" width={24} height={24} />
         </button>
         <button
           onClick={() => handleSocialRegister(new FacebookAuthProvider())}
-          className="p-2 border rounded border-gray-700 hover:border-gray-600 transition duration-300"
+          className="p-2 border rounded bg-gray-800 border-gray-700 hover:border-gray-600 transition duration-300"
         >
           <Image src={FacebookIcon} alt="Facebook" width={24} height={24} />
         </button>
         <button
           onClick={() => handleSocialRegister(new TwitterAuthProvider())}
-          className="p-2 border rounded border-gray-700 hover:border-gray-600 transition duration-300"
+          className="p-2 border rounded bg-gray-800 border-gray-700 hover:border-gray-600 transition duration-300"
         >
           <Image src={XIcon} alt="X" width={24} height={24} />
         </button>
@@ -100,7 +100,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
         Already have an account?{" "}
         <button
           onClick={() => router.push("/?auth=login")}
-          className="text-blue-400 hover:underline"
+          className="text-primary hover:underline"
         >
           Sign In
         </button>

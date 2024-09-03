@@ -20,11 +20,8 @@ const AuthButtons = () => {
     <div className="flex space-x-2">
       {user ? (
         <>
-          <span className="mr-2">
-            Welcome, {user.displayName || user.email}
-          </span>
           <button
-            className="bg-gray-800 px-4 py-2 rounded"
+            className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded"
             onClick={handleLogout}
           >
             Logout
