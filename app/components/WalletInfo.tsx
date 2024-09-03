@@ -1,65 +1,65 @@
 import React, { useState } from "react";
-
+// /images/games/wager/blackjack.jpg
 const coins = [
   {
     symbol: "BTC",
     name: "Bitcoin",
     balance: 1000,
-    icon: "/images/crypto/bitcoin.svg",
-  },
-  {
-    symbol: "ETH",
-    name: "Ethereum",
-    balance: 5000,
-    icon: "/images/crypto/ethereum.svg",
-  },
-  {
-    symbol: "USDT",
-    name: "Tether",
-    balance: 10000,
-    icon: "/images/crypto/tether.svg",
+    icon: "/images/currencies/bitcoin.png",
   },
   {
     symbol: "BNB",
     name: "Binance Coin",
     balance: 100,
-    icon: "/images/crypto/binance-coin.svg",
-  },
-  {
-    symbol: "XRP",
-    name: "Ripple",
-    balance: 10000,
-    icon: "/images/crypto/ripple.svg",
-  },
-  {
-    symbol: "ADA",
-    name: "Cardano",
-    balance: 5000,
-    icon: "/images/crypto/cardano.svg",
+    icon: "/images/currencies/bnb.png",
   },
   {
     symbol: "DOGE",
     name: "Dogecoin",
     balance: 100000,
-    icon: "/images/crypto/dogecoin.svg",
+    icon: "/images/currencies/dodgecoin.png",
   },
   {
-    symbol: "SOL",
-    name: "Solana",
-    balance: 200,
-    icon: "/images/crypto/solana.svg",
+    symbol: "ETH",
+    name: "Ethereum",
+    balance: 5000,
+    icon: "/images/currencies/etherum.png",
   },
   {
-    symbol: "DOT",
-    name: "Polkadot",
-    balance: 1000,
-    icon: "/images/crypto/polkadot.svg",
+    symbol: "LTC",
+    name: "Litecoin",
+    balance: 2000,
+    icon: "/images/currencies/ltc.png",
   },
   {
     symbol: "MATIC",
     name: "Polygon",
     balance: 5000,
-    icon: "/images/crypto/polygon.svg",
+    icon: "/images/currencies/matic.png",
+  },
+  {
+    symbol: "TCOIN",
+    name: "TCoin",
+    balance: 500,
+    icon: "/images/currencies/tcoin.png",
+  },
+  {
+    symbol: "TRX",
+    name: "TRON",
+    balance: 20000,
+    icon: "/images/currencies/trx.png",
+  },
+  {
+    symbol: "USDC",
+    name: "USD Coin",
+    balance: 10000,
+    icon: "/images/currencies/usdc.png",
+  },
+  {
+    symbol: "XRP",
+    name: "Ripple",
+    balance: 10000,
+    icon: "/images/currencies/xrp.png",
   },
 ];
 
@@ -81,6 +81,7 @@ const BalanceDropdown: React.FC<BalanceDropdownProps> = ({ onSelectCoin }) => {
           >
             <img src={coin.icon} alt={coin.name} className="w-6 h-6 mr-2" />
             <span className="font-medium">{coin.symbol}</span>
+            <span className="ml-2 text-gray-400">{coin.name}</span>
             <span className="ml-auto">
               {showFiat ? `$${(coin.balance * 100).toFixed(2)}` : coin.balance}
             </span>
