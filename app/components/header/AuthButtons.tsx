@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../authentication/AuthContext";
 import { auth } from "@/app/firebase/firebaseConfig";
 import { useRouter } from "next/navigation";
 
