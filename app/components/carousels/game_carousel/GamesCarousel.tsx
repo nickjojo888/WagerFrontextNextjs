@@ -64,7 +64,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto">
+    <div className="w-full mx-auto">
       <div className="flex justify-between items-center h-12 mb-4">
         <div className="flex items-center gap-2">
           <div className="text-primary">{Icon}</div>

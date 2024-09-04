@@ -18,14 +18,14 @@ export default function Home() {
       <ShadowDivider />
       <SearchOptions />
       <GamesCarousel
-        category="wager"
-        title="Wager Games"
-        Icon={<ControllerSVG width={24} height={24} />}
-      />
-      <GamesCarousel
         category="slots"
         title="Slot Games"
         Icon={<PokerChipSVG width={24} height={24} />}
+      />
+      <GamesCarousel
+        category="table"
+        title="Table Games"
+        Icon={<CardsSVG width={24} height={24} />}
       />
       <ProviderCarousel />
       <GamesCarousel
@@ -34,9 +34,9 @@ export default function Home() {
         Icon={<HeadPhonesSVG width={24} height={24} />}
       />
       <GamesCarousel
-        category="table"
-        title="Table Games"
-        Icon={<CardsSVG width={24} height={24} />}
+        category="wager"
+        title="Wager Games"
+        Icon={<ControllerSVG width={24} height={24} />}
       />
     </main>
   );
