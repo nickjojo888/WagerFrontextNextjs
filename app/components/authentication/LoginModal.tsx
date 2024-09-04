@@ -58,7 +58,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
   };
 
   return (
-    <div className="bg-gray-900 p-8 rounded-lg relative text-white">
+    <div className="w-1/3 bg-gray-900 p-8 rounded-lg relative text-white">
       <button
         onClick={onClose}
         className="absolute top-2 right-2 text-gray-400 text-xl hover:text-gray-200"
