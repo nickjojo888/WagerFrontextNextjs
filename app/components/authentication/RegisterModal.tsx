@@ -81,16 +81,16 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   };
 
   return (
-    <div className="w-1/3 bg-gray-900 p-8 rounded-lg relative text-white">
+    <div className="w-1/3 h-3/5 flex flex-col gap-4 justify-center px-14 bg-gray-900 rounded-2xl relative text-white">
       <button
         onClick={onClose}
         className="absolute top-2 right-2 text-gray-400 text-xl hover:text-gray-200"
       >
         &times;
       </button>
-      <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
-      <form onSubmit={handleEmailRegister} className="mb-4">
-        <div className="mb-4">
+      <h2 className="text-2xl font-bold text-center">Register</h2>
+      <form onSubmit={handleEmailRegister} className="flex flex-col gap-4">
+        <div>
           <input
             type="email"
             placeholder="Email"
@@ -98,9 +98,11 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
             onChange={(e) => setEmail(e.target.value)}
             className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-gray-600 focus:outline-none"
           />
-          {emailError && <p className="text-red-400 text-sm">{emailError}</p>}
+          {emailError && (
+            <p className="text-red-400 text-sm mt-1">{emailError}</p>
+          )}
         </div>
-        <div className="mb-4">
+        <div>
           <input
             type="password"
             placeholder="Password"
@@ -109,34 +111,36 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
             className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-gray-600 focus:outline-none"
           />
           {passwordError && (
-            <p className="text-red-400 text-sm">{passwordError}</p>
+            <p className="text-red-400 text-sm mt-1">{passwordError}</p>
           )}
         </div>
-        <div className="flex items-center mb-4">
-          <input
-            type="checkbox"
-            id="agreeTerms"
-            checked={agreeTerms}
-            onChange={(e) => {
-              setAgreeTerms(e.target.checked);
-              if (e.target.checked) setTermsError(""); // Clear error when checkbox is checked
-            }}
-            className="mr-2"
-          />
-          <label htmlFor="agreeTerms" className="text-sm">
-            I agree to the{" "}
-            <Link href="/terms" className="text-primary hover:underline">
-              Terms
-            </Link>{" "}
-            and{" "}
-            <Link href="/privacy" className="text-primary hover:underline">
-              Privacy Policy
-            </Link>
-          </label>
+        <div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="agreeTerms"
+              checked={agreeTerms}
+              onChange={(e) => {
+                setAgreeTerms(e.target.checked);
+                if (e.target.checked) setTermsError("");
+              }}
+              className="mr-2"
+            />
+            <label htmlFor="agreeTerms" className="text-sm">
+              I agree to the{" "}
+              <Link href="/terms" className="text-primary">
+                Terms
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy" className="text-primary">
+                Privacy Policy
+              </Link>
+            </label>
+          </div>
+          {termsError && (
+            <p className="text-red-400 text-sm mt-1">{termsError}</p>
+          )}
         </div>
-        {termsError && (
-          <p className="text-red-400 text-sm mb-2">{termsError}</p>
-        )}
         <button
           type="submit"
           className="w-full bg-primary text-white p-2 rounded hover:bg-secondary transition duration-300 flex items-center justify-center"
@@ -146,8 +150,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
           Register
         </button>
       </form>
-      {error && <p className="text-red-400 text-center mb-4">{error}</p>}
-      <div className="flex justify-center space-x-8 mb-4">
+      {error && <p className="text-red-400 text-center">{error}</p>}
+      <div className="flex justify-center space-x-8">
         <button
           onClick={() => handleSocialRegister(new GoogleAuthProvider())}
           className="p-2 border rounded bg-gray-800 border-gray-700 hover:border-gray-600 transition duration-300"

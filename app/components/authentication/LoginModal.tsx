@@ -58,28 +58,28 @@ const LoginModal: React.FC<LoginModalProps> = ({
   };
 
   return (
-    <div className="w-1/3 bg-gray-900 p-8 rounded-lg relative text-white">
+    <div className="w-1/3 h-3/5 flex flex-col justify-center gap-4 bg-gray-900 px-14 rounded-2xl relative text-white">
       <button
         onClick={onClose}
         className="absolute top-2 right-2 text-gray-400 text-xl hover:text-gray-200"
       >
         &times;
       </button>
-      <h2 className="text-2xl font-bold mb-4 text-center">Sign In</h2>
-      <form onSubmit={handleEmailLogin} className="mb-4">
+      <h2 className="text-2xl font-bold text-center">Sign In</h2>
+      <form onSubmit={handleEmailLogin} className="flex flex-col gap-4">
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 mb-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-gray-600 focus:outline-none"
+          className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-gray-600 focus:outline-none"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 mb-4 border rounded bg-gray-800 text-white border-gray-700 focus:border-gray-600 focus:outline-none"
+          className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-gray-600 focus:outline-none"
         />
         <button
           type="submit"
@@ -90,8 +90,8 @@ const LoginModal: React.FC<LoginModalProps> = ({
           Sign In
         </button>
       </form>
-      {error && <p className="text-red-400 text-center mb-4">{error}</p>}
-      <div className="flex justify-center space-x-8 mb-4">
+      {error && <p className="text-red-400 text-center">{error}</p>}
+      <div className="flex justify-center space-x-8">
         <button
           onClick={() => handleSocialLogin(new GoogleAuthProvider())}
           className="p-2 border rounded bg-gray-800 border-gray-700 hover:border-gray-600 transition duration-300"
