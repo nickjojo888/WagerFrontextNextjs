@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import newWagerLogo from "@/public/logos/new_wager_com_logo.png";
+import newWagerLogo from "@/public/logos/new_wager_logo.png";
 import AuthButtons from "./AuthButtons";
 import { useAuth } from "../authentication/AuthContext";
 import UserMenu from "./UserMenu";
@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <header className="flex justify-between items-center h-20 bg-gray-900 py-4 text-white">
-      <div className="relative h-10">
+      <div className="relative h-12">
         <Image
           src={newWagerLogo}
           alt="Wager Logo"
