@@ -9,6 +9,7 @@ const AuthModal: React.FC = () => {
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [authType, setAuthType] = useState<"login" | "register" | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const authParam = searchParams.get("auth");
@@ -17,13 +18,15 @@ const AuthModal: React.FC = () => {
   }, [searchParams]);
 
   const closeModal = useCallback(() => {
-    const currentPath = window.location.pathname;
-    const newUrl = new URL(currentPath, window.location.origin);
-    router.replace(newUrl.toString());
-  }, [router]);
+    if (!isLoading) {
+      const currentPath = window.location.pathname;
+      const newUrl = new URL(currentPath, window.location.origin);
+      router.replace(newUrl.toString());
+    }
+  }, [router, isLoading]);
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
+    if (e.target === e.currentTarget && !isLoading) {
       closeModal();
     }
   };
@@ -36,9 +39,17 @@ const AuthModal: React.FC = () => {
       onClick={handleOutsideClick}
     >
       {authType === "login" ? (
-        <LoginModal onClose={closeModal} />
+        <LoginModal
+          onClose={closeModal}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
       ) : (
-        <RegisterModal onClose={closeModal} />
+        <RegisterModal
+          onClose={closeModal}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
       )}
     </div>
   );

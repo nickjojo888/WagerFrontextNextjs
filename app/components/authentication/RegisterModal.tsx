@@ -14,13 +14,18 @@ import { FaSpinner } from "react-icons/fa";
 
 interface RegisterModalProps {
   onClose: () => void;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
+const RegisterModal: React.FC<RegisterModalProps> = ({
+  onClose,
+  isLoading,
+  setIsLoading,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleEmailRegister = async (e: React.FormEvent) => {
