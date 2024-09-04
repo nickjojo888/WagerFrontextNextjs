@@ -12,6 +12,7 @@ import GoogleIcon from "@/public/images/auth/google-logo.png";
 import XIcon from "@/public/images/auth/x-logo.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { FaSpinner } from "react-icons/fa";
 
 interface LoginModalProps {
   onClose: () => void;
@@ -21,26 +22,33 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/");
     } catch (error) {
       setError("Login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSocialLogin = async (
     provider: GoogleAuthProvider | FacebookAuthProvider | TwitterAuthProvider
   ) => {
+    setIsLoading(true);
     try {
       await signInWithPopup(auth, provider);
       router.push("/");
     } catch (error) {
       setError("Login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -70,8 +78,10 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
         />
         <button
           type="submit"
-          className="w-full bg-primary text-white p-2 rounded hover:bg-secondary transition duration-300"
+          className="w-full bg-primary text-white p-2 rounded hover:bg-secondary transition duration-300 flex items-center justify-center"
+          disabled={isLoading}
         >
+          {isLoading ? <FaSpinner className="animate-spin mr-2" /> : null}
           Sign In
         </button>
       </form>
@@ -80,20 +90,35 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
         <button
           onClick={() => handleSocialLogin(new GoogleAuthProvider())}
           className="p-2 border rounded bg-gray-800 border-gray-700 hover:border-gray-600 transition duration-300"
+          disabled={isLoading}
         >
-          <Image src={GoogleIcon} alt="Google" width={24} height={24} />
+          {isLoading ? (
+            <FaSpinner className="animate-spin" />
+          ) : (
+            <Image src={GoogleIcon} alt="Google" width={24} height={24} />
+          )}
         </button>
         <button
           onClick={() => handleSocialLogin(new FacebookAuthProvider())}
           className="p-2 border rounded bg-gray-800 border-gray-700 hover:border-gray-600 transition duration-300"
+          disabled={isLoading}
         >
-          <Image src={FacebookIcon} alt="Facebook" width={24} height={24} />
+          {isLoading ? (
+            <FaSpinner className="animate-spin" />
+          ) : (
+            <Image src={FacebookIcon} alt="Facebook" width={24} height={24} />
+          )}
         </button>
         <button
           onClick={() => handleSocialLogin(new TwitterAuthProvider())}
           className="p-2 border rounded bg-gray-800 border-gray-700 hover:border-gray-600 transition duration-300"
+          disabled={isLoading}
         >
-          <Image src={XIcon} alt="X" width={24} height={24} />
+          {isLoading ? (
+            <FaSpinner className="animate-spin" />
+          ) : (
+            <Image src={XIcon} alt="X" width={24} height={24} />
+          )}
         </button>
       </div>
       <p className="text-center text-sm text-gray-400">
