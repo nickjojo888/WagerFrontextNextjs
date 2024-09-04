@@ -4,12 +4,10 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
-  TwitterAuthProvider,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import FacebookIcon from "@/public/images/auth/facebook-logo.png";
 import GoogleIcon from "@/public/images/auth/google-logo.png";
-import XIcon from "@/public/images/auth/x-logo.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
@@ -32,6 +30,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/");
     } catch (error) {
+      console.log("this is the error: ", error);
       setError("Login failed. Please try again.");
     } finally {
       setIsLoading(false);
@@ -39,7 +38,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
   };
 
   const handleSocialLogin = async (
-    provider: GoogleAuthProvider | FacebookAuthProvider | TwitterAuthProvider
+    provider: GoogleAuthProvider | FacebookAuthProvider
   ) => {
     setIsLoading(true);
     try {
@@ -86,7 +85,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
         </button>
       </form>
       {error && <p className="text-red-400 text-center mb-4">{error}</p>}
-      <div className="flex justify-center space-x-4 mb-4">
+      <div className="flex justify-center space-x-8 mb-4">
         <button
           onClick={() => handleSocialLogin(new GoogleAuthProvider())}
           className="p-2 border rounded bg-gray-800 border-gray-700 hover:border-gray-600 transition duration-300"
