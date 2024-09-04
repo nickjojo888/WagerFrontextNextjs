@@ -50,6 +50,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
       await signInWithPopup(auth, provider);
       router.push("/");
     } catch (error) {
+      console.log("this is the error: ", error);
       setError("Login failed. Please try again.");
     } finally {
       setIsLoading(false);

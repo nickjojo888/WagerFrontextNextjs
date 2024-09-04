@@ -50,6 +50,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       await signInWithPopup(auth, provider);
       router.push("/");
     } catch (error) {
+      console.log("this is the error: ", error);
       setError("Registration failed. Please try again.");
     } finally {
       setIsLoading(false);
