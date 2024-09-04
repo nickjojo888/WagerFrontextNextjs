@@ -12,6 +12,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  // extract this out into separate loading context. stops shift in header on page load and displays spinner instead
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

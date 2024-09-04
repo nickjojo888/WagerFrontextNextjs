@@ -120,6 +120,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
         <button
           onClick={() => router.push("/?auth=register")}
           className="text-primary hover:underline"
+          disabled={isLoading}
         >
           Register
         </button>

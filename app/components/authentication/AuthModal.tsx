@@ -3,6 +3,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
+import { useAuth } from "./AuthContext";
 
 const AuthModal: React.FC = () => {
   const router = useRouter();
@@ -10,12 +11,18 @@ const AuthModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [authType, setAuthType] = useState<"login" | "register" | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { user, loading } = useAuth(); //if user status still loading don't open modal, and if user present don;t open modal
 
   useEffect(() => {
-    const authParam = searchParams.get("auth");
-    setIsOpen(authParam === "login" || authParam === "register");
-    setAuthType(authParam as "login" | "register" | null);
-  }, [searchParams]);
+    if (!loading && !user) {
+      const authParam = searchParams.get("auth");
+      setIsOpen(authParam === "login" || authParam === "register");
+      setAuthType(authParam as "login" | "register" | null);
+    } else if (!loading && user) {
+      // If user is logged in, close the modal and remove the auth parameter
+      closeModal();
+    }
+  }, [searchParams, user, loading]);
 
   const closeModal = useCallback(() => {
     if (!isLoading) {
@@ -31,7 +38,7 @@ const AuthModal: React.FC = () => {
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || loading || user) return null;
 
   return (
     <div
