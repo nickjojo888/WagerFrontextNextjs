@@ -109,17 +109,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
             <Image src={FacebookIcon} alt="Facebook" width={24} height={24} />
           )}
         </button>
-        <button
-          onClick={() => handleSocialLogin(new TwitterAuthProvider())}
-          className="p-2 border rounded bg-gray-800 border-gray-700 hover:border-gray-600 transition duration-300"
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <FaSpinner className="animate-spin" />
-          ) : (
-            <Image src={XIcon} alt="X" width={24} height={24} />
-          )}
-        </button>
       </div>
       <p className="text-center text-sm text-gray-400">
         Don't have an account?{" "}
