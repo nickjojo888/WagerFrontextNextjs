@@ -13,7 +13,7 @@ import {
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center gap-8">
+    <div className="flex min-h-screen flex-col items-center gap-8">
       <Carousel />
       <ShadowDivider />
       <SearchOptions />
@@ -38,6 +38,6 @@ export default function Home() {
         title="Wager Games"
         Icon={<ControllerSVG width={24} height={24} />}
       />
-    </main>
+    </div>
   );
 }

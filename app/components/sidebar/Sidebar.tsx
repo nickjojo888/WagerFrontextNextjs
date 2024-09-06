@@ -34,14 +34,15 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
   return (
     <aside
       className={clsx(
-        "overflow-y-auto bg-gray-800 text-white p-2 transition-all duration-300",
+        "bg-gray-800 text-white pb-2 px-2 transition-all duration-300",
         {
           "w-full lg:w-64": isExpanded, // takes whole width on smaller than medium
           "hidden lg:block lg:w-16": !isExpanded, // hidden on smaller than medium
         }
       )}
     >
-      <div className="flex items-center justify-center mb-8">
+      {/* toggle button has same size as the header to they are aligned */}
+      <div className="flex items-center justify-center lg:h-20">
         <button onClick={toggleSidebar} className="text-white">
           <MenuIcon width={24} height={24} />
         </button>
