@@ -12,7 +12,7 @@ export default function Header() {
   console.log("this is the user", user);
 
   return (
-    <header className="flex justify-between items-center h-20 bg-gray-900 py-4 text-white">
+    <header className="flex justify-between items-center h-20 w-full bg-gray-900 py-4 text-white">
       <div className="relative h-12 flex-shrink-0">
         <Image
           src={newWagerLogo}

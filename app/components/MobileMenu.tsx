@@ -1,25 +1,47 @@
 "use client";
-import { useState } from "react";
+import Link from "next/link";
 import MenuIcon from "@/public/svgs/menu-outline.svg";
+import ReceiptIcon from "@/public/svgs/receipt-outline.svg";
+import StarIcon from "@/public/svgs/star-outline.svg";
+import ChatboxIcon from "@/public/svgs/chatbox-outline.svg";
 
 interface MobileMenuProps {
   toggleSidebar: () => void;
 }
 
 export default function MobileMenu({ toggleSidebar }: MobileMenuProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-    toggleSidebar();
-  };
-
   return (
-    <div className="md:hidden">
-      <button onClick={handleToggle} className="text-white p-2">
-        <MenuIcon width={24} height={24} />
-      </button>
-      {/* Add more mobile menu items here if needed */}
-    </div>
+    <nav className="lg:hidden h-16 bg-gray-900 border-t border-gray-700 p-2 text-white">
+      <div className="flex">
+        <Link
+          href="/"
+          className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
+        >
+          <MenuIcon className="w-6 h-6" />
+          <span className="text-xs mt-1">Home</span>
+        </Link>
+        <Link
+          href="/search"
+          className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
+        >
+          <ReceiptIcon className="w-6 h-6" />
+          <span className="text-xs mt-1">Search</span>
+        </Link>
+        <Link
+          href="/new"
+          className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
+        >
+          <StarIcon className="w-6 h-6" />
+          <span className="text-xs mt-1">New</span>
+        </Link>
+        <Link
+          href="/notifications"
+          className="flex-1 flex flex-col items-center justify-center"
+        >
+          <ChatboxIcon className="w-6 h-6" />
+          <span className="text-xs mt-1">Alerts</span>
+        </Link>
+      </div>
+    </nav>
   );
 }
