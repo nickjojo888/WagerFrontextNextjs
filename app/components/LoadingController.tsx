@@ -1,9 +1,8 @@
 "use client";
-import React from "react";
 import { useAuth } from "./authentication/AuthContext";
 import LoadingScreen from "./LoadingScreen";
 
-export default function ClientLayout({
+export default function LoadingController({
   children,
 }: {
   children: React.ReactNode;

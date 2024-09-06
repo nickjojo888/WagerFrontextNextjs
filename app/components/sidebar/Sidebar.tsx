@@ -25,13 +25,12 @@ import { useState } from "react";
 import clsx from "clsx";
 import SidebarGroup from "./SidebarGroup"; // New import
 
-export default function Sidebar() {
-  const [isExpanded, setIsExpanded] = useState(true);
+interface SidebarProps {
+  isExpanded: boolean; // controls whether sidebar is expanded
+  toggleSidebar: () => void; // function to control the state that is passed to isExpanded
+}
 
-  const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
-  };
-
+export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
   return (
     <aside
       className={clsx(
