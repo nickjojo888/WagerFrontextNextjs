@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <header className="flex justify-between items-center h-20 bg-gray-900 py-4 text-white">
-      <div className="relative h-12">
+      <div className="relative h-12 flex-shrink-0">
         <Image
           src={newWagerLogo}
           alt="Wager Logo"
