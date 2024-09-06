@@ -34,7 +34,7 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
   return (
     <aside
       className={clsx(
-        "bg-gray-800 text-white h-screen p-2 transition-all duration-300",
+        "overflow-y-auto bg-gray-800 text-white p-2 transition-all duration-300",
         {
           "w-full lg:w-64": isExpanded, // takes whole width on smaller than medium
           "hidden lg:block lg:w-16": !isExpanded, // hidden on smaller than medium

@@ -13,13 +13,13 @@ export default function MobileMenu({ toggleSidebar }: MobileMenuProps) {
   return (
     <nav className="lg:hidden h-16 bg-gray-900 border-t border-gray-700 p-2 text-white">
       <div className="flex">
-        <Link
-          href="/"
+        <button
+          onClick={toggleSidebar}
           className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
         >
           <MenuIcon className="w-6 h-6" />
           <span className="text-xs mt-1">Home</span>
-        </Link>
+        </button>
         <Link
           href="/search"
           className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"

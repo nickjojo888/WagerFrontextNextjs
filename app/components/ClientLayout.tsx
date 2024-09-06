@@ -5,31 +5,6 @@ import Sidebar from "@/app/components/sidebar/Sidebar";
 import MobileMenu from "@/app/components/MobileMenu";
 import Header from "@/app/components/header/Header";
 
-// export default function ClientLayout({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) {
-//   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
-
-//   const toggleSidebar = () => {
-//     setIsSidebarExpanded(!isSidebarExpanded);
-//   };
-
-//   return (
-//     <div className="flex flex-col lg:flex-row h-screen">
-//       <Sidebar isExpanded={isSidebarExpanded} toggleSidebar={toggleSidebar} />
-//       <div className="max-w-7xl mx-auto flex-1 flex flex-col px-5 md:px-10 overflow-x-auto">
-//         <Header />
-//         <main className="flex-1 overflow-y-auto overflow-x-hidden">
-//           {children}
-//         </main>
-//       </div>
-//       <MobileMenu toggleSidebar={toggleSidebar} />
-//     </div>
-//   );
-// }
-
 export default function ClientLayout({
   children,
 }: {
@@ -42,23 +17,36 @@ export default function ClientLayout({
   };
 
   return (
-    <div className="grid grid-rows-[auto,1fr,auto] grid-cols-1 lg:grid-cols-[auto,1fr] lg:grid-rows-[auto,1fr] h-screen relative">
-      {/* Sidebar */}
-      <div className="row-start-5 row-span-1 lg:col-start-1 lg:row-span-2 lg:relative z-10">
-        <Sidebar isExpanded={isSidebarExpanded} toggleSidebar={toggleSidebar} />
-        {/* On smaller screens, the overlay is shown when the sidebar is expanded */}
-      </div>
-
+    <div className="flex flex-col h-screen lg:grid lg:grid-rows-[auto,1fr] lg:grid-cols-[auto,1fr]">
       {/* Header */}
-      <div className="row-start-1 row-span-1 lg:col-start-2 lg:col-span-1 px-5 md:px-10">
+      <div className="lg:col-start-2 px-5 md:px-10">
         <Header />
       </div>
 
-      {/* Main Content */}
-      <div className="row-start-2 lg:col-start-2 lg:row-start-2 px-5 md:px-10 overflow-y-auto">
-        <main className="h-full">{children}</main>
+      <div
+        className={clsx(
+          "flex-1 overflow-y-auto lg:col-start-1 lg:row-start-1 lg:row-span-2 ",
+          {
+            "hidden lg:block": !isSidebarExpanded,
+          }
+        )}
+      >
+        <Sidebar isExpanded={isSidebarExpanded} toggleSidebar={toggleSidebar} />
       </div>
-      <div className="row-start-3">
+
+      {/* Main content wrapper */}
+      <div
+        className={clsx(
+          "flex-1 overflow-hidden lg:col-start-2 lg:row-start-2",
+          { "hidden lg:block": isSidebarExpanded }
+        )}
+      >
+        {/* Scrollable main content */}
+        <main className="h-full overflow-y-auto px-5 md:px-10">{children}</main>
+      </div>
+
+      {/* Mobile Menu */}
+      <div className="lg:hidden">
         <MobileMenu toggleSidebar={toggleSidebar} />
       </div>
     </div>
