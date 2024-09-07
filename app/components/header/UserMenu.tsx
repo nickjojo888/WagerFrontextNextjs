@@ -10,19 +10,19 @@ const UserMenu: React.FC = () => {
     <div className="flex space-x-2">
       <Link
         href="/transactions"
-        className="bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full transition duration-300"
+        className="hidden lg:block bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full transition duration-300"
       >
         <ReceiptIcon width={24} height={24} />
       </Link>
       <Link
         href="/favorites"
-        className="bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full transition duration-300"
+        className="hidden lg:block bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full transition duration-300"
       >
         <StarIcon width={24} height={24} />
       </Link>
       <Link
         href="/messages"
-        className="bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full transition duration-300"
+        className="hidden lg:block bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full transition duration-300"
       >
         <ChatboxIcon width={24} height={24} />
       </Link>
