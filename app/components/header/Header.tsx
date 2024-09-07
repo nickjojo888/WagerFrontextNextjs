@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import newWagerLogo from "@/public/logos/new_wager_logo.png";
+import newWagerIcon from "@/public/logos/new_wager_icon.png";
 import AuthButtons from "./AuthButtons";
 import { useAuth } from "../authentication/AuthContext";
 import UserMenu from "./UserMenu";
@@ -9,7 +10,6 @@ import WalletInfo from "./WalletInfo";
 
 export default function Header() {
   const { user } = useAuth();
-  console.log("this is the user", user);
 
   return (
     <header className="flex justify-between items-center h-20 w-full bg-gray-900 py-4 text-white">
@@ -20,7 +20,16 @@ export default function Header() {
           priority
           width={464}
           height={118}
-          className="h-full w-auto shrink-0"
+          className={`h-full w-auto shrink-0 ${user ? "hidden sm:block" : ""}`}
+        />
+        {/*always hidden if user not logged in */}
+        <Image
+          src={newWagerIcon}
+          alt="Wager Icon"
+          priority
+          width={230}
+          height={230}
+          className={`h-full w-auto shrink-0 ${user ? "sm:hidden" : "hidden"}`}
         />
       </div>
       {user && <WalletInfo />}

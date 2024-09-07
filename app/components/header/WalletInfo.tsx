@@ -35,7 +35,7 @@ const WalletInfo: React.FC = () => {
   };
 
   return (
-    <div className="relative flex items-center space-x-4" ref={dropdownRef}>
+    <div className="relative flex items-center space-x-2" ref={dropdownRef}>
       <button
         className="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded transition duration-300 flex items-center"
         onClick={() => setIsBalanceDropdownOpen(!isBalanceDropdownOpen)}
@@ -45,9 +45,7 @@ const WalletInfo: React.FC = () => {
           alt={selectedCoin.name}
           className="w-6 h-6 mr-2"
         />
-        <span>
-          {selectedCoin.balance} {selectedCoin.symbol}
-        </span>
+        <span>{selectedCoin.balance}</span>
       </button>
       {isBalanceDropdownOpen && (
         <BalanceDropdown onSelectCoin={handleCoinSelect} />
