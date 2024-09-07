@@ -68,10 +68,10 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
       <div className="flex justify-between items-center h-12 mb-4">
         <div className="flex items-center gap-2">
           <div className="text-primary">{Icon}</div>
-          <h2 className="text-2xl font-bold">{title}</h2>
+          <h2 className="text-lg xs:text-2xl font-bold">{title}</h2>
         </div>
-        <div className="flex self-stretch gap-4">
-          <button className="bg-gray-800 text-white px-4 rounded-2xl hover:bg-gray-700">
+        <div className="flex gap-4">
+          <button className="hidden xs:block bg-gray-800 text-white px-4 rounded-2xl hover:bg-gray-700">
             View All
           </button>
           <div className="flex gap-2">

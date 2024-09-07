@@ -60,24 +60,19 @@ const ProviderCarousel: React.FC = () => {
           <div className="text-primary">
             <ProvidersSVG width={24} height={24} />
           </div>
-          <h2 className="text-2xl font-bold">Providers</h2>
+          <h2 className="text-lg xs:text-2xl font-bold">Providers</h2>
         </div>
-        <div className="flex self-stretch gap-4">
-          <button className="bg-gray-800 text-white px-4 rounded-2xl hover:bg-gray-700">
-            View All
-          </button>
-          <div className="flex gap-2">
-            <CarouselButton
-              direction="prev"
-              onClick={() => scrollGames("prev")}
-              disabled={isAtStart}
-            />
-            <CarouselButton
-              direction="next"
-              onClick={() => scrollGames("next")}
-              disabled={isAtEnd}
-            />
-          </div>
+        <div className="flex gap-2">
+          <CarouselButton
+            direction="prev"
+            onClick={() => scrollGames("prev")}
+            disabled={isAtStart}
+          />
+          <CarouselButton
+            direction="next"
+            onClick={() => scrollGames("next")}
+            disabled={isAtEnd}
+          />
         </div>
       </div>
       <div
