@@ -74,7 +74,10 @@ export default function Carousel() {
           }}
         >
           {images.map((src, index) => (
-            <div key={index} className="w-1/3 flex-shrink-0 snap-start">
+            <div
+              key={index}
+              className="w-full xs:w-1/2 md:w-1/3 flex-shrink-0 snap-start"
+            >
               <Image
                 src={src}
                 alt={`Slide ${index + 1}`}

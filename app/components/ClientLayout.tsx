@@ -17,9 +17,9 @@ export default function ClientLayout({
   };
 
   return (
-    <div className="flex flex-col h-screen lg:grid lg:grid-rows-[auto,1fr] lg:grid-cols-[auto,1fr]">
+    <div className="flex flex-col h-screen lg:grid lg:grid-rows-[auto,1fr] lg:grid-cols-[auto,1fr] overflow-y-hidden">
       {/* Header */}
-      <div className="lg:col-start-2 px-5 md:px-10">
+      <div className="lg:col-start-2 px-5 md:px-10 overflow-x-visible">
         <Header />
       </div>
 
@@ -37,12 +37,14 @@ export default function ClientLayout({
       {/* Main content wrapper */}
       <div
         className={clsx(
-          "flex-1 overflow-hidden lg:col-start-2 lg:row-start-2",
+          "flex-1 overflow-y-hidden lg:col-start-2 lg:row-start-2",
           { "hidden lg:block": isSidebarExpanded }
         )}
       >
         {/* Scrollable main content */}
-        <main className="h-full overflow-y-auto px-5 md:px-10">{children}</main>
+        <main className="h-full overflow-y-auto overflow-x-hidden px-5 md:px-10">
+          {children}
+        </main>
       </div>
 
       {/* Mobile Menu */}

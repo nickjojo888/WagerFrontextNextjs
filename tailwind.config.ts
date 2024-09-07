@@ -36,6 +36,9 @@ const config: Config = {
           "scrollbar-width": "none" /* Firefox */,
         },
       },
+      screens: {
+        xs: "500px",
+      },
     },
   },
   plugins: [],
