@@ -58,7 +58,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
   };
 
   return (
-    <div className="w-1/3 h-3/5 flex flex-col justify-center gap-4 bg-gray-900 px-14 rounded-2xl relative text-white">
+    <div className="w-4/5 max-h-[90vh] sm:w-1/2 xl:w-1/3 overflow-y-auto py-16 flex flex-col gap-4 px-6 sm:px-14 bg-gray-900 rounded-2xl relative text-white">
       <button
         onClick={onClose}
         className="absolute top-2 right-2 text-gray-400 text-xl hover:text-gray-200"
