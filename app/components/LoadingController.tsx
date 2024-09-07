@@ -9,9 +9,10 @@ export default function LoadingController({
 }) {
   const { loading } = useAuth();
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
-
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      {loading && <LoadingScreen />}
+    </>
+  );
 }
