@@ -88,27 +88,42 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
           </div>
         </div>
       </div>
-      {/* actual carousel */}
       <div
         ref={carouselRef}
-        className="flex webk gap-4 overflow-x-scroll snap-x snap-mandatory h-48 w-full"
+        className="flex gap-x-4 min-w-full overflow-x-auto snap-x snap-mandatory scrollbar-hide"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
-          WebkitOverflowScrolling: "touch", // Add this line for smoother scrolling on iOS
+          WebkitOverflowScrolling: "touch",
         }}
       >
-        {games.map((game) => (
-          <Image
-            key={game.id}
-            src={game.imageUrl}
-            alt={game.name}
-            width={384}
-            height={538}
-            className="rounded-lg snap-start w-auto flex-shrink-0" //for some reason only way to get border and size to same on safari as chrome version
-            style={{ border: game.border }}
-          />
-        ))}
+        {/* when there are no games, display placeholder games */}
+        {games.length === 0
+          ? Array(7)
+              .fill(null)
+              .map((_, index) => (
+                <div
+                  key={`placeholder-${index}`}
+                  className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/6 xl:w-1/7 flex-shrink-0 snap-start"
+                >
+                  <div className="rounded-lg w-full aspect-[384/538] bg-gray-700 animate-pulse" />
+                </div>
+              ))
+          : games.map((game) => (
+              <div
+                key={game.id}
+                className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/6 xl:w-1/7 flex-shrink-0 snap-start"
+              >
+                <Image
+                  src={game.imageUrl}
+                  alt={game.name}
+                  width={384}
+                  height={538}
+                  style={{ border: game.border }}
+                  className="rounded-lg w-full h-auto"
+                />
+              </div>
+            ))}
       </div>
     </div>
   );
