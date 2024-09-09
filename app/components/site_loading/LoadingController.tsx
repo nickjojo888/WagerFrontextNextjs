@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "./authentication/AuthContext";
+import { useAuth } from "../authentication/AuthContext";
 import LoadingScreen from "./LoadingScreen";
 
 export default function LoadingController({

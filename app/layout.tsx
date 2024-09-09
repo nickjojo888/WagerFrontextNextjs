@@ -4,7 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/app/components/authentication/AuthContext";
 import AuthModal from "./components/authentication/AuthModal";
 import ClientLayout from "./components/ClientLayout";
-import LoadingController from "./components/LoadingController";
+import LoadingController from "./components/site_loading/LoadingController";
 
 const inter = Inter({ subsets: ["latin"] });
 
