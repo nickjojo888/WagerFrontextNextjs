@@ -27,5 +27,9 @@ export async function GET(
 
   const data = await apiResponse.json();
 
-  return NextResponse.json(data);
+  if (data.msg !== "SUCCESS") {
+    return NextResponse.json({ error: data.msg }, { status: 400 });
+  }
+
+  return NextResponse.json({ launch_url: data.launch_url });
 }

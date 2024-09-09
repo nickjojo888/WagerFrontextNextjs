@@ -22,6 +22,10 @@ export async function GET(
 
   const data = await apiResponse.json();
 
+  if (data.msg !== "SUCCESS") {
+    return NextResponse.json({ error: data.msg }, { status: 400 });
+  }
+
   // Transform the API data to match the Game type
   const transformedGames: Game[] = data.games.map((game: any) => ({
     id: game.game_code,
