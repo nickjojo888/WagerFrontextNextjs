@@ -18,23 +18,23 @@ export default function Home() {
       <ShadowDivider />
       <SearchOptions />
       <GamesCarousel
-        category="slots"
+        provider="PRAGMATIC"
         title="Slot Games"
         Icon={<PokerChipSVG width={24} height={24} />}
       />
       <GamesCarousel
-        category="table"
+        provider="EVOLUTION"
         title="Table Games"
         Icon={<CardsSVG width={24} height={24} />}
       />
       <ProviderCarousel />
       <GamesCarousel
-        category="liveCasino"
+        provider="REELKINGDOM"
         title="Live Casino"
         Icon={<HeadPhonesSVG width={24} height={24} />}
       />
       <GamesCarousel
-        category="wager"
+        provider="HABANERO"
         title="Wager Games"
         Icon={<ControllerSVG width={24} height={24} />}
       />

@@ -5,12 +5,14 @@ import { useGames, GameCategory } from "./useGames";
 import Image from "next/image";
 
 interface GamesCarouselProps {
+  provider: string;
   category?: GameCategory;
   title: string;
   Icon: React.ReactNode;
 }
 
 const GamesCarousel: React.FC<GamesCarouselProps> = ({
+  provider,
   category = "all",
   title,
   Icon,
@@ -18,7 +20,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
-  const games = useGames(category);
+  const { games, gamesLoading, error } = useGames(provider, category);
 
   const updateButtonStates = () => {
     if (carouselRef.current) {
@@ -97,33 +99,39 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
           WebkitOverflowScrolling: "touch",
         }}
       >
-        {/* when there are no games, display placeholder games */}
-        {games.length === 0
-          ? Array(7)
-              .fill(null)
-              .map((_, index) => (
-                <div
-                  key={`placeholder-${index}`}
-                  className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/6 xl:w-1/7 flex-shrink-0 snap-start"
-                >
-                  <div className="rounded-lg w-full aspect-[384/538] bg-gray-700 animate-pulse" />
-                </div>
-              ))
-          : games.map((game) => (
+        {gamesLoading ? (
+          // Show loading placeholders
+          Array(7)
+            .fill(null)
+            .map((_, index) => (
               <div
-                key={game.id}
+                key={`placeholder-${index}`}
                 className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/6 xl:w-1/7 flex-shrink-0 snap-start"
               >
-                <Image
-                  src={game.imageUrl}
-                  alt={game.name}
-                  width={384}
-                  height={538}
-                  style={{ border: game.border }}
-                  className="rounded-lg w-full h-auto"
-                />
+                <div className="rounded-lg w-full aspect-[384/538] bg-gray-700 animate-pulse" />
               </div>
-            ))}
+            ))
+        ) : error ? (
+          <div className="text-red-500">Error: {error}</div>
+        ) : games.length === 0 ? (
+          <div>No games available for this provider.</div>
+        ) : (
+          games.map((game) => (
+            <div
+              key={game.id}
+              className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/6 xl:w-1/7 flex-shrink-0 snap-start"
+            >
+              <Image
+                src={game.imageUrl}
+                alt={game.name}
+                width={384}
+                height={538}
+                style={{ border: game.border }}
+                className="rounded-lg w-full h-auto"
+              />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

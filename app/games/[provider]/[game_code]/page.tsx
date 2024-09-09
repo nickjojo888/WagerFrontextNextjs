@@ -20,7 +20,7 @@ const GamePage: React.FC<GamePageProps> = ({ params }) => {
       <GameIframe provider={provider} game_code={game_code} />
       <GameDescription provider={provider} game_code={game_code} />
       <GamesCarousel
-        category="slots"
+        provider={provider}
         title="More From This Provider"
         Icon={<PokerChipSVG width={24} height={24} />}
       />

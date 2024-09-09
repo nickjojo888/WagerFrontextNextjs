@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { Game } from "@/app/components/carousels/game_carousel/types";
 
 export async function GET(
   request: Request,
@@ -21,5 +22,14 @@ export async function GET(
 
   const data = await apiResponse.json();
 
-  return NextResponse.json(data);
+  // Transform the API data to match the Game type
+  const transformedGames: Game[] = data.games.map((game: any) => ({
+    id: game.game_code,
+    name: game.game_name,
+    imageUrl: game.image_url,
+    provider: game.provider_name,
+    providerCode: provider,
+  }));
+
+  return NextResponse.json({ games: transformedGames });
 }

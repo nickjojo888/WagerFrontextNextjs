@@ -1,6 +1,8 @@
 export interface Game {
-  id: number;
+  id: string;
   name: string;
   imageUrl: string;
-  border: string;
+  provider: string;
+  providerCode: string;
+  border?: string;
 }
