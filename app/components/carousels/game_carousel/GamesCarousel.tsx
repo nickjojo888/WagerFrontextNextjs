@@ -1,26 +1,24 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import CarouselButton from "../CarouselButton";
-import { useGames, GameCategory } from "./useGames";
+import { useGames } from "./useGames";
 import Image from "next/image";
 
 interface GamesCarouselProps {
   provider: string;
-  category?: GameCategory;
   title: string;
   Icon: React.ReactNode;
 }
 
 const GamesCarousel: React.FC<GamesCarouselProps> = ({
   provider,
-  category = "all",
   title,
   Icon,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
-  const { games, gamesLoading, error } = useGames(provider, category);
+  const { games, gamesLoading, error } = useGames(provider);
 
   const updateButtonStates = () => {
     if (carouselRef.current) {

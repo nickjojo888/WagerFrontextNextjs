@@ -26,7 +26,7 @@ export async function GET(
   const transformedGames: Game[] = data.games.map((game: any) => ({
     id: game.game_code,
     name: game.game_name,
-    imageUrl: game.image_url,
+    imageUrl: game.banner,
     provider: game.provider_name,
     providerCode: provider,
   }));
