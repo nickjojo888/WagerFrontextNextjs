@@ -1,7 +1,9 @@
 import React from "react";
-import { FaHome, FaInfoCircle, FaCog } from "react-icons/fa";
-import newWagerLogo from "@/public/logos/new_wager_logo.png";
-import Image from "next/image";
+import GameIframe from "@/app/components/play_game/GameIframe";
+import GameDescription from "@/app/components/play_game/GameDescription";
+import GamesCarousel from "@/app/components/carousels/game_carousel/GamesCarousel";
+import ProviderCarousel from "@/app/components/carousels/provider_carousel/ProviderCarousel";
+import { PokerChipSVG } from "@/public/svgs/SVGComponents";
 
 interface GamePageProps {
   params: {
@@ -14,66 +16,17 @@ const GamePage: React.FC<GamePageProps> = ({ params }) => {
   const { provider, game_code } = params;
 
   return (
-    <div className="flex flex-col h-full min-h-full">
-      {/* iframe container */}
-      <div className="h-5/6">
-        <iframe
-          className="bg-gray-800 w-full h-full border-none"
-          title={`${provider} - ${game_code}`}
-        />
-      </div>
-      {/* Updated menu div */}
-      <div className="bg-gray-800 text-white p-4 flex justify-between items-center h-16">
-        {/* Left icons with tooltips */}
-        <div className="flex space-x-4">
-          <div className="relative group">
-            <button className="p-2 hover:bg-gray-700 rounded">
-              <FaHome size={24} />
-            </button>
-            <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              Home
-            </span>
-          </div>
-          <div className="relative group">
-            <button className="p-2 hover:bg-gray-700 rounded">
-              <FaInfoCircle size={24} />
-            </button>
-            <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              Info
-            </span>
-          </div>
-          <div className="relative group">
-            <button className="p-2 hover:bg-gray-700 rounded">
-              <FaCog size={24} />
-            </button>
-            <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              Settings
-            </span>
-          </div>
-        </div>
-
-        {/* Center logo */}
-        <div className="h-full">
-          <Image
-            src={newWagerLogo}
-            alt="Wager Logo"
-            priority
-            width={464}
-            height={118}
-            className={"h-full w-auto shrink-0 grayscale"}
-          />
-        </div>
-
-        {/* Right menu toggle */}
-        <div className="flex items-center space-x-2">
-          <span>Real</span>
-          <label className="switch">
-            <input type="checkbox" />
-            <span className="slider round"></span>
-          </label>
-          <span>Fun</span>
-        </div>
-      </div>
+    <div className="flex flex-col gap-6 h-full min-h-full overflow-visible px-5 md:px-10">
+      <GameIframe provider={provider} game_code={game_code} />
+      <GameDescription provider={provider} game_code={game_code} />
+      <GamesCarousel
+        category="slots"
+        title="More From This Provider"
+        Icon={<PokerChipSVG width={24} height={24} />}
+      />
+      <ProviderCarousel />
+      {/* empty space added to bottom, will be replayed in top level layout with footer */}
+      <div className="h-10 flex-shrink-0"></div>
     </div>
   );
 };

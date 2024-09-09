@@ -42,7 +42,7 @@ export default function ClientLayout({
         )}
       >
         {/* Scrollable main content */}
-        <main className="h-full overflow-y-auto overflow-x-hidden px-5 md:px-10">
+        <main className="h-full overflow-y-auto overflow-x-hidden">
           {children}
         </main>
       </div>

@@ -13,7 +13,7 @@ import {
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col items-center gap-8">
+    <div className="flex min-h-screen flex-col items-center gap-8 px-5 md:px-10">
       <Carousel />
       <ShadowDivider />
       <SearchOptions />
