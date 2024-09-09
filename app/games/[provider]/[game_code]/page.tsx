@@ -1,5 +1,6 @@
 import React from "react";
 import { FaHome, FaInfoCircle, FaCog } from "react-icons/fa";
+import newWagerLogo from "@/public/logos/new_wager_logo.png";
 import Image from "next/image";
 
 interface GamePageProps {
@@ -52,8 +53,15 @@ const GamePage: React.FC<GamePageProps> = ({ params }) => {
         </div>
 
         {/* Center logo */}
-        <div className="flex-grow flex justify-center">
-          <Image src="/logo.png" alt="Logo" width={100} height={40} />
+        <div className="h-full">
+          <Image
+            src={newWagerLogo}
+            alt="Wager Logo"
+            priority
+            width={464}
+            height={118}
+            className={"h-full w-auto shrink-0 grayscale"}
+          />
         </div>
 
         {/* Right menu toggle */}
