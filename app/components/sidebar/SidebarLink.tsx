@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import React, { useState } from "react";
 import clsx from "clsx";
@@ -9,6 +10,7 @@ type SidebarLinkProps = {
   text: string;
   disabled?: boolean; // Optional disabled prop
   isExpanded: boolean; // New prop to indicate whether the sidebar is expanded or collapsed
+  toggleSidebar: () => void; // New prop to toggle the sidebar
 };
 
 const SidebarLink: React.FC<SidebarLinkProps> = ({
@@ -17,8 +19,18 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
   text,
   disabled = false,
   isExpanded,
+  toggleSidebar,
 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (disabled) {
+      e.preventDefault();
+    } else if (window.innerWidth < 1024) {
+      // Only toggle sidebar on smaller screens
+      toggleSidebar();
+    }
+  };
 
   return (
     <li
@@ -35,6 +47,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
         })}
         aria-disabled={disabled} // Accessibility: indicate the link is disabled
         tabIndex={disabled ? -1 : undefined} // Prevent focus if disabled
+        onClick={handleClick} // Add this line
       >
         <div>
           {icon}

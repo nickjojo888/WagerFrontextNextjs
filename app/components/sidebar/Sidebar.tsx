@@ -55,6 +55,7 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
             icon={<HomeIcon width={24} height={24} />}
             text="Home"
             isExpanded={isExpanded}
+            toggleSidebar={toggleSidebar}
           />
           <SidebarLink
             href="/favourites"
@@ -62,6 +63,7 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
             text="Favourites"
             disabled={true}
             isExpanded={isExpanded}
+            toggleSidebar={toggleSidebar}
           />
           <SidebarLink
             href="/recents"
@@ -69,6 +71,7 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
             text="Recents"
             disabled={true}
             isExpanded={isExpanded}
+            toggleSidebar={toggleSidebar}
           />
           <SidebarLink
             href="/mybets"
@@ -76,6 +79,7 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
             text="My Bets"
             disabled={true}
             isExpanded={isExpanded}
+            toggleSidebar={toggleSidebar}
           />
         </SidebarGroup>
 
@@ -85,30 +89,35 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
             icon={<CardsSVG width={24} height={24} />}
             text="Slots"
             isExpanded={isExpanded}
+            toggleSidebar={toggleSidebar}
           />
           <SidebarLink
             href="/live-casino"
             icon={<HeadPhonesSVG width={24} height={24} />}
             text="Live Casino"
             isExpanded={isExpanded}
+            toggleSidebar={toggleSidebar}
           />
           <SidebarLink
             href="/blackjack"
             icon={<HandShakeSVG width={24} height={24} />}
             text="Blackjack"
             isExpanded={isExpanded}
+            toggleSidebar={toggleSidebar}
           />
           <SidebarLink
             href="/roulette"
             icon={<RouletteSVG width={24} height={24} />}
             text="Roulette"
             isExpanded={isExpanded}
+            toggleSidebar={toggleSidebar}
           />
           <SidebarLink
             href="/game-shows"
             icon={<GameShowsSVG width={24} height={24} />}
             text="Game Shows"
             isExpanded={isExpanded}
+            toggleSidebar={toggleSidebar}
           />
         </SidebarGroup>
 
@@ -118,6 +127,7 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
             icon={<ProvidersSVG width={24} height={24} />}
             text="Providers"
             isExpanded={isExpanded}
+            toggleSidebar={toggleSidebar}
           />
         </SidebarGroup>
       </ul>
