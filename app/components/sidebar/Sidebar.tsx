@@ -21,7 +21,6 @@ import HomeIcon from "@/public/svgs/home-outline.svg";
 import StarIcon from "@/public/svgs/star-outline.svg";
 import RecentIcon from "@/public/svgs/time-outline.svg";
 import SidebarLink from "./SidebarLink";
-import { useState } from "react";
 import clsx from "clsx";
 import SidebarGroup from "./SidebarGroup"; // New import
 
