@@ -19,23 +19,23 @@ export default function Home() {
       <SearchOptions />
       <GamesCarousel
         provider="PRAGMATIC"
-        title="Slot Games"
+        title="PRAGMATIC games"
         Icon={<PokerChipSVG width={24} height={24} />}
       />
       <GamesCarousel
         provider="EVOLUTION"
-        title="Table Games"
+        title="EVOLUTION games"
         Icon={<CardsSVG width={24} height={24} />}
       />
       <ProviderCarousel />
       <GamesCarousel
         provider="REELKINGDOM"
-        title="Live Casino"
+        title="REELKINGDOM games"
         Icon={<HeadPhonesSVG width={24} height={24} />}
       />
       <GamesCarousel
         provider="HABANERO"
-        title="Wager Games"
+        title="HABANERO games"
         Icon={<ControllerSVG width={24} height={24} />}
       />
     </div>

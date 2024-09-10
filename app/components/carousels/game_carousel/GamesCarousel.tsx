@@ -124,8 +124,8 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
               <Image
                 src={game.imageUrl}
                 alt={game.name}
-                width={384}
-                height={538}
+                width={200}
+                height={200}
                 style={{ border: game.border }}
                 className="rounded-lg w-full h-auto"
               />

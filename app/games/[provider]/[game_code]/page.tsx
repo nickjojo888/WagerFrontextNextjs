@@ -21,7 +21,7 @@ const GamePage: React.FC<GamePageProps> = ({ params }) => {
       <GameDescription provider={provider} game_code={game_code} />
       <GamesCarousel
         provider={provider}
-        title="More From This Provider"
+        title={`More From ${provider}`}
         Icon={<PokerChipSVG width={24} height={24} />}
       />
       <ProviderCarousel />
