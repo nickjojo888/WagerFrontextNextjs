@@ -77,7 +77,7 @@ const ProviderCarousel: React.FC = () => {
       </div>
       <div
         ref={carouselRef}
-        className="flex overflow-x-scroll snap-x gap-20 h-14 snap-mandatory"
+        className="flex overflow-x-auto snap-x gap-10 xs:gap-20 min-w-full h-14 snap-mandatory"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -88,7 +88,7 @@ const ProviderCarousel: React.FC = () => {
             key={provider.id}
             src={provider.imageUrl}
             alt={provider.name}
-            className="snap-start w-auto"
+            className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/6 xl:w-1/7 h-auto flex-shrink-0 snap-start"
           />
         ))}
       </div>
