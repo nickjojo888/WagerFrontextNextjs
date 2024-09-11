@@ -116,7 +116,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
         </button>
       </div>
       <p className="text-center text-sm text-gray-400">
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <button
           onClick={() => router.push("/?auth=register")}
           className="text-primary hover:underline"
