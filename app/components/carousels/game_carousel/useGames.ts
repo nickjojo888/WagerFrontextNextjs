@@ -18,7 +18,6 @@ export const useGames = (provider: string, category: GameCategory = "all") => {
           throw new Error("Failed to fetch games");
         }
         const data = await response.json();
-        console.log(data.games);
         setGames(data.games);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
