@@ -7,9 +7,9 @@ const RealPlayToggle: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<"Real" | "Play">("Real");
 
   return (
-    <div className="flex gap-x-2 overflow-x-auto h-12">
+    <div className="flex gap-x-1 xs:gap-x-2 overflow-x-auto h-12">
       <button
-        className={`px-4 rounded-lg text-sm whitespace-nowrap flex items-center ${
+        className={`px-2 xs:px-4 rounded-lg text-xs xs:text-sm whitespace-nowrap flex items-center ${
           selectedOption === "Real" ? "bg-gray-700" : ""
         }`}
         onClick={() => setSelectedOption("Real")}
@@ -20,7 +20,7 @@ const RealPlayToggle: React.FC = () => {
         Real
       </button>
       <button
-        className={`px-4 rounded-lg text-sm whitespace-nowrap flex items-center ${
+        className={`px-1 xs:px-4 rounded-lg text-xs xs:text-sm whitespace-nowrap flex items-center ${
           selectedOption === "Play" ? "bg-gray-700" : ""
         }`}
         onClick={() => setSelectedOption("Play")}
