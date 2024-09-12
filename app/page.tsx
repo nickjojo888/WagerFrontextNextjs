@@ -23,20 +23,20 @@ export default function Home() {
         Icon={<PokerChipSVG width={24} height={24} />}
       />
       <GamesCarousel
-        provider="EVOLUTION"
-        title="EVOLUTION games"
-        Icon={<CardsSVG width={24} height={24} />}
-      />
-      <ProviderCarousel />
-      <GamesCarousel
         provider="REELKINGDOM"
         title="REELKINGDOM games"
         Icon={<HeadPhonesSVG width={24} height={24} />}
       />
+      <ProviderCarousel />
       <GamesCarousel
         provider="HABANERO"
         title="HABANERO games"
         Icon={<ControllerSVG width={24} height={24} />}
+      />
+      <GamesCarousel
+        provider="DREAMTECH"
+        title="DREAMTECH games"
+        Icon={<CardsSVG width={24} height={24} />}
       />
     </div>
   );
