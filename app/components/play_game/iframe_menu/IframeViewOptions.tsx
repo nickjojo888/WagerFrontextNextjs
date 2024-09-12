@@ -7,14 +7,14 @@ import StatsIcon from "@/public/svgs/stats-chart-outline.svg";
 
 const IframeViewOptions: React.FC = () => {
   return (
-    <div className="flex space-x-4">
-      <div className="relative group">
+    <div className="flex gap-x-1 xs:gap-x-4">
+      <div className="hidden xs:block relative group">
         <button className="p-2 hover:bg-gray-700 rounded relative">
           <SlSizeFullscreen size={20} />
           <IframeViewOptionTooltip text="Fullscreen" />
         </button>
       </div>
-      <div className="relative group">
+      <div className="hidden xs:block relative group">
         <button className="p-2 hover:bg-gray-700 rounded relative">
           <RxEnterFullScreen size={20} />
           <IframeViewOptionTooltip text="Theatre Mode" />
