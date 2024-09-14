@@ -25,8 +25,6 @@ const GamePage: React.FC<GamePageProps> = ({ params }) => {
         Icon={<PokerChipSVG width={24} height={24} />}
       />
       <ProviderCarousel />
-      {/* empty space added to bottom, will be replayed in top level layout with footer */}
-      <div className="h-10 flex-shrink-0"></div>
     </div>
   );
 };

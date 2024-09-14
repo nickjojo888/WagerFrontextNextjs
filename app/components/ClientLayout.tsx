@@ -17,7 +17,7 @@ export default function ClientLayout({
   };
 
   return (
-    <div className="flex flex-col h-screen lg:grid lg:grid-rows-[auto,1fr] lg:grid-cols-[auto,1fr] overflow-y-hidden">
+    <div className="flex flex-col h-full lg:grid lg:grid-rows-[auto,1fr] lg:grid-cols-[auto,1fr] overflow-y-hidden">
       {/* Header */}
       <div className="lg:col-start-2 px-5 md:px-10 overflow-x-visible">
         <Header />
