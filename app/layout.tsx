@@ -15,9 +15,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html className="overflow-hidden h-full" lang="en">
       <body
-        className={`${inter.className} bg-gray-900 text-white overflow-hidden`}
+        className={`${inter.className} overflow-hidden h-full bg-gray-900 text-white`}
       >
         <AuthProvider>
           <LoadingController>
