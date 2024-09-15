@@ -11,34 +11,34 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ toggleSidebar }: MobileMenuProps) {
   return (
-    <nav className="lg:hidden h-16 bg-gray-900 border-t border-gray-700 p-2 text-white">
+    <nav className="lg:hidden bg-gray-900 border-t border-gray-700 p-2 text-white">
       <div className="flex">
         <button
           onClick={toggleSidebar}
           className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
         >
-          <MenuIcon className="w-6 h-6" />
+          <MenuIcon className="w-4 h-4" />
           <span className="text-xs mt-1">Home</span>
         </button>
         <Link
           href="/search"
           className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
         >
-          <ReceiptIcon className="w-6 h-6" />
+          <ReceiptIcon className="w-4 h-4" />
           <span className="text-xs mt-1">Search</span>
         </Link>
         <Link
           href="/new"
           className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
         >
-          <StarIcon className="w-6 h-6" />
+          <StarIcon className="w-4 h-4" />
           <span className="text-xs mt-1">New</span>
         </Link>
         <Link
           href="/notifications"
           className="flex-1 flex flex-col items-center justify-center"
         >
-          <ChatboxIcon className="w-6 h-6" />
+          <ChatboxIcon className="w-4 h-4" />
           <span className="text-xs mt-1">Alerts</span>
         </Link>
       </div>
