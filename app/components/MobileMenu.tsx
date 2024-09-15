@@ -18,7 +18,7 @@ export default function MobileMenu({ toggleSidebar }: MobileMenuProps) {
           className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
         >
           <MenuIcon className="w-5 h-5" />
-          <span className="text-xs mt-1">Home</span>
+          <span className="text-xs mt-1">Menu</span>
         </button>
         <Link
           href="/search"

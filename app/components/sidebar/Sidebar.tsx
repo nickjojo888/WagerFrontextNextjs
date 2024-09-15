@@ -40,8 +40,8 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
         }
       )}
     >
-      {/* toggle button has same size as the header to they are aligned */}
-      <div className="flex items-center justify-center lg:h-20">
+      {/* toggle button has same size as the header to they are aligned, don't show in mobile view */}
+      <div className="hidden lg:flex items-center justify-center lg:h-20">
         <button onClick={toggleSidebar} className="text-white">
           <MenuIcon width={24} height={24} />
         </button>
