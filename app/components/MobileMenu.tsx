@@ -17,28 +17,28 @@ export default function MobileMenu({ toggleSidebar }: MobileMenuProps) {
           onClick={toggleSidebar}
           className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
         >
-          <MenuIcon className="w-4 h-4" />
+          <MenuIcon className="w-5 h-5" />
           <span className="text-xs mt-1">Home</span>
         </button>
         <Link
           href="/search"
           className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
         >
-          <ReceiptIcon className="w-4 h-4" />
+          <ReceiptIcon className="w-5 h-5" />
           <span className="text-xs mt-1">Search</span>
         </Link>
         <Link
           href="/new"
           className="flex-1 flex flex-col items-center justify-center border-r border-gray-700"
         >
-          <StarIcon className="w-4 h-4" />
+          <StarIcon className="w-5 h-5" />
           <span className="text-xs mt-1">New</span>
         </Link>
         <Link
           href="/notifications"
           className="flex-1 flex flex-col items-center justify-center"
         >
-          <ChatboxIcon className="w-4 h-4" />
+          <ChatboxIcon className="w-5 h-5" />
           <span className="text-xs mt-1">Alerts</span>
         </Link>
       </div>
