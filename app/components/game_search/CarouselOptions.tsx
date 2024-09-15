@@ -42,19 +42,16 @@ export default function CarouselOptions() {
     <div
       style={{
         scrollSnapType: "x mandatory", // must snap to nearest child when scrolling stops
-        overflowX: "scroll",
-        scrollbarWidth: "none", // Firefox
-        msOverflowStyle: "none", // Internet Explorer and Edge
       }}
-      className="flex items-stretch gap-x-2 overflow-x-auto w-full h-12"
+      className="flex items-stretch gap-x-2 overflow-x-auto w-full bg-gray-800 rounded-lg p-2 "
     >
       {options.map((option) => (
         <button
           key={option.text}
-          className={`px-4 rounded-lg text-sm whitespace-nowrap flex items-center ${
+          className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap flex items-center ${
             selectedOption === option.text
               ? "bg-gray-500 text-white"
-              : "bg-gray-800 text-white hover:bg-gray-700"
+              : " text-white hover:bg-gray-600"
           }`}
           onClick={() => setSelectedOption(option.text)}
         >
