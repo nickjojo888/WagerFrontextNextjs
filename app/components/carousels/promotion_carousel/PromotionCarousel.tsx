@@ -4,11 +4,10 @@ import Image from "next/image";
 import { CarouselButton, CarouselDirection } from "./PromotionCarouselButton";
 
 const images = [
-  "/images/dummy/20k-weekly-gr.webp",
-  "/images/dummy/drops_wins.webp",
-  "/images/dummy/levelup2024_promo.webp",
-  "/images/dummy/sb1000_promo.webp",
-  "/images/dummy/treasurehunt_promo.webp",
+  "/images/dummy/Banner 1.jpg",
+  "/images/dummy/Banner 2.png",
+  "/images/dummy/Banner 3.png",
+  "/images/dummy/Banner 4.png",
 ];
 
 export default function Carousel() {
@@ -81,8 +80,8 @@ export default function Carousel() {
               <Image
                 src={src}
                 alt={`Slide ${index + 1}`}
-                width={640}
-                height={360}
+                width={854}
+                height={467}
                 className="w-full h-auto rounded-lg"
               />
             </div>
