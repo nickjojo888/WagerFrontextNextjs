@@ -38,7 +38,7 @@ const AuthModal: React.FC = () => {
     }
   };
 
-  if (!isOpen || loading || authUser) return null;
+  if (!isOpen || loading || authUser) return null; //if the user is already logged in, or we are still waiting to tell if this is the case, then don't show anything
 
   return (
     <div
