@@ -42,7 +42,7 @@ const AuthModal: React.FC = () => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50"
+      className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-40"
       onClick={handleOutsideClick}
     >
       {authType === "login" ? (
