@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
+import { FaSpinner } from "react-icons/fa";
 
 const SetUsernameModal: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -41,6 +42,7 @@ const SetUsernameModal: React.FC = () => {
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter username"
             className="w-full p-2 mb-4 bg-gray-700 rounded"
+            disabled={isLoading}
             required
           />
           {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -49,7 +51,11 @@ const SetUsernameModal: React.FC = () => {
             className="w-full bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded"
             disabled={isLoading}
           >
-            {isLoading ? "Setting Username..." : "Set Username"}
+            {isLoading ? (
+              <FaSpinner className="animate-spin" />
+            ) : (
+              "Set Username"
+            )}
           </button>
         </form>
       </div>
