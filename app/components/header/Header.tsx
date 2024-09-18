@@ -9,7 +9,7 @@ import UserMenu from "./UserMenu";
 import WalletInfo from "./WalletInfo";
 
 export default function Header() {
-  const { user } = useAuth();
+  const { authUser } = useAuth();
 
   return (
     <header className="flex justify-between items-center h-20 w-full bg-gray-900 py-4 text-white">
@@ -20,7 +20,9 @@ export default function Header() {
           priority
           width={464}
           height={118}
-          className={`h-full w-auto shrink-0 ${user ? "hidden sm:block" : ""}`}
+          className={`h-full w-auto shrink-0 ${
+            authUser ? "hidden sm:block" : ""
+          }`}
         />
         {/*always hidden if user not logged in */}
         <Image
@@ -29,13 +31,15 @@ export default function Header() {
           priority
           width={230}
           height={230}
-          className={`h-full w-auto shrink-0 ${user ? "sm:hidden" : "hidden"}`}
+          className={`h-full w-auto shrink-0 ${
+            authUser ? "sm:hidden" : "hidden"
+          }`}
         />
       </div>
-      {user && <WalletInfo />}
+      {authUser && <WalletInfo />}
 
       <div className="flex items-center space-x-4">
-        {user ? <UserMenu /> : <AuthButtons />}
+        {authUser ? <UserMenu /> : <AuthButtons />}
       </div>
     </header>
   );

@@ -11,18 +11,18 @@ const AuthModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [authType, setAuthType] = useState<"login" | "register" | null>(null);
   const [isLoading, setIsLoading] = useState(false); //this manages whether the auth modal itself if loading
-  const { user, loading } = useAuth(); //if user status still loading don't open modal, and if user present don;t open modal
+  const { authUser, loading } = useAuth(); //if user status still loading don't open modal, and if user present don;t open modal
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !authUser) {
       const authParam = searchParams.get("auth");
       setIsOpen(authParam === "login" || authParam === "register");
       setAuthType(authParam as "login" | "register" | null);
-    } else if (!loading && user) {
+    } else if (!loading && authUser) {
       // If user is logged in, close the modal and remove the auth parameter
       closeModal();
     }
-  }, [searchParams, user, loading]);
+  }, [searchParams, authUser, loading]);
 
   const closeModal = useCallback(() => {
     if (!isLoading) {
@@ -38,7 +38,7 @@ const AuthModal: React.FC = () => {
     }
   };
 
-  if (!isOpen || loading || user) return null;
+  if (!isOpen || loading || authUser) return null;
 
   return (
     <div
