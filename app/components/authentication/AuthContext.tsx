@@ -14,8 +14,6 @@ interface AuthContextType {
   authUser: AuthUser | null;
   user: User | null;
   loading: boolean;
-  showSetUsernameModal: boolean;
-  setShowSetUsernameModal: (show: boolean) => void;
   checkUsername: (username: string) => Promise<boolean>;
   createUser: (username: string) => Promise<void>;
 }
@@ -26,7 +24,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [showSetUsernameModal, setShowSetUsernameModal] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
@@ -38,7 +35,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } catch (error) {
           console.error("Error fetching user:", error);
           setUser(null);
-          setShowSetUsernameModal(true);
         }
       } else {
         setUser(null);
@@ -66,7 +62,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         username,
       });
       setUser(response.data);
-      setShowSetUsernameModal(false);
     } catch (error) {
       console.error("Error creating user:", error);
       throw error;
@@ -79,8 +74,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         authUser,
         user,
         loading,
-        showSetUsernameModal,
-        setShowSetUsernameModal,
         checkUsername,
         createUser,
       }}

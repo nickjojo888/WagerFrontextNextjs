@@ -6,7 +6,7 @@ const SetUsernameModal: React.FC = () => {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { showSetUsernameModal, checkUsername, createUser } = useAuth();
+  const { checkUsername, createUser } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,13 +24,11 @@ const SetUsernameModal: React.FC = () => {
       await createUser(username);
     } catch (error) {
       console.error("Error creating user:", error);
-      setError("An error occurred. Please try again.");
+      setError(`${error}`);
     } finally {
       setIsLoading(false);
     }
   };
-
-  if (!showSetUsernameModal) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-40">

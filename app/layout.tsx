@@ -24,7 +24,6 @@ export default function RootLayout({
             <ClientLayout>{children}</ClientLayout>
           </LoadingController>
           <AuthModal />
-          <SetUsernameModal />
         </AuthProvider>
       </body>
     </html>
