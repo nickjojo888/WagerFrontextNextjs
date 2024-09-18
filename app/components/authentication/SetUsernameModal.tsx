@@ -33,26 +33,28 @@ const SetUsernameModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-40">
-      <div className="bg-gray-800 p-8 rounded-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4">Set Your Username</h2>
-        <form onSubmit={handleSubmit}>
+      <div className="w-4/5 max-h-[90vh] sm:w-1/2 xl:w-1/3 overflow-y-auto py-16 flex flex-col gap-4 px-6 sm:px-14 bg-gray-900 rounded-2xl relative text-white">
+        <h2 className="text-2xl font-bold text-center mb-4">
+          Set Your Username
+        </h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter username"
-            className="w-full p-2 mb-4 bg-gray-700 rounded"
+            className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-gray-600 focus:outline-none"
             disabled={isLoading}
             required
           />
-          {error && <p className="text-red-500 mb-4">{error}</p>}
+          {error && <p className="text-red-400">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded"
+            className="w-full bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded transition duration-300 flex items-center justify-center"
             disabled={isLoading}
           >
             {isLoading ? (
-              <FaSpinner className="animate-spin" />
+              <FaSpinner className="animate-spin mr-2" />
             ) : (
               "Set Username"
             )}
