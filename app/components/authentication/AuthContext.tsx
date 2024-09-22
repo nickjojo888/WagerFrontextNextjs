@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { User as AuthUser } from "firebase/auth";
 import { auth } from "@/app/firebase/firebaseConfig";
-import axios from "axios"; // Assume axios is installed for making API calls
+import axios, { isAxiosError } from "axios";
 
 // Update this line to use NEXT_PUBLIC_ prefix
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
@@ -11,6 +11,7 @@ export interface User {
   _id: string;
   username: string;
   email?: string;
+  emailVerified: boolean;
   // Add other user properties as needed
 }
 
@@ -55,12 +56,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const response = await axios.post<User>(`${BACKEND_URL}/api/users`, {
         userID: authUser.uid,
         username,
-        email: authUser.email || undefined, // Include email if available
+        email: authUser.email || undefined,
+        emailVerified: authUser.emailVerified,
       });
       setUser(response.data);
     } catch (error) {
       console.error("Error creating user:", error);
-      throw error;
+      if (isAxiosError(error) && error.response) {
+        throw new Error(`Failed to create user: ${error.response.data}`);
+      } else {
+        throw new Error("Failed to create user: Unknown error occurred");
+      }
     }
   };
 
