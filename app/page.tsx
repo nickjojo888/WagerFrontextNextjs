@@ -20,28 +20,28 @@ export default function Home() {
       <SearchOptions />
       <WagerGamesCarousel
         provider="PRAGMATIC"
-        title="Wager games"
+        title="Wager Games"
         Icon={<PokerChipSVG width={24} height={24} />}
       />
       <GamesCarousel
         provider="PRAGMATIC"
-        title="PRAGMATIC games"
+        title="PRAGMATIC Games"
         Icon={<PokerChipSVG width={24} height={24} />}
       />
       <GamesCarousel
         provider="REELKINGDOM"
-        title="REELKINGDOM games"
+        title="REELKINGDOM Games"
         Icon={<HeadPhonesSVG width={24} height={24} />}
       />
       <ProviderCarousel />
       <GamesCarousel
         provider="HABANERO"
-        title="HABANERO games"
+        title="HABANERO Games"
         Icon={<ControllerSVG width={24} height={24} />}
       />
       <GamesCarousel
         provider="DREAMTECH"
-        title="DREAMTECH games"
+        title="DREAMTECH Games"
         Icon={<CardsSVG width={24} height={24} />}
       />
     </div>
