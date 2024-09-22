@@ -25,7 +25,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
     {
       id: "game1",
       name: "Poker",
-      imageUrl: "/images/games/wager/frame 6.png",
+      imageUrl: "/images/games/wager/Frame 6.png",
       provider: "ProviderA",
       providerCode: "PA",
       gameType: "card",
@@ -33,7 +33,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
     {
       id: "game2",
       name: "Slots",
-      imageUrl: "/images/games/wager/frame 7.png",
+      imageUrl: "/images/games/wager/Frame 7.png",
       provider: "ProviderB",
       providerCode: "PB",
       gameType: "slot",
@@ -41,7 +41,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
     {
       id: "game3",
       name: "Blackjack",
-      imageUrl: "/images/games/wager/frame 8.png",
+      imageUrl: "/images/games/wager/Frame 8.png",
       provider: "ProviderA",
       providerCode: "PA",
       gameType: "card",
@@ -49,7 +49,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
     {
       id: "game4",
       name: "Blackjack",
-      imageUrl: "/images/games/wager/frame 9.png",
+      imageUrl: "/images/games/wager/Frame 9.png",
       provider: "ProviderA",
       providerCode: "PA",
       gameType: "card",
@@ -57,7 +57,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
     {
       id: "game5",
       name: "Blackjack",
-      imageUrl: "/images/games/wager/frame 10.png",
+      imageUrl: "/images/games/wager/Frame 10.png",
       provider: "ProviderA",
       providerCode: "PA",
       gameType: "card",
@@ -65,7 +65,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
     {
       id: "game6",
       name: "Blackjack",
-      imageUrl: "/images/games/wager/frame 11.png",
+      imageUrl: "/images/games/wager/Frame 11.png",
       provider: "ProviderA",
       providerCode: "PA",
       gameType: "card",
@@ -73,7 +73,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
     {
       id: "game7",
       name: "Blackjack",
-      imageUrl: "/images/games/wager/frame 12.png",
+      imageUrl: "/images/games/wager/Frame 12.png",
       provider: "ProviderA",
       providerCode: "PA",
       gameType: "card",
@@ -81,7 +81,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
     {
       id: "game8",
       name: "Blackjack",
-      imageUrl: "/images/games/wager/frame 13.png",
+      imageUrl: "/images/games/wager/Frame 13.png",
       provider: "ProviderA",
       providerCode: "PA",
       gameType: "card",
@@ -89,7 +89,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
     {
       id: "game9",
       name: "Blackjack",
-      imageUrl: "/images/games/wager/frame 14.png",
+      imageUrl: "/images/games/wager/Frame 14.png",
       provider: "ProviderA",
       providerCode: "PA",
       gameType: "card",
@@ -97,7 +97,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
     {
       id: "game10",
       name: "Blackjack",
-      imageUrl: "/images/games/wager/frame 15.png",
+      imageUrl: "/images/games/wager/Frame 15.png",
       provider: "ProviderA",
       providerCode: "PA",
       gameType: "card",
