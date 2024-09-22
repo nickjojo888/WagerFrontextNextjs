@@ -7,7 +7,7 @@ const SetUsernameModal: React.FC = () => {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { checkUsername, createUser } = useAuth();
+  const { createUser } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,17 +15,14 @@ const SetUsernameModal: React.FC = () => {
     setError("");
 
     try {
-      const isAvailable = await checkUsername(username);
-      if (!isAvailable) {
-        setError("Username is already taken");
-        setIsLoading(false);
-        return;
-      }
-
       await createUser(username);
     } catch (error) {
       console.error("Error creating user:", error);
-      setError(`${error}`);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unexpected error occurred");
+      }
     } finally {
       setIsLoading(false);
     }
