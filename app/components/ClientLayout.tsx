@@ -25,7 +25,8 @@ export default function ClientLayout({
 
       <div
         className={clsx(
-          "flex-1 overflow-y-auto lg:col-start-1 lg:row-start-1 lg:row-span-2 ",
+          // you need overflow-y to be visible for the tooltips to show outside sidebar, change to hidden and they are clipped. Wierd
+          "flex-1 overflow-y-visible lg:col-start-1 lg:row-start-1 lg:row-span-2 ",
           {
             "hidden lg:block": !isSidebarExpanded,
           }
