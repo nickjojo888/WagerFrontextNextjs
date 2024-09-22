@@ -5,4 +5,5 @@ export interface Game {
   provider: string;
   providerCode: string;
   border?: string;
+  gameType: string;
 }

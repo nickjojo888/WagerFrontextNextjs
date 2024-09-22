@@ -10,6 +10,7 @@ import {
   HeadPhonesSVG,
   PokerChipSVG,
 } from "@/public/svgs/SVGComponents";
+import WagerGamesCarousel from "./components/carousels/game_carousel/WagerGamesCarousel";
 
 export default function Home() {
   return (
@@ -17,6 +18,11 @@ export default function Home() {
       <Carousel />
       <ShadowDivider />
       <SearchOptions />
+      <WagerGamesCarousel
+        provider="PRAGMATIC"
+        title="Wager games"
+        Icon={<PokerChipSVG width={24} height={24} />}
+      />
       <GamesCarousel
         provider="PRAGMATIC"
         title="PRAGMATIC games"
