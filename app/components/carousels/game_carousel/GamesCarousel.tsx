@@ -112,7 +112,7 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
           : games.map((game) => (
               <div
                 key={game.id}
-                className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/6 xl:w-1/7 flex-shrink-0 snap-start"
+                className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/7 xl:w-1/8 flex-shrink-0 snap-start"
               >
                 <Image
                   src={game.imageUrl}
