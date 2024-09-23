@@ -33,7 +33,7 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
     >
       <button
         className={clsx("hidden lg:block text-white", {
-          "h-20": !isExpanded,
+          "h-20": !isExpanded, //ensure that when in column mode and not expanded, height is 20
         })}
         onClick={toggleSidebar}
       >
