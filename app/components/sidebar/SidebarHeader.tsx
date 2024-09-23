@@ -54,11 +54,12 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
           <Link
             href="/"
             className={clsx(
-              "p-3 flex items-center justify-center w-full h-full",
+              "p-3 flex items-center justify-center w-full h-full transition-colors duration-200",
               {
                 "border-b border-gray-600": !isExpanded,
                 "border-r border-gray-600": isExpanded,
                 "bg-primary": !isSportsActive,
+                "hover:bg-gray-600": isSportsActive,
               }
             )}
           >
@@ -74,9 +75,10 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
           <Link
             href="/sports"
             className={clsx(
-              "p-3 flex items-center justify-center w-full h-full",
+              "p-3 flex items-center justify-center w-full h-full transition-colors duration-200",
               {
                 "bg-primary": isSportsActive,
+                "hover:bg-gray-600": !isSportsActive,
               }
             )}
           >
