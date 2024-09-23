@@ -23,10 +23,13 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
 
   return (
     <div
-      className={clsx("flex justify-center lg:justify-between items-center", {
-        "pb-4 pt-4 lg:pt-0 lg:pb-0 lg:h-20 flex-row": isExpanded,
-        "flex-col pb-4": !isExpanded,
-      })}
+      className={clsx(
+        "flex justify-center lg:justify-between items-center w-full",
+        {
+          "pb-4 pt-4 lg:pt-0 lg:pb-0 lg:h-20 flex-row gap-2": isExpanded,
+          "flex-col pb-4": !isExpanded,
+        }
+      )}
     >
       <button
         className={clsx("hidden lg:block text-white", {
@@ -37,37 +40,45 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
         <MenuIcon width={24} height={24} />
       </button>
       <div
-        className={clsx("flex bg-gray-700 rounded-lg overflow-hidden", {
-          "flex-col mt-2 lg:mt-0": !isExpanded,
+        className={clsx("flex bg-gray-700 rounded-lg overflow-hidden w-full", {
+          "flex-col": !isExpanded,
+          "flex-row": isExpanded,
+          "mt-2 lg:mt-0": !isExpanded,
         })}
       >
         <div
-          className="relative"
+          className="relative flex-grow"
           onMouseEnter={() => setShowHomeTooltip(true)}
           onMouseLeave={() => setShowHomeTooltip(false)}
         >
           <Link
             href="/"
-            className={clsx("p-3 flex items-center", {
-              "border-b border-gray-600": !isExpanded,
-              "border-r border-gray-600": isExpanded,
-              "bg-primary": !isSportsActive,
-            })}
+            className={clsx(
+              "p-3 flex items-center justify-center w-full h-full",
+              {
+                "border-b border-gray-600": !isExpanded,
+                "border-r border-gray-600": isExpanded,
+                "bg-primary": !isSportsActive,
+              }
+            )}
           >
             <HomeIcon width={24} height={24} />
             {isExpanded && <span className="ml-2">Home</span>}
           </Link>
         </div>
         <div
-          className="relative"
+          className="relative flex-grow"
           onMouseEnter={() => setShowSportsTooltip(true)}
           onMouseLeave={() => setShowSportsTooltip(false)}
         >
           <Link
             href="/sports"
-            className={clsx("p-3 flex items-center", {
-              "bg-primary": isSportsActive,
-            })}
+            className={clsx(
+              "p-3 flex items-center justify-center w-full h-full",
+              {
+                "bg-primary": isSportsActive,
+              }
+            )}
           >
             <SportsSVG width={24} height={24} />
             {isExpanded && <span className="ml-2">Sports</span>}
