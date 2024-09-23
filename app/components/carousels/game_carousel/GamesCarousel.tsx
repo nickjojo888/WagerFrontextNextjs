@@ -104,8 +104,8 @@ const GamesCarousel: React.FC<GamesCarouselProps> = ({
             .fill(null)
             .map((_, index) => (
               <div
-                key={`placeholder-${index}`}
-                className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/6 xl:w-1/7 flex-shrink-0 snap-start"
+                key={index}
+                className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/7 xl:w-1/8 flex-shrink-0 snap-start"
               >
                 <div className="rounded-lg w-full aspect-[1/1] bg-gray-700 animate-pulse" />
               </div>

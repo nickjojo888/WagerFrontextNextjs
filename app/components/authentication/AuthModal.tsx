@@ -3,28 +3,32 @@ import React, { useCallback, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
+import SetUsernameModal from "./SetUsernameModal";
 import { useAuth } from "./AuthContext";
 
 const AuthModal: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authType, setAuthType] = useState<"login" | "register" | null>(null);
   const [isLoading, setIsLoading] = useState(false); //this manages whether the auth modal itself if loading
-  const { user, loading } = useAuth(); //if user status still loading don't open modal, and if user present don;t open modal
+  const { user, authUser, loading } = useAuth(); //if user status still loading don't open modal, and if user present don;t open modal
+  const [isSetUsernameOpen, setIsSetUsernameOpen] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) {
+    setIsAuthOpen(false);
+    setIsSetUsernameOpen(false);
+    if (!loading && !authUser) {
       const authParam = searchParams.get("auth");
-      setIsOpen(authParam === "login" || authParam === "register");
+      setIsAuthOpen(authParam === "login" || authParam === "register");
       setAuthType(authParam as "login" | "register" | null);
-    } else if (!loading && user) {
-      // If user is logged in, close the modal and remove the auth parameter
-      closeModal();
+    } else if (!loading && authUser && !user) {
+      // if auth user found, but no backend user, we need to create one
+      setIsSetUsernameOpen(true);
     }
-  }, [searchParams, user, loading]);
+  }, [searchParams, authUser, user, loading]);
 
-  const closeModal = useCallback(() => {
+  const closeAuthModal = useCallback(() => {
     if (!isLoading) {
       const currentPath = window.location.pathname;
       const newUrl = new URL(currentPath, window.location.origin);
@@ -34,31 +38,37 @@ const AuthModal: React.FC = () => {
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget && !isLoading) {
-      closeModal();
+      closeAuthModal();
     }
   };
-
-  if (!isOpen || loading || user) return null;
+  //if the user is already logged in, or we are still waiting to tell if this is the case, then don't show anything
+  if (!isAuthOpen && !isSetUsernameOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50"
-      onClick={handleOutsideClick}
-    >
-      {authType === "login" ? (
-        <LoginModal
-          onClose={closeModal}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
+    <>
+      {isSetUsernameOpen ? (
+        <SetUsernameModal />
       ) : (
-        <RegisterModal
-          onClose={closeModal}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-40"
+          onClick={handleOutsideClick}
+        >
+          {authType === "login" ? (
+            <LoginModal
+              onClose={closeAuthModal}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          ) : (
+            <RegisterModal
+              onClose={closeAuthModal}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

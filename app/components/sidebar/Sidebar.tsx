@@ -23,6 +23,9 @@ import RecentIcon from "@/public/svgs/time-outline.svg";
 import SidebarLink from "./SidebarLink";
 import clsx from "clsx";
 import SidebarGroup from "./SidebarGroup"; // New import
+import SidebarSearchBar from "./SidebarSearchBar";
+import { usePathname } from "next/navigation"; // Add this import
+import SidebarHeader from "./SidebarHeader"; // Add this import
 
 interface SidebarProps {
   isExpanded: boolean; // controls whether sidebar is expanded
@@ -30,6 +33,9 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
+  const pathname = usePathname(); // Add this line to get the current path
+  const isSportsActive = pathname.startsWith("/sports");
+
   return (
     <aside
       className={clsx(
@@ -40,11 +46,14 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
         }
       )}
     >
-      {/* toggle button has same size as the header to they are aligned, don't show in mobile view */}
-      <div className="hidden lg:flex items-center justify-center lg:h-20">
-        <button onClick={toggleSidebar} className="text-white">
-          <MenuIcon width={24} height={24} />
-        </button>
+      <SidebarHeader
+        isExpanded={isExpanded}
+        toggleSidebar={toggleSidebar}
+        pathname={pathname}
+      />
+
+      <div className="mb-4">
+        <SidebarSearchBar isExpanded={isExpanded} />
       </div>
 
       <ul className="flex flex-col gap-y-4">
