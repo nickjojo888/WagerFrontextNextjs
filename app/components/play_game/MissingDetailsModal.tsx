@@ -66,7 +66,7 @@ const MissingDetailsModal: React.FC = () => {
         </p>
         <div className="flex justify-center">
           <Link
-            href="/settings/details"
+            href="/settings/verify"
             className="bg-primary text-white px-4 py-2 rounded hover:bg-secondary transition duration-300"
           >
             Go to Settings

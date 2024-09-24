@@ -1,10 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "@/app/components/authentication/AuthContext";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import PersonalDetailsModal from "./PersonalDetailsModal";
 
 const VerifyPage: React.FC = () => {
   const { user } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const verificationSteps = [
     {
@@ -24,6 +26,13 @@ const VerifyPage: React.FC = () => {
       completed: user?.kycFilled,
     },
   ];
+
+  const handleCompleteClick = (stepName: string) => {
+    if (stepName === "Personal Details") {
+      setIsModalOpen(true);
+    }
+    // Handle other steps if needed
+  };
 
   return (
     <div className="space-y-6">
@@ -57,6 +66,7 @@ const VerifyPage: React.FC = () => {
                         : "bg-primary hover:bg-secondary"
                     }`}
                     disabled={isDisabled}
+                    onClick={() => handleCompleteClick(step.name)}
                   >
                     Complete
                   </button>
@@ -66,6 +76,10 @@ const VerifyPage: React.FC = () => {
           );
         })}
       </div>
+      <PersonalDetailsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
