@@ -13,6 +13,7 @@ interface AuthContextType {
   user: IUser | null;
   loading: boolean;
   createUser: (username: string) => Promise<void>;
+  updateUserDetails: (details: any) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -63,18 +64,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  return (
-    <AuthContext.Provider
-      value={{
-        authUser,
-        user,
-        loading,
-        createUser,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  const updateUserDetails = async (details: any) => {
+    try {
+      // Make an API call to update user details
+      const response = await fetch("/api/user/update-details", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(details),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update user details");
+      }
+
+      // Update the user state with the new details
+      setUser((prevUser) => ({ ...prevUser, ...details, detailsFilled: true }));
+    } catch (error) {
+      console.error("Error updating user details:", error);
+      throw error;
+    }
+  };
+
+  const value = {
+    authUser,
+    user,
+    loading,
+    createUser,
+    updateUserDetails,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
