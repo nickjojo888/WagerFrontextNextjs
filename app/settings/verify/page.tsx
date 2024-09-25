@@ -4,12 +4,14 @@ import { useAuth } from "@/app/components/authentication/AuthContext";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import PersonalDetailsModal from "./personal_details_modal/PersonalDetailsModal";
 import KYCVerificationModal from "./kyc_modal/KYCVerificationModal";
+import EmailVerificationModal from "./email_modal/EmailVerificationModal";
 
 const VerifyPage: React.FC = () => {
   const { user } = useAuth();
   const [isPersonalDetailsModalOpen, setIsPersonalDetailsModalOpen] =
     useState(false);
   const [isKYCModalOpen, setIsKYCModalOpen] = useState(false);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
 
   const verificationSteps = [
     {
@@ -31,7 +33,9 @@ const VerifyPage: React.FC = () => {
   ];
 
   const handleCompleteClick = (stepName: string) => {
-    if (stepName === "Personal Details") {
+    if (stepName === "Email Verification") {
+      setIsEmailModalOpen(true);
+    } else if (stepName === "Personal Details") {
       setIsPersonalDetailsModalOpen(true);
     } else if (stepName === "KYC Verification") {
       setIsKYCModalOpen(true);
@@ -81,6 +85,10 @@ const VerifyPage: React.FC = () => {
           );
         })}
       </div>
+      <EmailVerificationModal
+        isOpen={isEmailModalOpen}
+        onClose={() => setIsEmailModalOpen(false)}
+      />
       <PersonalDetailsModal
         isOpen={isPersonalDetailsModalOpen}
         onClose={() => setIsPersonalDetailsModalOpen(false)}
