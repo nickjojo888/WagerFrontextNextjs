@@ -1,6 +1,6 @@
 import React from "react";
 import SettingsLink from "./SettingsLink";
-import AuthCheck from "../components/AuthCheck";
+import AuthCheck from "../components/authentication/AuthCheck";
 
 const menuItems = [
   { label: "Account", path: "/settings/account" },
