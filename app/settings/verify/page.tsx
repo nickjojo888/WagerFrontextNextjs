@@ -2,11 +2,14 @@
 import React, { useState } from "react";
 import { useAuth } from "@/app/components/authentication/AuthContext";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import PersonalDetailsModal from "./PersonalDetailsModal";
+import PersonalDetailsModal from "./personal_details_modal/PersonalDetailsModal";
+import KYCVerificationModal from "./kyc_modal/KYCVerificationModal";
 
 const VerifyPage: React.FC = () => {
   const { user } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPersonalDetailsModalOpen, setIsPersonalDetailsModalOpen] =
+    useState(false);
+  const [isKYCModalOpen, setIsKYCModalOpen] = useState(false);
 
   const verificationSteps = [
     {
@@ -29,18 +32,20 @@ const VerifyPage: React.FC = () => {
 
   const handleCompleteClick = (stepName: string) => {
     if (stepName === "Personal Details") {
-      setIsModalOpen(true);
+      setIsPersonalDetailsModalOpen(true);
+    } else if (stepName === "KYC Verification") {
+      setIsKYCModalOpen(true);
     }
     // Handle other steps if needed
   };
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6">
       <h2 className="text-2xl font-bold">Verify Account</h2>
       <div className="flex flex-col gap-6 rounded-lg">
         {verificationSteps.map((step, index) => {
           const isDisabled =
-            index > 0 && !verificationSteps[index - 1].completed;
+            false && index > 0 && !verificationSteps[index - 1].completed;
           return (
             <div
               key={index}
@@ -77,8 +82,12 @@ const VerifyPage: React.FC = () => {
         })}
       </div>
       <PersonalDetailsModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isPersonalDetailsModalOpen}
+        onClose={() => setIsPersonalDetailsModalOpen(false)}
+      />
+      <KYCVerificationModal
+        isOpen={isKYCModalOpen}
+        onClose={() => setIsKYCModalOpen(false)}
       />
     </div>
   );
