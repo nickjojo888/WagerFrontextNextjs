@@ -18,15 +18,23 @@ const AuthModal: React.FC = () => {
   useEffect(() => {
     setIsAuthOpen(false);
     setIsSetUsernameOpen(false);
-    if (!loading && !authUser) {
-      const authParam = searchParams.get("auth");
-      setIsAuthOpen(authParam === "login" || authParam === "register");
-      setAuthType(authParam as "login" | "register" | null);
-    } else if (!loading && authUser && !user) {
-      // if auth user found, but no backend user, we need to create one
-      setIsSetUsernameOpen(true);
+    if (!loading) {
+      if (!authUser) {
+        const authParam = searchParams.get("auth");
+        setIsAuthOpen(authParam === "login" || authParam === "register");
+        setAuthType(authParam as "login" | "register" | null);
+      } else if (!user) {
+        // if auth user found, but no backend user, we need to create one
+        setIsSetUsernameOpen(true);
+      } else {
+        // If user is authenticated and has a backend user, redirect to settings
+        const currentPath = window.location.pathname;
+        if (currentPath === "/") {
+          router.push("/settings");
+        }
+      }
     }
-  }, [searchParams, authUser, user, loading]);
+  }, [searchParams, authUser, user, loading, router]);
 
   const closeAuthModal = useCallback(() => {
     if (!isLoading) {
