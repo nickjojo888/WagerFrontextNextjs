@@ -2,18 +2,19 @@
 import React from "react";
 import { useAuth } from "../authentication/AuthContext";
 import { auth } from "@/app/firebase/firebaseConfig";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const AuthButtons = () => {
   const { authUser } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogout = () => {
     auth.signOut();
   };
 
   const openAuthModal = (mode: "login" | "register") => {
-    router.push(`/?auth=${mode}`);
+    router.push(`${pathname}/?auth=${mode}`);
   };
 
   return (

@@ -4,6 +4,7 @@ import GameDescription from "@/app/components/play_game/GameDescription";
 import GamesCarousel from "@/app/components/carousels/game_carousel/GamesCarousel";
 import ProviderCarousel from "@/app/components/carousels/provider_carousel/ProviderCarousel";
 import { PokerChipSVG } from "@/public/svgs/SVGComponents";
+import MissingDetailsModal from "@/app/components/play_game/MissingDetailsModal";
 
 interface GamePageProps {
   params: {
@@ -17,6 +18,7 @@ const GamePage: React.FC<GamePageProps> = ({ params }) => {
 
   return (
     <div className="flex flex-col gap-6 h-full min-h-full overflow-visible px-5 md:px-10">
+      <MissingDetailsModal />
       <GameIframe provider={provider} game_code={game_code} />
       <GameDescription provider={provider} game_code={game_code} />
       <GamesCarousel
