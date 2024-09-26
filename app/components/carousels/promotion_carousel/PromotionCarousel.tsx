@@ -66,7 +66,7 @@ export default function Carousel() {
       <div className="overflow-hidden rounded-lg">
         <div
           ref={carouselRef}
-          className="flex gap-x-2 overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+          className="flex gap-x-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
