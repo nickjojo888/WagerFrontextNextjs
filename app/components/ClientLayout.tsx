@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import clsx from "clsx";
 import Sidebar from "@/app/components/sidebar/Sidebar";
 import MobileMenu from "@/app/components/MobileMenu";
@@ -10,7 +10,18 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+
+  useEffect(() => {
+    // on lg devices sidebar open by default, but closed by default on mobile
+    const handleResize = () => {
+      setIsSidebarExpanded(window.innerWidth >= 1024); // 1024px is the default breakpoint for 'lg' in Tailwind
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarExpanded(!isSidebarExpanded);
