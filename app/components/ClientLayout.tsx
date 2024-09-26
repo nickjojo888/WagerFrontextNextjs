@@ -10,7 +10,7 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarExpanded(!isSidebarExpanded);
@@ -19,7 +19,7 @@ export default function ClientLayout({
   return (
     <div className="flex flex-col h-full lg:grid lg:grid-rows-[auto,1fr] lg:grid-cols-[auto,1fr] overflow-y-hidden">
       {/* Header */}
-      <div className="lg:col-start-2 px-5 md:px-10 overflow-x-visible">
+      <div className="lg:col-start-2 w-full max-w-7xl m-auto px-5 md:px-10 overflow-x-visible">
         <Header />
       </div>
 
@@ -43,7 +43,7 @@ export default function ClientLayout({
         )}
       >
         {/* Scrollable main content */}
-        <main className="h-full overflow-y-auto overflow-x-hidden">
+        <main className="h-full max-w-7xl m-auto overflow-y-auto overflow-x-hidden">
           {children}
         </main>
       </div>

@@ -44,6 +44,9 @@ const config: Config = {
         "1/8": "12.5%",
         "1/9": "11.1111111%",
       },
+      maxWidth: {
+        "7xl": "81.25rem", // 1300px / 16px per rem = 81.25rem
+      },
     },
   },
   plugins: [],
