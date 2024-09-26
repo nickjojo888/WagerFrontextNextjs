@@ -26,12 +26,6 @@ const AuthModal: React.FC = () => {
       } else if (!user) {
         // if auth user found, but no backend user, we need to create one
         setIsSetUsernameOpen(true);
-      } else {
-        // If user is authenticated and has a backend user, redirect to settings
-        const currentPath = window.location.pathname;
-        if (currentPath === "/") {
-          router.push("/settings");
-        }
       }
     }
   }, [searchParams, authUser, user, loading, router]);
