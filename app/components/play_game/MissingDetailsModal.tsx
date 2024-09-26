@@ -32,7 +32,7 @@ const MissingDetailsModal: React.FC = () => {
         setIsOpen(true);
       }
     }
-  }, [user, authUser, router, pathname, searchParams]);
+  }, [user, authUser, router, pathname]);
 
   const closeModal = useCallback(() => {
     setIsOpen(false);
