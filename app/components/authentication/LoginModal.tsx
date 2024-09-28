@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import { useAuth } from "./AuthContext";
+import { useOpenAuthModal } from "@/app/utils/authHelpers";
 
 interface LoginModalProps {
   onClose: () => void;
@@ -29,6 +30,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [error, setError] = useState("");
   const router = useRouter();
   const { fetchUserByFirebaseId } = useAuth();
+  const openAuthModal = useOpenAuthModal();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,7 +126,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
       <p className="text-center text-sm text-gray-400">
         Don't have an account?{" "}
         <button
-          onClick={() => router.push("/?auth=register")}
+          onClick={() => openAuthModal("register")}
           className="text-primary hover:underline"
           disabled={isLoading}
         >

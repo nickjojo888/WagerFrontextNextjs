@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import Link from "next/link"; // Add this import
 import { useAuth } from "./AuthContext"; // Add this import
+import { useOpenAuthModal } from "@/app/utils/authHelpers";
 
 // Use environment variable for backend URL
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
@@ -37,8 +38,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   const [termsError, setTermsError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const router = useRouter();
   const { createInitialUser } = useAuth();
+  const openAuthModal = useOpenAuthModal();
 
   const handleEmailRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -204,7 +205,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       <p className="text-center text-sm text-gray-400">
         Already have an account?{" "}
         <button
-          onClick={() => router.push("/?auth=login")}
+          onClick={() => openAuthModal("login")}
           className="text-primary hover:underline"
           disabled={isLoading}
         >
