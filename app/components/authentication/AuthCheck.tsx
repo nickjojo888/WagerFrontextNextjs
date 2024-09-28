@@ -9,9 +9,9 @@ const AuthCheck: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/?auth=login");
+      router.push("/?auth=login"); //send back to home page
     }
-  }, [loading, router]);
+  }, [user, loading, router]);
 
   return <>{children}</>;
 };
