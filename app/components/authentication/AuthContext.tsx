@@ -15,6 +15,7 @@ interface AuthContextType {
   updateUser: (details: any) => Promise<void>;
   createInitialUser: (firebaseUser: any) => Promise<IUser>;
   fetchUserByFirebaseId: (firebaseUserId: string) => Promise<void>;
+  deleteUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -70,11 +71,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         `${BACKEND_URL}/api/users/${user._id}`,
         details
       );
-
       if (response.status !== 200) {
         throw new Error("Failed to update user details");
       }
-
       // Update the user state with the new details
       setUser(response.data);
     } catch (error) {
@@ -102,6 +101,60 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const deleteUser = async () => {
+    if (!user || !authUser) {
+      throw new Error("No user data available");
+    }
+
+    try {
+      const response = await axios.delete(
+        `${BACKEND_URL}/api/users/${user._id}`
+      );
+
+      if (response.status !== 200) {
+        throw new Error("Failed to delete user");
+      }
+
+      // Sign out from Firebase
+      // This will trigger onAuthStateChanged, which will set user to null
+      await auth.signOut();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      if (isAxiosError(error) && error.response) {
+        throw new Error(error.response.data);
+      } else {
+        throw error;
+      }
+    }
+  };
+
+  const deleteFirebaseAuthUser = async () => {
+    if (!authUser) {
+      throw new Error("No authenticated user");
+    }
+
+    try {
+      const response = await axios.delete(
+        `${BACKEND_URL}/api/users/${authUser.uid}/auth`
+      );
+
+      if (response.status !== 200) {
+        throw new Error("Failed to delete Firebase Auth user");
+      }
+
+      // Sign out from Firebase
+      // This will trigger onAuthStateChanged, which will set user and authUser to null
+      await auth.signOut();
+    } catch (error) {
+      console.error("Error deleting Firebase Auth user:", error);
+      if (isAxiosError(error) && error.response) {
+        throw new Error(error.response.data);
+      } else {
+        throw error;
+      }
+    }
+  };
+
   const value = {
     authUser,
     user,
@@ -109,6 +162,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     updateUser,
     createInitialUser,
     fetchUserByFirebaseId,
+    deleteUser,
+    deleteFirebaseAuthUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
