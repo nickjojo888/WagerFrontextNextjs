@@ -5,7 +5,7 @@ import { useAuth } from "@/app/components/authentication/AuthContext";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 const MissingDetailsModal: React.FC = () => {
-  const { user, authUser } = useAuth();
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -13,26 +13,22 @@ const MissingDetailsModal: React.FC = () => {
 
   useEffect(() => {
     setIsOpen(false);
-    console.log("user logegr: ", authUser);
-    if (!authUser) {
-      // If authUser is not present, open the AuthModal
+    if (!user) {
+      // If user is not present, open the AuthModal
       router.push(`${pathname}/?auth=login`);
     } else {
-      // If authUser is present, remove the auth parameter from the URL
+      // If user is present, remove the auth parameter from the URL
       const params = new URLSearchParams(searchParams);
       params.delete("auth");
       router.replace(
         `${pathname}${params.toString() ? `?${params.toString()}` : ""}` //add params if present
       );
       // if the user has not filled in all details yet, then show the modal
-      if (
-        user &&
-        (!user.emailVerified || !user.detailsFilled || !user.kycFilled)
-      ) {
+      if (!user.emailVerified || !user.detailsFilled || !user.kycFilled) {
         setIsOpen(true);
       }
     }
-  }, [user, authUser, router, pathname]);
+  }, [user, router, pathname]);
 
   const closeModal = useCallback(() => {
     setIsOpen(false);

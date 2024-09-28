@@ -12,23 +12,23 @@ const AuthModal: React.FC = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authType, setAuthType] = useState<"login" | "register" | null>(null);
   const [isLoading, setIsLoading] = useState(false); //this manages whether the auth modal itself if loading
-  const { user, authUser, loading } = useAuth(); //if user status still loading don't open modal, and if user present don;t open modal
+  const { user, loading } = useAuth(); //if user status still loading don't open modal, and if user present don;t open modal
   const [isSetUsernameOpen, setIsSetUsernameOpen] = useState(false);
 
   useEffect(() => {
     setIsAuthOpen(false);
     setIsSetUsernameOpen(false);
     if (!loading) {
-      if (!authUser) {
+      if (!user) {
         const authParam = searchParams.get("auth");
         setIsAuthOpen(authParam === "login" || authParam === "register");
         setAuthType(authParam as "login" | "register" | null);
-      } else if (!user) {
-        // if auth user found, but no backend user, we need to create one
+      } else if (!user.username) {
+        // if user present but does not have username, show the username modal
         setIsSetUsernameOpen(true);
       }
     }
-  }, [searchParams, authUser, user, loading, router]);
+  }, [searchParams, user, loading, router]);
 
   const closeAuthModal = useCallback(() => {
     if (!isLoading) {

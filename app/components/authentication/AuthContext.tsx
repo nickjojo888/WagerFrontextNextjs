@@ -12,8 +12,9 @@ interface AuthContextType {
   authUser: AuthUser | null;
   user: IUser | null;
   loading: boolean;
-  createUser: (username: string) => Promise<void>;
-  updateUserDetails: (details: any) => Promise<void>;
+  updateUser: (details: any) => Promise<void>;
+  createInitialUser: (firebaseUser: any) => Promise<IUser>;
+  fetchUserByFirebaseId: (firebaseUserId: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,6 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
       setAuthUser(firebaseUser);
+      console.log("auth user: ", firebaseUser);
       if (firebaseUser) {
         try {
           const response = await axios.get(
@@ -33,7 +35,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           );
           setUser(response.data);
         } catch (error) {
-          console.error("Error fetching user:", error);
+          // don't use the fetchuserbyfirebaseid function here since catch block will soon delete firebase auth user here
+          console.error("Error fetching user in useEffect:", error);
           setUser(null);
         }
       } else {
@@ -44,46 +47,58 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return unsubscribe;
   }, []);
 
-  const createUser = async (username: string): Promise<void> => {
-    if (!authUser) throw new Error("No authenticated user");
+  const fetchUserByFirebaseId = async (firebaseUserId: string) => {
     try {
-      const response = await axios.post<IUser>(`${BACKEND_URL}/api/users`, {
-        userID: authUser.uid,
-        username,
-        email: authUser.email || undefined,
-        emailVerified: authUser.emailVerified,
-      });
+      const response = await axios.get(
+        `${BACKEND_URL}/api/users/${firebaseUserId}`
+      );
       setUser(response.data);
     } catch (error) {
-      console.error("Error creating user:", error);
-      if (isAxiosError(error) && error.response) {
-        throw new Error(`Failed to create user: ${error.response.data}`);
-      } else {
-        throw new Error("Failed to create user: Unknown error occurred");
-      }
+      console.error("Error fetching user:", error);
+      setUser(null);
+      throw error;
     }
   };
 
-  const updateUserDetails = async (details: any) => {
-    try {
-      // Make an API call to update user details
-      const response = await fetch("/api/user/update-details", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(details),
-      });
+  const updateUser = async (details: Partial<IUser>) => {
+    if (!user) {
+      throw new Error("No user data available");
+    }
 
-      if (!response.ok) {
+    try {
+      const response = await axios.put(
+        `${BACKEND_URL}/api/users/${user._id}`,
+        details
+      );
+
+      if (response.status !== 200) {
         throw new Error("Failed to update user details");
       }
 
       // Update the user state with the new details
-      setUser((prevUser) => ({ ...prevUser, ...details, detailsFilled: true }));
+      setUser(response.data);
     } catch (error) {
       console.error("Error updating user details:", error);
-      throw error;
+      if (isAxiosError(error) && error.response) {
+        throw new Error(error.response.data);
+      } else {
+        throw error;
+      }
+    }
+  };
+
+  const createInitialUser = async (firebaseUser: any): Promise<IUser> => {
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/users`, {
+        userID: firebaseUser.uid,
+        email: firebaseUser.email || undefined,
+        emailVerified: firebaseUser.emailVerified,
+      });
+      setUser(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error creating initial user:", error);
+      throw new Error("Failed to create initial user");
     }
   };
 
@@ -91,8 +106,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     authUser,
     user,
     loading,
-    createUser,
-    updateUserDetails,
+    updateUser,
+    createInitialUser,
+    fetchUserByFirebaseId,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -2,12 +2,14 @@
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 import { FaSpinner } from "react-icons/fa";
+import { useRouter } from "next/navigation"; // Added for navigation after username set
 
 const SetUsernameModal: React.FC = () => {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { createUser } = useAuth();
+  const { updateUser } = useAuth(); // Use updateUserDetails from AuthContext
+  const router = useRouter(); // Added for navigation after username set
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,9 +17,12 @@ const SetUsernameModal: React.FC = () => {
     setError("");
 
     try {
-      await createUser(username);
+      // Use updateUserDetails to set the username
+      await updateUser({ username });
+      // Redirect to home page or dashboard after successful username set
+      router.push("/");
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error("Error setting username:", error);
       if (error instanceof Error) {
         setError(error.message);
       } else {

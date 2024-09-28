@@ -6,12 +6,18 @@ import {
   FacebookAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+import axios from "axios"; // Added for making HTTP requests
 import FacebookIcon from "@/public/images/auth/facebook-logo.png";
 import GoogleIcon from "@/public/images/auth/google-logo.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import Link from "next/link"; // Add this import
+import { useAuth } from "./AuthContext"; // Add this import
+
+// Use environment variable for backend URL
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
 
 interface RegisterModalProps {
   onClose: () => void;
@@ -32,6 +38,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const router = useRouter();
+  const { createInitialUser } = useAuth();
 
   const handleEmailRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,11 +62,27 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
 
     setIsLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.push("/");
+      // Create user in Firebase
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const firebaseUser = userCredential.user;
+      // Create initial user in our database and update AuthContext
+      await createInitialUser(firebaseUser);
     } catch (error) {
-      console.log("this is the error: ", error);
-      setError("Registration failed. Please try again.");
+      console.error("Registration failed:", error);
+      if (
+        error instanceof FirebaseError &&
+        error.code === "auth/email-already-in-use"
+      ) {
+        setError(
+          "This email is already in use. Please try a different email or sign in."
+        );
+      } else {
+        setError(`Registration failed: ${error}`);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -70,11 +93,14 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   ) => {
     setIsLoading(true);
     try {
-      await signInWithPopup(auth, provider);
-      router.push("/");
+      // Authenticate with social provider
+      const result = await signInWithPopup(auth, provider);
+      const firebaseUser = result.user;
+      // Create initial user in our database and update AuthContext
+      await createInitialUser(firebaseUser);
     } catch (error) {
-      console.log("this is the error: ", error);
-      setError("Registration failed. Please try again.");
+      console.error("Social registration failed:", error);
+      setError(`Registration failes. ${error}`);
     } finally {
       setIsLoading(false);
     }

@@ -11,6 +11,7 @@ import GoogleIcon from "@/public/images/auth/google-logo.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
+import { useAuth } from "./AuthContext";
 
 interface LoginModalProps {
   onClose: () => void;
@@ -27,13 +28,18 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const { fetchUserByFirebaseId } = useAuth();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await fetchUserByFirebaseId(userCredential.user.uid);
     } catch (error) {
       console.log("this is the error: ", error);
       setError("Login failed. Please try again.");
@@ -47,8 +53,8 @@ const LoginModal: React.FC<LoginModalProps> = ({
   ) => {
     setIsLoading(true);
     try {
-      await signInWithPopup(auth, provider);
-      router.push("/");
+      const result = await signInWithPopup(auth, provider);
+      await fetchUserByFirebaseId(result.user.uid);
     } catch (error) {
       console.log("this is the error: ", error);
       setError("Login failed. Please try again.");

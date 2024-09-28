@@ -5,7 +5,7 @@ import { auth } from "@/app/firebase/firebaseConfig";
 import { useRouter, usePathname } from "next/navigation";
 
 const AuthButtons = () => {
-  const { authUser } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -19,7 +19,7 @@ const AuthButtons = () => {
 
   return (
     <div className="flex space-x-2">
-      {authUser ? (
+      {user ? (
         <>
           <button
             className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded"

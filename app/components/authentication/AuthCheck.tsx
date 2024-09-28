@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "./AuthContext";
 
 const AuthCheck: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { authUser, loading } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !authUser) {
+    if (!loading && !user) {
       router.push("/?auth=login");
     }
-  }, [authUser, loading, router]);
+  }, [loading, router]);
 
   return <>{children}</>;
 };
