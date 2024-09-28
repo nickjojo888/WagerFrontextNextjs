@@ -97,7 +97,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return response.data;
     } catch (error) {
       console.error("Error creating initial user:", error);
-      throw new Error("Failed to create initial user");
+      throw new Error(`Failed to create initial user: ${error}`);
     }
   };
 

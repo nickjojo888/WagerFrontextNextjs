@@ -92,6 +92,12 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   const handleSocialRegister = async (
     provider: GoogleAuthProvider | FacebookAuthProvider
   ) => {
+    setError("");
+    setTermsError("");
+    if (!agreeTerms) {
+      setTermsError("Please agree to the Terms and Privacy Policy.");
+      return;
+    }
     setIsLoading(true);
     try {
       // Authenticate with social provider
