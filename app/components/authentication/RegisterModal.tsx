@@ -38,7 +38,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   const [termsError, setTermsError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const { createInitialUser, isHandlingAuth } = useAuth();
+  const { createNewUser, isHandlingAuth } = useAuth();
   const openAuthModal = useOpenAuthModal();
 
   const handleEmailRegister = async (e: React.FormEvent) => {
@@ -72,7 +72,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       );
       const firebaseUser = userCredential.user;
       // Create initial user in our database and update AuthContext
-      await createInitialUser(firebaseUser);
+      await createNewUser(firebaseUser, true);
     } catch (error) {
       console.error("Registration failed:", error);
       if (
@@ -107,7 +107,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       const result = await signInWithPopup(auth, provider);
       const firebaseUser = result.user;
       // Create initial user in our database and update AuthContext
-      await createInitialUser(firebaseUser);
+      await createNewUser(firebaseUser, true);
     } catch (error) {
       console.error("Social registration failed:", error);
       setError(`Registration failed. ${error}`);

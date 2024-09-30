@@ -20,7 +20,7 @@ interface AuthContextType {
   loading: boolean;
   isHandlingAuth: React.MutableRefObject<boolean>;
   updateUser: (details: Partial<IUser>) => Promise<void>;
-  createInitialUser: (firebaseUser: any) => Promise<IUser>;
+  createNewUser: (firebaseUser: any, agreedToTerms: boolean) => Promise<IUser>;
   fetchUserByFirebaseUser: (firebaseUser: AuthUser) => Promise<void>;
   deleteUser: () => Promise<void>;
   deleteFirebaseAuthUser: () => Promise<void>;
@@ -77,7 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (isAxiosError(error) && error.response?.status === 404) {
         // User not found, attempt to create
         try {
-          const newUser = await createInitialUser(firebaseUser);
+          const newUser = await createNewUser(firebaseUser);
           setUser(newUser);
         } catch (createError) {
           console.error("Error creating initial user:", createError);
@@ -117,12 +117,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const createInitialUser = async (firebaseUser: any): Promise<IUser> => {
+  const createNewUser = async (
+    firebaseUser: any,
+    agreedToTerms: boolean = false
+  ): Promise<IUser> => {
     try {
       const response = await axios.post(`${BACKEND_URL}/api/users`, {
         userID: firebaseUser.uid,
         email: firebaseUser.email || undefined,
         emailVerified: firebaseUser.emailVerified,
+        agreedToTerms: agreedToTerms,
       });
       setUser(response.data);
       return response.data;
@@ -192,7 +196,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loading,
     isHandlingAuth,
     updateUser,
-    createInitialUser,
+    createNewUser,
     fetchUserByFirebaseUser,
     deleteUser,
     deleteFirebaseAuthUser,
