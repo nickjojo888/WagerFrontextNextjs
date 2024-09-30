@@ -1,4 +1,5 @@
 import React from "react";
+import { getNames, getCode } from "country-list";
 
 interface PersonalInfoFormProps {
   formData: {
@@ -19,6 +20,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   handleChange,
   onNext,
 }) => {
+  const countryNames = getNames();
+
   return (
     <>
       <h2 className="text-2xl font-bold text-center mb-4">
@@ -38,7 +41,11 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             className="w-full p-2 bg-gray-700 rounded"
           >
             <option value="">Select Country</option>
-            {/* Add country options here */}
+            {countryNames.map((name) => (
+              <option key={getCode(name)} value={name}>
+                {name}
+              </option>
+            ))}
           </select>
         </div>
         <div>
