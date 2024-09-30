@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/app/components/authentication/AuthContext";
+import { sendEmailVerification, applyActionCode } from "firebase/auth";
+import { auth } from "@/app/firebase/firebaseConfig";
+import { useSearchParams, useRouter } from "next/navigation";
+
+// This modal is designed to be opened only when:
+// 1. A user exists (is logged in)
+// 2. The user's email is not yet verified
+// The parent component (likely VerifyPage) should handle this logic and only render
+// or open this modal under these conditions.
 
 interface EmailVerificationModalProps {
   isOpen: boolean;
@@ -10,11 +19,51 @@ const EmailVerificationModal: React.FC<EmailVerificationModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  const { user } = useAuth();
+  const { authUser, user, updateUser } = useAuth();
+  // If this modal is opened, we can assume user exists and email is not verified
   const [email, setEmail] = useState(user?.email || "");
   const [cooldown, setCooldown] = useState(0);
   const [error, setError] = useState("");
 
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleEmailVerification = async () => {
+      const mode = searchParams.get("mode");
+      const oobCode = searchParams.get("oobCode");
+      if (mode === "verifyEmail" && oobCode && user) {
+        try {
+          await applyActionCode(auth, oobCode);
+          await updateUser({ emailVerified: true });
+        } catch (error) {
+          console.error("Error verifying email:", error);
+          setError("Failed to verify email. Please try again.");
+        } finally {
+          // Remove mode and oobCode from URL
+          const newSearchParams = new URLSearchParams(searchParams.toString());
+          newSearchParams.delete("mode");
+          newSearchParams.delete("oobCode");
+          newSearchParams.delete("apiKey");
+          const newPathname =
+            window.location.pathname +
+            (newSearchParams.toString()
+              ? `?${newSearchParams.toString()}`
+              : "");
+          router.replace(newPathname);
+        }
+      }
+    };
+    handleEmailVerification();
+  }, [searchParams, updateUser, router, user]);
+
+  useEffect(() => {
+    if (user?.email) {
+      setEmail(user.email);
+    }
+  }, [user]);
+
+  // Manage cooldown timer for resending verification email
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (cooldown > 0) {
@@ -40,15 +89,17 @@ const EmailVerificationModal: React.FC<EmailVerificationModalProps> = ({
     }
 
     try {
-      // TODO: Implement the actual email verification logic here
-      console.log("Sending verification email to:", email);
+      // This should only be called if user exists, as per the modal's intended usage
+      await sendEmailVerification(authUser!);
       setCooldown(60);
       setError("");
     } catch (error) {
       setError("Failed to send verification email. Please try again.");
+      console.error("Error sending verification email:", error);
     }
   };
 
+  // Modal is not rendered if it's not open
   if (!isOpen) return null;
 
   return (
@@ -83,7 +134,7 @@ const EmailVerificationModal: React.FC<EmailVerificationModalProps> = ({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={!!user?.email}
-              className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-gray-600 focus:outline-none disabled:opacity-50"
+              className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-gray-600 focus:outline-none disabled:opacity-75"
             />
           </div>
           {error && <p className="text-red-500 text-sm">{error}</p>}
