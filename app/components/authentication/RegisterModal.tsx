@@ -119,7 +119,17 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       }
     } catch (error) {
       console.error("Social registration failed:", error);
-      setError(`Registration failed. ${error}`);
+      if (error instanceof FirebaseError) {
+        if (error.code === "auth/account-exists-with-different-credential") {
+          setError(
+            "An account already exists with the same email address but different sign-in credentials. Please sign in using the original method."
+          );
+        } else {
+          setError(`Registration failed: ${error.message}`);
+        }
+      } else {
+        setError(`Registration failed. ${error}`);
+      }
     } finally {
       setIsLoading(false);
       isHandlingAuth.current = false;

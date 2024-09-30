@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import { useAuth } from "./AuthContext";
 import { useOpenAuthModal } from "@/app/utils/authHelpers";
+import { FirebaseError } from "firebase/app";
 
 interface LoginModalProps {
   onClose: () => void;
@@ -77,7 +78,17 @@ const LoginModal: React.FC<LoginModalProps> = ({
       }
     } catch (error) {
       console.error("Social login failed:", error);
-      setError("Login failed. Please try again.");
+      if (error instanceof FirebaseError) {
+        if (error.code === "auth/account-exists-with-different-credential") {
+          setError(
+            "An account already exists with the same email address but different sign-in credentials. Please sign in using the original method."
+          );
+        } else {
+          setError(`Login failed: ${error.message}`);
+        }
+      } else {
+        setError("Login failed. Please try again.");
+      }
     } finally {
       setIsLoading(false);
       isHandlingAuth.current = false;
