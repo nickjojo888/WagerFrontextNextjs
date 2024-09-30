@@ -6,7 +6,11 @@ import React, {
   useEffect,
   useRef,
 } from "react";
-import { User as AuthUser } from "firebase/auth";
+import {
+  User as AuthUser,
+  deleteUser as deleteFirebaseAuthUser,
+  signOut,
+} from "firebase/auth";
 import { auth } from "@/app/firebase/firebaseConfig";
 import axios, { isAxiosError } from "axios";
 import { IUser } from "@/app/shared-types/userTypes/userTypes";
@@ -23,7 +27,7 @@ interface AuthContextType {
   createNewUser: (firebaseUser: any, agreedToTerms: boolean) => Promise<IUser>;
   fetchUserByFirebaseUser: (firebaseUser: AuthUser) => Promise<void>;
   deleteUser: () => Promise<void>;
-  deleteFirebaseAuthUser: () => Promise<void>;
+  handleAuthError: (firebaseUser: AuthUser, error: any) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -163,29 +167,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const deleteFirebaseAuthUser = async () => {
-    if (!authUser) {
-      throw new Error("No authenticated user");
-    }
-
-    try {
-      const response = await axios.delete(
-        `${BACKEND_URL}/api/users/${authUser.uid}/auth`
-      );
-
-      if (response.status !== 200) {
-        throw new Error("Failed to delete Firebase Auth user");
+  const handleAuthError = async (firebaseUser: AuthUser, error: any) => {
+    console.error("Error in auth process:", error);
+    const isNewUser =
+      firebaseUser.metadata.creationTime ===
+      firebaseUser.metadata.lastSignInTime;
+    if (isNewUser) {
+      try {
+        console.log("Deleting new Firebase auth user");
+        await deleteFirebaseAuthUser(firebaseUser);
+      } catch (deleteError) {
+        console.error("Error deleting Firebase user:", deleteError);
       }
-
-      // Sign out from Firebase
-      // This will trigger onAuthStateChanged, which will set user and authUser to null
-      await auth.signOut();
-    } catch (error) {
-      console.error("Error deleting Firebase Auth user:", error);
-      if (isAxiosError(error) && error.response) {
-        throw new Error(error.response.data);
-      } else {
-        throw error;
+    } else {
+      try {
+        console.log("Signing out non-new user");
+        await signOut(auth);
+      } catch (signOutError) {
+        console.error("Error signing out user:", signOutError);
       }
     }
   };
@@ -199,7 +198,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     createNewUser,
     fetchUserByFirebaseUser,
     deleteUser,
-    deleteFirebaseAuthUser,
+    handleAuthError,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -29,7 +29,8 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const { fetchUserByFirebaseUser, isHandlingAuth } = useAuth();
+  const { fetchUserByFirebaseUser, isHandlingAuth, handleAuthError } =
+    useAuth();
   const openAuthModal = useOpenAuthModal();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
@@ -43,10 +44,16 @@ const LoginModal: React.FC<LoginModalProps> = ({
         password
       );
       const firebaseUser = userCredential.user;
-      await fetchUserByFirebaseUser(firebaseUser);
+      try {
+        await fetchUserByFirebaseUser(firebaseUser);
+      } catch (fetchError) {
+        await handleAuthError(firebaseUser, fetchError);
+        setError("Login failed. User not found in the database.");
+        return;
+      }
     } catch (error) {
-      console.log("this is the error: ", error);
-      setError("Login failed. Please try again.");
+      console.error("Login failed:", error);
+      setError("Login failed. Please check your email and password.");
     } finally {
       setIsLoading(false);
       isHandlingAuth.current = false;
@@ -61,9 +68,15 @@ const LoginModal: React.FC<LoginModalProps> = ({
     try {
       const result = await signInWithPopup(auth, provider);
       const firebaseUser = result.user;
-      await fetchUserByFirebaseUser(firebaseUser);
+      try {
+        await fetchUserByFirebaseUser(firebaseUser);
+      } catch (fetchError) {
+        await handleAuthError(firebaseUser, fetchError);
+        setError("Login failed. User not found in the database.");
+        return;
+      }
     } catch (error) {
-      console.log("this is the error: ", error);
+      console.error("Social login failed:", error);
       setError("Login failed. Please try again.");
     } finally {
       setIsLoading(false);

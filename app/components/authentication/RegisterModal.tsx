@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
   signInWithPopup,
+  deleteUser,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import axios from "axios"; // Added for making HTTP requests
@@ -38,7 +39,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   const [termsError, setTermsError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const { createNewUser, isHandlingAuth } = useAuth();
+  const { createNewUser, isHandlingAuth, handleAuthError } = useAuth();
   const openAuthModal = useOpenAuthModal();
 
   const handleEmailRegister = async (e: React.FormEvent) => {
@@ -64,15 +65,19 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
     setIsLoading(true);
     isHandlingAuth.current = true;
     try {
-      // Create user in Firebase
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
       const firebaseUser = userCredential.user;
-      // Create initial user in our database and update AuthContext
-      await createNewUser(firebaseUser, true);
+      try {
+        await createNewUser(firebaseUser, true);
+      } catch (createError) {
+        await handleAuthError(firebaseUser, createError);
+        setError("Registration failed. Unable to create user in the database.");
+        return;
+      }
     } catch (error) {
       console.error("Registration failed:", error);
       if (
@@ -103,11 +108,15 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
     setIsLoading(true);
     isHandlingAuth.current = true;
     try {
-      // Authenticate with social provider
       const result = await signInWithPopup(auth, provider);
       const firebaseUser = result.user;
-      // Create initial user in our database and update AuthContext
-      await createNewUser(firebaseUser, true);
+      try {
+        await createNewUser(firebaseUser, true);
+      } catch (createError) {
+        await handleAuthError(firebaseUser, createError);
+        setError("Registration failed. Unable to create user in the database.");
+        return;
+      }
     } catch (error) {
       console.error("Social registration failed:", error);
       setError(`Registration failed. ${error}`);
