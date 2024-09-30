@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import AddressInfoForm from "./AddressInfoForm";
 import PersonalInfoForm from "./PersonalInfoForm";
+import { useAuth } from "@/app/components/authentication/AuthContext";
 
 interface PersonalDetailsModalProps {
   isOpen: boolean;
@@ -22,6 +23,12 @@ const PersonalDetailsModal: React.FC<PersonalDetailsModalProps> = ({
     occupation: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [addressInfo, setAddressInfo] = useState({
+    address: "",
+    postalCode: "",
+    city: "",
+  });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handlePersonalInfoChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -30,22 +37,36 @@ const PersonalDetailsModal: React.FC<PersonalDetailsModalProps> = ({
     setPersonalInfo((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleAddressInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setAddressInfo((prevData) => ({ ...prevData, [name]: value }));
+  };
+
   const handleNextPage = (e: React.FormEvent) => {
     e.preventDefault();
     setCurrentPage("address");
   };
 
-  const handleSubmit = async (addressInfo: any) => {
+  const { updateUser } = useAuth();
+
+  const handleSubmit = async () => {
     setIsLoading(true);
+    setErrorMessage(null);
     try {
-      // Combine data from both forms
       const completeFormData = { ...personalInfo, ...addressInfo };
       console.log("Submitting complete form data:", completeFormData);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      await updateUser({
+        ...completeFormData,
+        detailsFilled: true,
+      });
+
       onClose();
     } catch (error) {
       console.error("Error submitting form:", error);
+      setErrorMessage(
+        error instanceof Error ? error.message : "An unknown error occurred"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -82,9 +103,12 @@ const PersonalDetailsModal: React.FC<PersonalDetailsModalProps> = ({
           />
         ) : (
           <AddressInfoForm
+            formData={addressInfo}
+            handleChange={handleAddressInfoChange}
             onSubmit={handleSubmit}
             onBack={() => setCurrentPage("personal")}
             isLoading={isLoading}
+            errorMessage={errorMessage}
           />
         )}
       </div>

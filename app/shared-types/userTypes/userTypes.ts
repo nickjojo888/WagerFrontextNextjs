@@ -8,4 +8,13 @@ export interface IUser extends Document {
   detailsFilled: boolean;
   kycFilled: boolean;
   agreedToTerms: boolean;
+  // New fields for personal details
+  country?: string;
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
+  occupation?: string;
+  address?: string;
+  postalCode?: string;
+  city?: string;
 }

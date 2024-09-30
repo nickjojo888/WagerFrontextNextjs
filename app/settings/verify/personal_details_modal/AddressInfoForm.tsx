@@ -1,31 +1,30 @@
-import React, { useState } from "react";
-import { FaSpinner, FaArrowLeft } from "react-icons/fa";
+import React from "react";
+import { FaSpinner } from "react-icons/fa";
 
 interface AddressInfoFormProps {
-  onSubmit: (data: any) => void;
+  formData: {
+    address: string;
+    postalCode: string;
+    city: string;
+  };
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: () => void;
   onBack: () => void;
   isLoading: boolean;
+  errorMessage: string | null;
 }
 
 const AddressInfoForm: React.FC<AddressInfoFormProps> = ({
+  formData,
+  handleChange,
   onSubmit,
   onBack,
   isLoading,
+  errorMessage,
 }) => {
-  const [formData, setFormData] = useState({
-    address: "",
-    postalCode: "",
-    city: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    onSubmit();
   };
 
   return (
@@ -82,6 +81,9 @@ const AddressInfoForm: React.FC<AddressInfoFormProps> = ({
             className="w-full p-2 bg-gray-700 rounded"
           />
         </div>
+        {errorMessage && (
+          <div className="text-red-400 text-center">{errorMessage}</div>
+        )}
         <div className="mt-4">
           <button
             type="submit"
