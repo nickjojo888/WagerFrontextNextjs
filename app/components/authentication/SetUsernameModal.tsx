@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 import { FaSpinner } from "react-icons/fa";
 import { useRouter } from "next/navigation"; // Added for navigation after username set
+import Link from "next/link"; // Add this import
 
 const SetUsernameModal: React.FC = () => {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { updateUser } = useAuth(); // Use updateUserDetails from AuthContext
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const { updateUser, user } = useAuth(); // Add user to the destructured values
   const router = useRouter(); // Added for navigation after username set
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -16,9 +18,18 @@ const SetUsernameModal: React.FC = () => {
     setIsLoading(true);
     setError("");
 
+    if (!user?.agreedToTerms && !agreeTerms) {
+      setError("Please agree to the Terms and Privacy Policy.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      // Use updateUserDetails to set the username
-      await updateUser({ username });
+      // Update user with username and agreedToTerms if necessary
+      await updateUser({
+        username,
+        ...(user?.agreedToTerms ? {} : { agreedToTerms: true }),
+      });
       // Redirect to home page or dashboard after successful username set
       router.push("/");
     } catch (error) {
@@ -49,6 +60,32 @@ const SetUsernameModal: React.FC = () => {
             disabled={isLoading}
             required
           />
+          {!user?.agreedToTerms && (
+            <div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="agreeTerms"
+                  checked={agreeTerms}
+                  onChange={(e) => {
+                    setAgreeTerms(e.target.checked);
+                    if (e.target.checked) setError("");
+                  }}
+                  className="mr-2"
+                />
+                <label htmlFor="agreeTerms" className="text-sm">
+                  I agree to the{" "}
+                  <Link href="/terms" className="text-primary">
+                    Terms
+                  </Link>{" "}
+                  and{" "}
+                  <Link href="/privacy" className="text-primary">
+                    Privacy Policy
+                  </Link>
+                </label>
+              </div>
+            </div>
+          )}
           {error && <p className="text-red-400">{error}</p>}
           <button
             type="submit"
