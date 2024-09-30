@@ -2,32 +2,36 @@ import React, { useState, useCallback } from "react";
 import AddressInfoForm from "./AddressInfoForm";
 import PersonalInfoForm from "./PersonalInfoForm";
 import { useAuth } from "@/app/components/authentication/AuthContext";
+import { IUser } from "@/app/shared-types/userTypes/userTypes";
 
 interface PersonalDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
+  userData: IUser | null;
 }
 
 const PersonalDetailsModal: React.FC<PersonalDetailsModalProps> = ({
   isOpen,
   onClose,
+  userData,
 }) => {
+  const { updateUser } = useAuth();
   const [currentPage, setCurrentPage] = useState<"personal" | "address">(
     "personal"
   );
   const [personalInfo, setPersonalInfo] = useState({
-    country: "",
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    occupation: "",
+    country: userData?.country || "",
+    firstName: userData?.firstName || "",
+    lastName: userData?.lastName || "",
+    dateOfBirth: userData?.dateOfBirth || "",
+    occupation: userData?.occupation || "",
+  });
+  const [addressInfo, setAddressInfo] = useState({
+    address: userData?.address || "",
+    postalCode: userData?.postalCode || "",
+    city: userData?.city || "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [addressInfo, setAddressInfo] = useState({
-    address: "",
-    postalCode: "",
-    city: "",
-  });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handlePersonalInfoChange = (
@@ -46,8 +50,6 @@ const PersonalDetailsModal: React.FC<PersonalDetailsModalProps> = ({
     e.preventDefault();
     setCurrentPage("address");
   };
-
-  const { updateUser } = useAuth();
 
   const handleSubmit = async () => {
     setIsLoading(true);
