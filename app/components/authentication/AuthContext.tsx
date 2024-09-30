@@ -1,5 +1,11 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import { User as AuthUser } from "firebase/auth";
 import { auth } from "@/app/firebase/firebaseConfig";
 import axios, { isAxiosError } from "axios";
@@ -12,10 +18,12 @@ interface AuthContextType {
   authUser: AuthUser | null;
   user: IUser | null;
   loading: boolean;
-  updateUser: (details: any) => Promise<void>;
+  isHandlingAuth: React.MutableRefObject<boolean>;
+  updateUser: (details: Partial<IUser>) => Promise<void>;
   createInitialUser: (firebaseUser: any) => Promise<IUser>;
-  fetchUserByFirebaseId: (firebaseUserId: string) => Promise<void>;
+  fetchUserByFirebaseUser: (firebaseUser: AuthUser) => Promise<void>;
   deleteUser: () => Promise<void>;
+  deleteFirebaseAuthUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -24,12 +32,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
+  // when sign in flow manually done in register / login modals, don't want onauthchange to run also, race conditions in calling setUser
+  const isHandlingAuth = useRef(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
       setAuthUser(firebaseUser);
-      console.log("auth user: ", firebaseUser);
-      if (firebaseUser) {
+      console.log(
+        "auth user just changed: ",
+        firebaseUser,
+        " manually handling auth? ",
+        isHandlingAuth.current
+      );
+      if (firebaseUser && !isHandlingAuth.current) {
         try {
           const response = await axios.get(
             `${BACKEND_URL}/api/users/${firebaseUser.uid}`
@@ -40,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           console.error("Error fetching user in useEffect:", error);
           setUser(null);
         }
-      } else {
+      } else if (!firebaseUser) {
         setUser(null);
       }
       setLoading(false);
@@ -48,16 +63,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return unsubscribe;
   }, []);
 
-  const fetchUserByFirebaseId = async (firebaseUserId: string) => {
+  // Function to fetch user data by Firebase ID
+  const fetchUserByFirebaseUser = async (
+    firebaseUser: AuthUser
+  ): Promise<void> => {
     try {
       const response = await axios.get(
-        `${BACKEND_URL}/api/users/${firebaseUserId}`
+        `${BACKEND_URL}/api/users/${firebaseUser.uid}`
       );
       setUser(response.data);
     } catch (error) {
-      console.error("Error fetching user:", error);
-      setUser(null);
-      throw error;
+      console.error("Fetched user not in db:", error);
+      if (isAxiosError(error) && error.response?.status === 404) {
+        // User not found, attempt to create
+        try {
+          const newUser = await createInitialUser(firebaseUser);
+          setUser(newUser);
+        } catch (createError) {
+          console.error("Error creating initial user:", createError);
+          setUser(null);
+          throw createError;
+        }
+      } else {
+        console.error("Error fetching user:", error);
+        setUser(null);
+        throw error;
+      }
     }
   };
 
@@ -159,9 +190,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     authUser,
     user,
     loading,
+    isHandlingAuth,
     updateUser,
     createInitialUser,
-    fetchUserByFirebaseId,
+    fetchUserByFirebaseUser,
     deleteUser,
     deleteFirebaseAuthUser,
   };

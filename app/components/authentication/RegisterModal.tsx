@@ -38,7 +38,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   const [termsError, setTermsError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const { createInitialUser } = useAuth();
+  const { createInitialUser, isHandlingAuth } = useAuth();
   const openAuthModal = useOpenAuthModal();
 
   const handleEmailRegister = async (e: React.FormEvent) => {
@@ -62,6 +62,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
     }
 
     setIsLoading(true);
+    isHandlingAuth.current = true;
     try {
       // Create user in Firebase
       const userCredential = await createUserWithEmailAndPassword(
@@ -86,6 +87,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       }
     } finally {
       setIsLoading(false);
+      isHandlingAuth.current = false;
     }
   };
 
@@ -99,6 +101,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       return;
     }
     setIsLoading(true);
+    isHandlingAuth.current = true;
     try {
       // Authenticate with social provider
       const result = await signInWithPopup(auth, provider);
@@ -107,9 +110,10 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       await createInitialUser(firebaseUser);
     } catch (error) {
       console.error("Social registration failed:", error);
-      setError(`Registration failes. ${error}`);
+      setError(`Registration failed. ${error}`);
     } finally {
       setIsLoading(false);
+      isHandlingAuth.current = false;
     }
   };
 

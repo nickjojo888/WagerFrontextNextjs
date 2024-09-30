@@ -29,24 +29,27 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const { fetchUserByFirebaseId } = useAuth();
+  const { fetchUserByFirebaseUser, isHandlingAuth } = useAuth();
   const openAuthModal = useOpenAuthModal();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    isHandlingAuth.current = true;
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
-      await fetchUserByFirebaseId(userCredential.user.uid);
+      const firebaseUser = userCredential.user;
+      await fetchUserByFirebaseUser(firebaseUser);
     } catch (error) {
       console.log("this is the error: ", error);
       setError("Login failed. Please try again.");
     } finally {
       setIsLoading(false);
+      isHandlingAuth.current = false;
     }
   };
 
@@ -54,14 +57,17 @@ const LoginModal: React.FC<LoginModalProps> = ({
     provider: GoogleAuthProvider | FacebookAuthProvider
   ) => {
     setIsLoading(true);
+    isHandlingAuth.current = true;
     try {
       const result = await signInWithPopup(auth, provider);
-      await fetchUserByFirebaseId(result.user.uid);
+      const firebaseUser = result.user;
+      await fetchUserByFirebaseUser(firebaseUser);
     } catch (error) {
       console.log("this is the error: ", error);
       setError("Login failed. Please try again.");
     } finally {
       setIsLoading(false);
+      isHandlingAuth.current = false;
     }
   };
 
