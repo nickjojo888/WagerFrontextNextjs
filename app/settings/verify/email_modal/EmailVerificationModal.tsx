@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/app/components/authentication/AuthContext";
 import { sendEmailVerification, applyActionCode } from "firebase/auth";

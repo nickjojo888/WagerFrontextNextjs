@@ -5,6 +5,7 @@ import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import PersonalDetailsModal from "./personal_details_modal/PersonalDetailsModal";
 import KYCVerificationModal from "./kyc_modal/KYCVerificationModal";
 import EmailVerificationModal from "./email_modal/EmailVerificationModal";
+import { Suspense } from "react";
 
 const VerifyPage: React.FC = () => {
   const { user } = useAuth();
@@ -84,10 +85,12 @@ const VerifyPage: React.FC = () => {
           );
         })}
       </div>
-      <EmailVerificationModal
-        isOpen={isEmailModalOpen}
-        onClose={() => setIsEmailModalOpen(false)}
-      />
+      <Suspense fallback={<div className=""></div>}>
+        <EmailVerificationModal
+          isOpen={isEmailModalOpen}
+          onClose={() => setIsEmailModalOpen(false)}
+        />
+      </Suspense>
       <PersonalDetailsModal
         key={isPersonalDetailsModalOpen ? "open" : "closed"} //so that if user goes off the page, data not saved
         isOpen={isPersonalDetailsModalOpen}
