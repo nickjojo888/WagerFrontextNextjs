@@ -14,11 +14,13 @@ import { useSearchParams, useRouter } from "next/navigation";
 interface EmailVerificationModalProps {
   isOpen: boolean;
   onClose: () => void;
+  setIsEmailVerifying: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EmailVerificationModal: React.FC<EmailVerificationModalProps> = ({
   isOpen,
   onClose,
+  setIsEmailVerifying,
 }) => {
   const { authUser, user, updateUser } = useAuth();
   // If this modal is opened, we can assume user exists and email is not verified
@@ -34,6 +36,7 @@ const EmailVerificationModal: React.FC<EmailVerificationModalProps> = ({
       const mode = searchParams.get("mode");
       const oobCode = searchParams.get("oobCode");
       if (mode === "verifyEmail" && oobCode && user) {
+        setIsEmailVerifying(true);
         try {
           await applyActionCode(auth, oobCode);
           await updateUser({ emailVerified: true });
@@ -41,6 +44,7 @@ const EmailVerificationModal: React.FC<EmailVerificationModalProps> = ({
           console.error("Error verifying email:", error);
           setError("Failed to verify email. Please try again.");
         } finally {
+          setIsEmailVerifying(false);
           // Remove mode and oobCode from URL
           const newSearchParams = new URLSearchParams(searchParams.toString());
           newSearchParams.delete("mode");
@@ -56,7 +60,7 @@ const EmailVerificationModal: React.FC<EmailVerificationModalProps> = ({
       }
     };
     handleEmailVerification();
-  }, [searchParams, updateUser, router, user]);
+  }, [searchParams, updateUser, router, user, setIsEmailVerifying]);
 
   useEffect(() => {
     if (user?.email) {

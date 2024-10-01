@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "@/app/components/authentication/AuthContext";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import PersonalDetailsModal from "./personal_details_modal/PersonalDetailsModal";
 import KYCVerificationModal from "./kyc_modal/KYCVerificationModal";
 import EmailVerificationModal from "./email_modal/EmailVerificationModal";
 import { Suspense } from "react";
+import { FaSpinner } from "react-icons/fa";
 
 const VerifyPage: React.FC = () => {
   const { user } = useAuth();
@@ -13,6 +14,7 @@ const VerifyPage: React.FC = () => {
     useState(false);
   const [isKYCModalOpen, setIsKYCModalOpen] = useState(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [isEmailVerifying, setIsEmailVerifying] = useState(false);
 
   const verificationSteps = [
     {
@@ -50,6 +52,7 @@ const VerifyPage: React.FC = () => {
         {verificationSteps.map((step, index) => {
           const isDisabled =
             false && index > 0 && !verificationSteps[index - 1].completed;
+          const isEmailStep = step.name === "Email Verification";
           return (
             <div
               key={index}
@@ -74,10 +77,21 @@ const VerifyPage: React.FC = () => {
                         ? "bg-gray-500 hover:bg-gray-600"
                         : "bg-primary hover:bg-secondary"
                     }`}
-                    disabled={isDisabled}
+                    disabled={isDisabled || (isEmailStep && isEmailVerifying)}
                     onClick={() => handleCompleteClick(step.name)}
                   >
-                    {step.completed ? "Update" : "Complete"}
+                    {isEmailStep && isEmailVerifying ? (
+                      <div className="bg-gray-500">
+                        {isEmailVerifying ? (
+                          <FaSpinner className="animate-spin mr-2 inline" />
+                        ) : null}
+                        Verifying...
+                      </div>
+                    ) : step.completed ? (
+                      "Update"
+                    ) : (
+                      "Complete"
+                    )}
                   </button>
                 )}
               </div>
@@ -89,6 +103,7 @@ const VerifyPage: React.FC = () => {
         <EmailVerificationModal
           isOpen={isEmailModalOpen}
           onClose={() => setIsEmailModalOpen(false)}
+          setIsEmailVerifying={setIsEmailVerifying}
         />
       </Suspense>
       <PersonalDetailsModal
