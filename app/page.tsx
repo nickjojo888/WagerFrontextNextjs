@@ -19,7 +19,6 @@ export default function Home() {
       <ShadowDivider />
       <SearchOptions />
       <WagerGamesCarousel
-        provider="PRAGMATIC"
         title="Wager Games"
         Icon={<PokerChipSVG width={24} height={24} />}
       />

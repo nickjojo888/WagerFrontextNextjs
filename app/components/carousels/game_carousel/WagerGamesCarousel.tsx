@@ -6,19 +6,15 @@ import Link from "next/link";
 import { Game } from "./types";
 
 interface GamesCarouselProps {
-  provider: string;
   title: string;
   Icon: React.ReactNode;
 }
 
-const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
-  provider,
-  title,
-  Icon,
-}) => {
+const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({ title, Icon }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
+  const provider = "no_provider";
 
   // Hardcoded list of games
   const games: Game[] = [
@@ -187,7 +183,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({
           games.map((game) => (
             <Link
               key={game.id}
-              href={`/games/${provider}/${game.id}`}
+              href={`/games/no_provider/${game.id}`}
               className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/7 xl:w-1/8 flex-shrink-0 snap-start transition-transform duration-300 ease-in-out hover:-translate-y-2"
             >
               <Image
