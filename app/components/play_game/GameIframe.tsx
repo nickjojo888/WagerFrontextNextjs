@@ -16,7 +16,7 @@ const GameIframe: React.FC<GameIframeProps> = ({ provider, game_code }) => {
   return (
     <div className="h-full flex flex-col flex-shrink-0">
       <div className="bg-gray-800 w-full h-full flex items-center justify-center">
-        {provider === "no_provider" ? (
+        {provider === "Wager" ? (
           <div className="text-center">
             <Image
               src={newWagerLogo}

@@ -2,6 +2,7 @@ import React from "react";
 import GameIframe from "@/app/components/play_game/GameIframe";
 import GameDescription from "@/app/components/play_game/GameDescription";
 import GamesCarousel from "@/app/components/carousels/game_carousel/GamesCarousel";
+import WagerGamesCarousel from "@/app/components/carousels/game_carousel/WagerGamesCarousel";
 import ProviderCarousel from "@/app/components/carousels/provider_carousel/ProviderCarousel";
 import { PokerChipSVG } from "@/public/svgs/SVGComponents";
 import MissingDetailsModal from "@/app/components/play_game/MissingDetailsModal";
@@ -21,11 +22,18 @@ const GamePage: React.FC<GamePageProps> = ({ params }) => {
       <MissingDetailsModal />
       <GameIframe provider={provider} game_code={game_code} />
       <GameDescription provider={provider} game_code={game_code} />
-      <GamesCarousel
-        provider={provider}
-        title={`More From ${provider}`}
-        Icon={<PokerChipSVG width={24} height={24} />}
-      />
+      {provider.toLowerCase() === "wager" ? (
+        <WagerGamesCarousel
+          title={`More From ${provider}`}
+          Icon={<PokerChipSVG width={24} height={24} />}
+        />
+      ) : (
+        <GamesCarousel
+          provider={provider}
+          title={`More From ${provider}`}
+          Icon={<PokerChipSVG width={24} height={24} />}
+        />
+      )}
       <ProviderCarousel />
     </div>
   );

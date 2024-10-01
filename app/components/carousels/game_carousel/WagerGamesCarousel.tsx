@@ -14,7 +14,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({ title, Icon }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
-  const provider = "no_provider";
+  const provider = "Wager";
 
   // Hardcoded list of games
   const games: Game[] = [
@@ -183,7 +183,7 @@ const WagerGamesCarousel: React.FC<GamesCarouselProps> = ({ title, Icon }) => {
           games.map((game) => (
             <Link
               key={game.id}
-              href={`/games/no_provider/${game.id}`}
+              href={`/games/Wager/${game.id}`}
               className="w-1/3 xs:w-1/4 md:w-1/5 lg:w-1/7 xl:w-1/8 flex-shrink-0 snap-start transition-transform duration-300 ease-in-out hover:-translate-y-2"
             >
               <Image
