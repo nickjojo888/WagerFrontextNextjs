@@ -2,24 +2,19 @@
 import React from "react";
 import { useAuth } from "../authentication/AuthContext";
 import { auth } from "@/app/firebase/firebaseConfig";
-import { useRouter, usePathname } from "next/navigation";
+import { useOpenAuthModal } from "@/app/utils/authHelpers";
 
 const AuthButtons = () => {
-  const { authUser } = useAuth();
-  const router = useRouter();
-  const pathname = usePathname();
+  const { user } = useAuth();
+  const openAuthModal = useOpenAuthModal();
 
   const handleLogout = () => {
     auth.signOut();
   };
 
-  const openAuthModal = (mode: "login" | "register") => {
-    router.push(`${pathname}/?auth=${mode}`);
-  };
-
   return (
     <div className="flex space-x-2">
-      {authUser ? (
+      {user ? (
         <>
           <button
             className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded"

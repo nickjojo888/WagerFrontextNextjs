@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/app/components/authentication/AuthContext";
 import AuthModal from "./components/authentication/AuthModal";
-import SetUsernameModal from "./components/authentication/SetUsernameModal";
 import ClientLayout from "./components/ClientLayout";
 import LoadingController from "./components/site_loading/LoadingController";
 import { Suspense } from "react";

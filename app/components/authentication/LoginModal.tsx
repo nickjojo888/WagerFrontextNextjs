@@ -11,6 +11,9 @@ import GoogleIcon from "@/public/images/auth/google-logo.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
+import { useAuth } from "./AuthContext";
+import { useOpenAuthModal } from "@/app/utils/authHelpers";
+import { FirebaseError } from "firebase/app";
 
 interface LoginModalProps {
   onClose: () => void;
@@ -27,18 +30,34 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const { fetchUserByFirebaseUser, isHandlingAuth, handleAuthError } =
+    useAuth();
+  const openAuthModal = useOpenAuthModal();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    isHandlingAuth.current = true;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const firebaseUser = userCredential.user;
+      try {
+        await fetchUserByFirebaseUser(firebaseUser);
+      } catch (fetchError) {
+        await handleAuthError(firebaseUser, fetchError);
+        setError("Login failed. User not found in the database.");
+        return;
+      }
     } catch (error) {
-      console.log("this is the error: ", error);
-      setError("Login failed. Please try again.");
+      console.error("Login failed:", error);
+      setError("Login failed. Please check your email and password.");
     } finally {
       setIsLoading(false);
+      isHandlingAuth.current = false;
     }
   };
 
@@ -46,14 +65,33 @@ const LoginModal: React.FC<LoginModalProps> = ({
     provider: GoogleAuthProvider | FacebookAuthProvider
   ) => {
     setIsLoading(true);
+    isHandlingAuth.current = true;
     try {
-      await signInWithPopup(auth, provider);
-      router.push("/");
+      const result = await signInWithPopup(auth, provider);
+      const firebaseUser = result.user;
+      try {
+        await fetchUserByFirebaseUser(firebaseUser);
+      } catch (fetchError) {
+        await handleAuthError(firebaseUser, fetchError);
+        setError("Login failed. User not found in the database.");
+        return;
+      }
     } catch (error) {
-      console.log("this is the error: ", error);
-      setError("Login failed. Please try again.");
+      console.error("Social login failed:", error);
+      if (error instanceof FirebaseError) {
+        if (error.code === "auth/account-exists-with-different-credential") {
+          setError(
+            "An account already exists with the same email address but different sign-in credentials. Please sign in using the original method."
+          );
+        } else {
+          setError(`Login failed: ${error.message}`);
+        }
+      } else {
+        setError("Login failed. Please try again.");
+      }
     } finally {
       setIsLoading(false);
+      isHandlingAuth.current = false;
     }
   };
 
@@ -118,7 +156,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
       <p className="text-center text-sm text-gray-400">
         Don&apos;t have an account?{" "}
         <button
-          onClick={() => router.push("/?auth=register")}
+          onClick={() => openAuthModal("register")}
           className="text-primary hover:underline"
           disabled={isLoading}
         >

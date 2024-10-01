@@ -40,7 +40,6 @@ const VerifyPage: React.FC = () => {
     } else if (stepName === "KYC Verification") {
       setIsKYCModalOpen(true);
     }
-    // Handle other steps if needed
   };
 
   return (
@@ -63,21 +62,21 @@ const VerifyPage: React.FC = () => {
               <div className="flex-grow flex flex-col xs:flex-row xs:items-center xs:justify-between">
                 <div className="flex flex-col xs:mb-0">
                   <span className="text-lg font-medium">{step.name}</span>
-                  {!step.completed && (
-                    <p className="text-sm text-gray-400">{step.description}</p>
-                  )}
+                  <p className="text-sm text-gray-400">{step.description}</p>
                 </div>
-                {!step.completed && (
+                {(step.name === "Personal Details" || !step.completed) && (
                   <button
                     className={`px-4 py-2 mt-4 xs:mt-0 rounded-md text-white self-start ${
                       isDisabled
                         ? "bg-gray-500 cursor-not-allowed"
+                        : step.completed
+                        ? "bg-gray-500 hover:bg-gray-600"
                         : "bg-primary hover:bg-secondary"
                     }`}
                     disabled={isDisabled}
                     onClick={() => handleCompleteClick(step.name)}
                   >
-                    Complete
+                    {step.completed ? "Update" : "Complete"}
                   </button>
                 )}
               </div>
@@ -90,8 +89,10 @@ const VerifyPage: React.FC = () => {
         onClose={() => setIsEmailModalOpen(false)}
       />
       <PersonalDetailsModal
+        key={isPersonalDetailsModalOpen ? "open" : "closed"} //so that if user goes off the page, data not saved
         isOpen={isPersonalDetailsModalOpen}
         onClose={() => setIsPersonalDetailsModalOpen(false)}
+        userData={user} // Pass user data as a prop so that on initial render it has right data, instead of using useeffect (right data on second render)
       />
       <KYCVerificationModal
         isOpen={isKYCModalOpen}

@@ -5,13 +5,21 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
   signInWithPopup,
+  deleteUser,
 } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+import axios from "axios"; // Added for making HTTP requests
 import FacebookIcon from "@/public/images/auth/facebook-logo.png";
 import GoogleIcon from "@/public/images/auth/google-logo.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import Link from "next/link"; // Add this import
+import { useAuth } from "./AuthContext"; // Add this import
+import { useOpenAuthModal } from "@/app/utils/authHelpers";
+
+// Use environment variable for backend URL
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
 
 interface RegisterModalProps {
   onClose: () => void;
@@ -31,7 +39,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   const [termsError, setTermsError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const router = useRouter();
+  const { createNewUser, isHandlingAuth, handleAuthError } = useAuth();
+  const openAuthModal = useOpenAuthModal();
 
   const handleEmailRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,29 +63,76 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
     }
 
     setIsLoading(true);
+    isHandlingAuth.current = true;
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.push("/");
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const firebaseUser = userCredential.user;
+      try {
+        await createNewUser(firebaseUser, true);
+      } catch (createError) {
+        await handleAuthError(firebaseUser, createError);
+        setError("Registration failed. Unable to create user in the database.");
+        return;
+      }
     } catch (error) {
-      console.log("this is the error: ", error);
-      setError("Registration failed. Please try again.");
+      console.error("Registration failed:", error);
+      if (
+        error instanceof FirebaseError &&
+        error.code === "auth/email-already-in-use"
+      ) {
+        setError(
+          "This email is already in use. Please try a different email or sign in."
+        );
+      } else {
+        setError(`Registration failed: ${error}`);
+      }
     } finally {
       setIsLoading(false);
+      isHandlingAuth.current = false;
     }
   };
 
   const handleSocialRegister = async (
     provider: GoogleAuthProvider | FacebookAuthProvider
   ) => {
+    setError("");
+    setTermsError("");
+    if (!agreeTerms) {
+      setTermsError("Please agree to the Terms and Privacy Policy.");
+      return;
+    }
     setIsLoading(true);
+    isHandlingAuth.current = true;
     try {
-      await signInWithPopup(auth, provider);
-      router.push("/");
+      const result = await signInWithPopup(auth, provider);
+      const firebaseUser = result.user;
+      try {
+        await createNewUser(firebaseUser, true);
+      } catch (createError) {
+        await handleAuthError(firebaseUser, createError);
+        setError("Registration failed. Unable to create user in the database.");
+        return;
+      }
     } catch (error) {
-      console.log("this is the error: ", error);
-      setError("Registration failed. Please try again.");
+      console.error("Social registration failed:", error);
+      if (error instanceof FirebaseError) {
+        if (error.code === "auth/account-exists-with-different-credential") {
+          setError(
+            "An account already exists with the same email address but different sign-in credentials. Please sign in using the original method."
+          );
+        } else {
+          setError(`Registration failed: ${error.message}`);
+        }
+      } else {
+        setError(`Registration failed. ${error}`);
+      }
     } finally {
       setIsLoading(false);
+      isHandlingAuth.current = false;
     }
   };
 
@@ -178,7 +234,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       <p className="text-center text-sm text-gray-400">
         Already have an account?{" "}
         <button
-          onClick={() => router.push("/?auth=login")}
+          onClick={() => openAuthModal("login")}
           className="text-primary hover:underline"
           disabled={isLoading}
         >
