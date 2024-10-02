@@ -34,7 +34,8 @@ interface GamePageProps {
 
 const GamePage = async ({ params }: GamePageProps) => {
   const { provider, game_code } = params;
-  const games = await getGames(provider);
+  const games =
+    provider.toLowerCase() !== "wager" ? await getGames(provider) : [];
 
   return (
     <div className="flex flex-col gap-6 h-full min-h-full overflow-visible px-5 md:px-10">
