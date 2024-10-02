@@ -21,12 +21,12 @@ import HomeIcon from "@/public/svgs/home-outline.svg";
 import StarIcon from "@/public/svgs/star-outline.svg";
 import RecentIcon from "@/public/svgs/time-outline.svg";
 import SidebarLink from "./SidebarLink";
-import { useState } from "react";
 import clsx from "clsx";
 import SidebarGroup from "./SidebarGroup"; // New import
 import SidebarSearchBar from "./SidebarSearchBar";
 import { usePathname } from "next/navigation"; // Add this import
 import SidebarHeader from "./SidebarHeader"; // Add this import
+import { useAuth } from "@/app/components/authentication/AuthContext";
 
 interface SidebarProps {
   isExpanded: boolean; // controls whether sidebar is expanded
@@ -36,6 +36,7 @@ interface SidebarProps {
 export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
   const pathname = usePathname(); // Add this line to get the current path
   const isSportsActive = pathname.startsWith("/sports");
+  const { user } = useAuth(); // Add this line to get the user
 
   return (
     <aside
@@ -70,7 +71,7 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
             href="/favourites"
             icon={<StarIcon width={24} height={24} />}
             text="Favourites"
-            disabled={true}
+            disabled={!user}
             isExpanded={isExpanded}
             toggleSidebar={toggleSidebar}
           />
@@ -78,7 +79,7 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
             href="/recents"
             icon={<RecentIcon width={24} height={24} />}
             text="Recents"
-            disabled={true}
+            disabled={!user}
             isExpanded={isExpanded}
             toggleSidebar={toggleSidebar}
           />
@@ -86,7 +87,7 @@ export default function Sidebar({ isExpanded, toggleSidebar }: SidebarProps) {
             href="/mybets"
             icon={<DollarSVG width={24} height={24} />}
             text="My Bets"
-            disabled={true}
+            disabled={!user}
             isExpanded={isExpanded}
             toggleSidebar={toggleSidebar}
           />
