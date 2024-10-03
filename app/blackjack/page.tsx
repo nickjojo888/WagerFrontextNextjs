@@ -2,8 +2,10 @@ import React from "react";
 import { getGames } from "../components/carousels/game_carousel/getGames";
 import GameDisplay from "../components/game_display/GameDisplay";
 
+export const dynamic = "force-dynamic";
+
 export default async function BlackjackPage() {
-  const provider = "EVOLUTION";
+  const provider = "DREAMTECH";
   const games = await getGames(provider);
 
   return (

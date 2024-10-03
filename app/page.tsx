@@ -12,6 +12,8 @@ import {
 import WagerGamesCarousel from "./components/carousels/game_carousel/WagerGamesCarousel";
 import { getGames } from "./components/carousels/game_carousel/getGames";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const pragmaticGames = await getGames("PRAGMATIC");
   const reelkingdomGames = await getGames("REELKINGDOM");

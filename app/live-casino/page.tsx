@@ -2,6 +2,8 @@ import React from "react";
 import { getGames } from "../components/carousels/game_carousel/getGames";
 import GameDisplay from "../components/game_display/GameDisplay";
 
+export const dynamic = "force-dynamic";
+
 export default async function LiveCasinoPage() {
   const provider = "HABANERO";
   const games = await getGames(provider);
