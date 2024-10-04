@@ -9,7 +9,7 @@ const LoadingScreen: React.FC = () => {
   `;
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center">
+    <div className="w-full h-full flex flex-col items-center justify-center bg-black">
       <div
         dangerouslySetInnerHTML={{ __html: videoHtml }}
         suppressHydrationWarning
