@@ -12,7 +12,11 @@ export default function LoadingController({
   return (
     <>
       {children}
-      {loading && <LoadingScreen />}
+      {loading && (
+        <div className="fixed inset-0 bg-black z-50">
+          <LoadingScreen />
+        </div>
+      )}
     </>
   );
 }

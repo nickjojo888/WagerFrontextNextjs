@@ -1,10 +1,19 @@
 import React from "react";
 
 const LoadingScreen: React.FC = () => {
+  const videoHtml = `
+    <video autoplay loop muted class="w-1/12 h-auto">
+      <source src="/videos/WagerAnimation.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  `;
+
   return (
-    <div className="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
-    </div>
+    <div
+      dangerouslySetInnerHTML={{ __html: videoHtml }}
+      suppressHydrationWarning
+      className="w-full h-full flex flex-col items-center justify-center bg-black"
+    ></div>
   );
 };
 
