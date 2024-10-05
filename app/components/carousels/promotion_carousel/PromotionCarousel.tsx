@@ -80,9 +80,9 @@ export default function Carousel() {
               <Image
                 src={src}
                 alt={`Slide ${index + 1}`}
-                width={854}
-                height={467}
-                className="w-full h-auto rounded-lg"
+                width={640}
+                height={360}
+                className="w-full h-auto rounded-xl"
               />
             </div>
           ))}
