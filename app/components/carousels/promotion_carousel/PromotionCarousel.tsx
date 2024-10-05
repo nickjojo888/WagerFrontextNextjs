@@ -83,7 +83,7 @@ export default function Carousel() {
                 alt={`Slide ${index + 1}`}
                 width={640}
                 height={360}
-                className="w-full h-auto rounded-lg"
+                className="w-full h-auto rounded-xl"
               />
             </div>
           ))}
