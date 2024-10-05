@@ -4,11 +4,6 @@ import CarouselButton from "../CarouselButton";
 import Link from "next/link";
 import { Game } from "./getGames";
 
-// Add this custom loader function
-const customLoader = ({ src }: { src: string }) => {
-  return src;
-};
-
 interface GamesCarouselProps {
   provider: string;
   title: string;
