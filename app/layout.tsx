@@ -4,6 +4,7 @@ import { AuthProvider } from "@/app/components/authentication/AuthContext";
 import AuthModal from "./components/authentication/AuthModal";
 import ClientLayout from "./components/ClientLayout";
 import LoadingController from "./components/site_loading/LoadingController";
+import IPRestrictionModal from "./components/ip_restriction/IPRestrictionModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
             <ClientLayout>{children}</ClientLayout>
           </LoadingController>
           <AuthModal />
+          <IPRestrictionModal />
         </AuthProvider>
       </body>
     </html>
