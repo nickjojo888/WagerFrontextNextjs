@@ -6,6 +6,7 @@ import ClientLayout from "./components/ClientLayout";
 import LoadingController from "./components/site_loading/LoadingController";
 import { Suspense } from "react";
 import DemoVerification from "./components/DemoVerification";
+import IPRestrictionModal from "./components/ip_restriction/IPRestrictionModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
             <AuthModal />
           </Suspense>
           <DemoVerification />
+          <IPRestrictionModal />
         </AuthProvider>
       </body>
     </html>
