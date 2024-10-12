@@ -6,6 +6,9 @@ const LoadingScreen: React.FC = () => {
       <source src="/videos/WagerAnimation.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
+    <script>
+      document.currentScript.parentElement.querySelector('video').playbackRate = 2.0;
+    </script>
   `;
 
   return (
