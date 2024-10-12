@@ -7,7 +7,7 @@ const LoadingScreen: React.FC = () => {
       Your browser does not support the video tag.
     </video>
     <script>
-      document.currentScript.parentElement.querySelector('video').playbackRate = 2.0;
+      document.currentScript.parentElement.querySelector('video').playbackRate = 4.0;
     </script>
   `;
 
