@@ -17,6 +17,7 @@ import { IUser } from "@/app/shared-types/userTypes/userTypes";
 
 // Update this line to use NEXT_PUBLIC_ prefix
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
+console.log("backend url is now: ", BACKEND_URL);
 
 interface AuthContextType {
   authUser: AuthUser | null;
